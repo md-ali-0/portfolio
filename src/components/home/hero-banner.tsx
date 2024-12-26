@@ -95,7 +95,7 @@ export default function HeroBanner({ userData }: { userData: UserData }) {
                         alt="Mohammad Ali"
                         layout="fill"
                         objectFit="cover"
-                        className="rounded-full rounded-2xl shadow-2xl"
+                        className="rounded-full md:rounded-2xl shadow-2xl"
                     />
                 </div>
             </motion.div>
