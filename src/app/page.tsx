@@ -1,9 +1,10 @@
-import HeroBanner from "@/components/home/hero-banner";
+import HeroSection from "@/components/home/hero-section";
 
 export default function Home() {
+    
     return (
         <>
-            <HeroBanner />
+            <HeroSection />
         </>
     );
 }

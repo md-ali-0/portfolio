@@ -40,7 +40,7 @@ export default function Contact() {
 
   return (
       <main className="container mx-auto px-4 py-12">
-          <section className="bg-[#1C1E20] rounded-lg px-6 py-8 md:px-8 md:py-10 lg:p-12">
+          <section className="border bg-[#111111] rounded-lg px-6 py-8 md:px-8 md:py-10 lg:p-12">
               <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-5"
                   initial={{ opacity: 0, y: 50 }}
                   animate={{ opacity: 1, y: 0 }}

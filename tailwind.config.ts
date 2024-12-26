@@ -88,15 +88,20 @@ const config: Config = {
                     "0%": { transform: "rotate(0deg)" },
                     "100%": { transform: "rotate(360deg)" },
                 },
+                fadeUp: {
+                    '0%': { opacity: "0", transform: 'translateY(20px)' },
+                    '100%': { opacity: "1", transform: 'translateY(0)' },
+                  },
             },
             animation: {
                 "accordion-down": "accordion-down 0.2s ease-out",
                 "accordion-up": "accordion-up 0.2s ease-out",
                 pulse: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
                 rotate360: "rotate360 8s linear infinite",
+                fadeUp: 'fadeUp 0.5s ease-out',
             },
         },
     },
-    plugins: [require("tailwindcss-animate")],
+    plugins: [require("tailwindcss-animate"), require('@tailwindcss/typography')],
 };
 export default config;
