@@ -2,7 +2,9 @@ import ProjectsList from "@/components/project/projects-list";
 import config from "@/config";
 
 async function fetchProjects(page: number) {
-    const response = await fetch(`${config.host}/api/project?page=${page}`);
+    const response = await fetch(`${config.host}/api/project?page=${page}`, {
+        cache: "no-store"
+    });
     const data = await response.json();
     return data;
 }
