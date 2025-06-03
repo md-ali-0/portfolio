@@ -10,7 +10,7 @@ import { baseMetadata, generatePersonJsonLd } from "@/lib/metadata";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import type React from "react";
-import "./globals.css";
+import "../styles/globals.css";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 

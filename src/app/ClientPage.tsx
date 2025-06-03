@@ -6,32 +6,28 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useMobile } from "@/hooks/use-mobile";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 import {
-  motion,
-  useMotionValue,
-  useSpring
-} from "framer-motion";
-import {
-  ArrowRight,
-  Box,
-  Briefcase,
-  Code,
-  ExternalLink,
-  Figma,
-  Github,
-  Instagram,
-  Layers,
-  Linkedin,
-  Mail,
-  Package,
-  Send,
-  Server,
-  Terminal,
-  TestTube,
-  Triangle,
-  Twitter,
-  User,
-  Wrench
+    ArrowRight,
+    Box,
+    Briefcase,
+    Code,
+    ExternalLink,
+    Figma,
+    Github,
+    Instagram,
+    Layers,
+    Linkedin,
+    Mail,
+    Package,
+    Send,
+    Server,
+    Terminal,
+    TestTube,
+    Triangle,
+    Twitter,
+    User,
+    Wrench,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -1017,7 +1013,7 @@ export default function ClientPage() {
                                     <h4 className="text-lg font-medium mb-4">
                                         Follow Me
                                     </h4>
-                                    <div className="flex gap-4">
+                                    <div className="flex items-center gap-4">
                                         {[
                                             {
                                                 icon: (
@@ -1054,7 +1050,7 @@ export default function ClientPage() {
                                             >
                                                 <motion.a
                                                     href={social.href}
-                                                    className="bg-zinc-800 p-3 rounded-full text-zinc-400 hover:text-emerald-400 hover:bg-zinc-700 transition-all duration-300"
+                                                    className="bg-zinc-800 py-3 rounded-full text-zinc-400 hover:text-emerald-400 hover:bg-zinc-700 transition-all duration-300"
                                                     whileHover={{
                                                         y: -5,
                                                         scale: 1.1,

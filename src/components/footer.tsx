@@ -1,8 +1,8 @@
 "use client"
 
-import Link from "next/link"
-import { Github, Twitter, Linkedin, Mail, ArrowUp } from "lucide-react"
 import { motion } from "framer-motion"
+import { ArrowUp, Github, Linkedin, Mail, Twitter } from "lucide-react"
+import Link from "next/link"
 import { Button } from "./ui/button"
 
 export default function Footer() {
@@ -157,19 +157,10 @@ export default function Footer() {
           </motion.div>
         </motion.div>
 
-        <div className="mt-16 pt-8 border-t border-gray-200 dark:border-zinc-800 text-center flex flex-col md:flex-row justify-between items-center">
+        <div className="mt-16 pt-8 border-t border-gray-200 dark:border-zinc-800 text-center flex flex-col md:flex-row justify-center items-center">
           <p className="text-gray-600 dark:text-zinc-400 mb-4 md:mb-0">
             © {currentYear} Ali. All rights reserved. Built with Next.js and Tailwind CSS.
           </p>
-          <Button
-            variant="outline"
-            size="icon"
-            className="rounded-full w-10 h-10 border-gray-200 dark:border-zinc-700 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/20"
-            onClick={scrollToTop}
-            aria-label="Scroll to top"
-          >
-            <ArrowUp className="h-5 w-5" />
-          </Button>
         </div>
       </div>
     </footer>
