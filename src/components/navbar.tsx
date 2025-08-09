@@ -2,10 +2,10 @@
 
 import { useMobile } from "@/hooks/use-mobile";
 import {
-  motion,
-  useMotionValue,
-  useScroll,
-  useTransform
+    motion,
+    useMotionValue,
+    useScroll,
+    useTransform
 } from "framer-motion";
 import { Download } from "lucide-react";
 import Link from "next/link";

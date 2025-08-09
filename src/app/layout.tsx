@@ -38,26 +38,18 @@ export default function RootLayout({
                     enableSystem
                     disableTransitionOnChange={false}
                 >
-                    <ClientLayout>{children}</ClientLayout>
+                    <div className="min-h-screen bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white transition-colors duration-300">
+                        <ThemeBackground />
+                        <ScrollProgress />
+                        <BackToTop />
+                        <Navbar />
+                        <main className="pt-16 relative z-10">
+                            <PageTransition>{children}</PageTransition>
+                        </main>
+                        <Footer />
+                    </div>
                 </ThemeProvider>
             </body>
         </html>
-    );
-}
-
-// Client component to handle client-side features
-function ClientLayout({ children }: { children: React.ReactNode }) {
-    return (
-        <div className="min-h-screen bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white transition-colors duration-300">
-            <ThemeBackground />
-            {/* <MouseTrailer /> */}
-            <ScrollProgress />
-            <BackToTop />
-            <Navbar />
-            <main className="pt-16 relative z-10">
-                <PageTransition>{children}</PageTransition>
-            </main>
-            <Footer />
-        </div>
     );
 }
