@@ -10,7 +10,7 @@ export const blogPosts = [
     author: {
       name: "Ali",
       title: "Full-Stack Developer",
-      avatar: "/professional-developer-portrait.png",
+      avatar: "/profile-image.png",
       bio: "Passionate about building scalable and user-friendly web applications.",
     },
     tags: ["Next.js", "React", "JavaScript"],
@@ -36,7 +36,7 @@ export const blogPosts = [
     author: {
       name: "Ali",
       title: "Full-Stack Developer",
-      avatar: "/professional-developer-portrait.png",
+      avatar: "/profile-image.png",
       bio: "Passionate about building scalable and user-friendly web applications.",
     },
     tags: ["Tailwind CSS", "CSS", "Frontend"],
@@ -62,7 +62,7 @@ export const blogPosts = [
     author: {
       name: "Ali",
       title: "Full-Stack Developer",
-      avatar: "/professional-developer-portrait.png",
+      avatar: "/profile-image.png",
       bio: "Passionate about building scalable and user-friendly web applications.",
     },
     tags: ["React", "JavaScript", "Frontend"],
@@ -87,7 +87,7 @@ export const blogPosts = [
     author: {
       name: "Ali",
       title: "Full-Stack Developer",
-      avatar: "/professional-developer-portrait.png",
+      avatar: "/profile-image.png",
       bio: "Passionate about building scalable and user-friendly web applications.",
     },
     tags: ["Career", "Development", "Web Development"],

@@ -1,6 +1,6 @@
 # Modern Developer Portfolio
 
-![Portfolio Preview](/public/professional-developer-portrait.png)
+![Portfolio Preview](/public/profile-image.png)
 
 A modern, responsive, and interactive developer portfolio built with Next.js, Tailwind CSS, and Framer Motion. This portfolio features a custom cursor, smooth page transitions, dark/light mode, and various interactive elements.
 

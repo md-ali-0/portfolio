@@ -276,7 +276,7 @@ export default function ClientPage() {
                                             className="w-full h-full"
                                         >
                                             <img
-                                                src="/professional-developer-portrait.png"
+                                                src="/profile-image.png"
                                                 alt="Ali - Full Stack Developer"
                                                 className="w-full h-full object-cover"
                                             />
@@ -972,7 +972,7 @@ export default function ClientPage() {
                                         >
                                             <motion.a
                                                 href={contact.link}
-                                                className="flex gap-4 p-4 rounded-xl hover:bg-zinc-800/50 transition-all duration-300 group"
+                                                className="flex gap-4 p-4 items-center rounded-xl hover:bg-zinc-800/50 transition-all duration-300 group"
                                                 initial={{ opacity: 0, y: 20 }}
                                                 whileInView={{
                                                     opacity: 1,
@@ -987,8 +987,10 @@ export default function ClientPage() {
                                                 data-cursor="link"
                                                 data-cursor-text={contact.title}
                                             >
-                                                <div className="bg-gradient-to-r from-emerald-500/20 to-teal-500/20 p-3 rounded-full group-hover:from-emerald-500/30 group-hover:to-teal-500/30 transition-all duration-300">
-                                                    {contact.icon}
+                                                <div>
+                                                    <div className="bg-gradient-to-r from-emerald-500/20 to-teal-500/20 p-2 rounded-full group-hover:from-emerald-500/30 group-hover:to-teal-500/30 transition-all duration-300 flex items-center justify-center">
+                                                        {contact.icon}
+                                                    </div>
                                                 </div>
                                                 <div>
                                                     <div className="flex items-baseline gap-2">

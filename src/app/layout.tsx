@@ -1,6 +1,5 @@
 import BackToTop from "@/components/back-to-top";
 import Footer from "@/components/footer";
-import MouseTrailer from "@/components/mouse-trailer";
 import Navbar from "@/components/navbar";
 import PageTransition from "@/components/page-transition";
 import ScrollProgress from "@/components/scroll-progress";
@@ -51,7 +50,7 @@ function ClientLayout({ children }: { children: React.ReactNode }) {
     return (
         <div className="min-h-screen bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white transition-colors duration-300">
             <ThemeBackground />
-            <MouseTrailer />
+            {/* <MouseTrailer /> */}
             <ScrollProgress />
             <BackToTop />
             <Navbar />

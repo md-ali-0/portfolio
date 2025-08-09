@@ -200,7 +200,7 @@ export function generatePersonJsonLd() {
       "@type": "Organization",
       name: "Freelance",
     },
-    image: "https://md-ali.vercel.app/professional-developer-portrait.png",
+    image: "https://md-ali.vercel.app/profile-image.png",
     description:
       "A dedicated Full-Stack Developer on a journey of continuous learning and growth, creating impactful projects with creativity and expertise.",
   }
