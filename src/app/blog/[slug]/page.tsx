@@ -1,6 +1,6 @@
-import type { Metadata } from "next"
 import { blogPosts } from "@/data/blog-data"
-import { generateBlogMetadata, baseMetadata } from "@/lib/metadata"
+import { baseMetadata, generateBlogMetadata } from "@/lib/metadata"
+import type { Metadata } from "next"
 import BlogPostClient from "./BlogPostClient"
 
 // Generate static params for all blog posts
@@ -24,6 +24,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   return generateBlogMetadata(post)
 }
 
-export default function BlogPost({ params }: { params: { slug: string } }) {
+export default async function BlogPost({ params }: { params: { slug: string } }) {
+  console.log(params);
+  
   return <BlogPostClient params={params} />
 }
