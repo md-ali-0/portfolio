@@ -1,49 +1,31 @@
 "use client"
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import Link from "next/link"
-import { Search, Filter, Calendar, Clock, ArrowRight, Tag, X, Github, Linkedin, Mail } from "lucide-react"
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Badge } from "@/components/ui/badge"
-import CursorAlternative from "@/components/cursor-alternative"
-import DarkPatternBackground from "@/components/dark-pattern-background"
-import RippleEffect from "@/components/ripple-effect"
-import BackToTop from "@/components/back-to-top"
-import MagneticElement from "@/components/magnetic-element"
-import AnimatedButton from "@/components/animated-button"
-import { useMobile } from "@/hooks/use-mobile"
 import { blogPosts } from "@/data/blog-data"
+import { ArrowRight, Calendar, ChevronLeft, ChevronRight, Clock, Search, Star, Tag, TrendingUp } from "lucide-react"
+import Link from "next/link"
+import { useEffect, useState } from "react"
 
-export default function BlogClientPage() {
-  const isMobile = useMobile()
+const POSTS_PER_PAGE = 6
+
+export default function BlogPage() {
   const [searchTerm, setSearchTerm] = useState("")
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
-  const [selectedTag, setSelectedTag] = useState<string | null>(null)
+  const [currentPage, setCurrentPage] = useState(1)
   const [filteredPosts, setFilteredPosts] = useState(blogPosts)
-  const [isLoading, setIsLoading] = useState(true)
   const [featuredPost, setFeaturedPost] = useState<any>(null)
 
-  // Get all unique categories
   const categories = Array.from(new Set(blogPosts.map((post) => post.category)))
 
-  // Get all unique tags
-  const allTags = blogPosts.flatMap((post) => post.tags)
-  const uniqueTags = Array.from(new Set(allTags))
+  const popularPosts = [...blogPosts].sort((a, b) => b.readTime - a.readTime).slice(0, 4)
+  const editorsPicks = blogPosts.filter((post) => post.featured || post.category === "Web Development").slice(0, 3)
 
   useEffect(() => {
-    // Simulate loading data
-    setIsLoading(true)
-    setTimeout(() => {
-      // Set featured post (first post with featured flag or first post)
-      const featured = blogPosts.find((post) => post.featured) || blogPosts[0]
-      setFeaturedPost(featured)
-      setIsLoading(false)
-    }, 500)
+    const featured = blogPosts.find((post) => post.featured) || blogPosts[0]
+    setFeaturedPost(featured)
   }, [])
 
   useEffect(() => {
-    // Filter posts based on search term, category, and tag
     let filtered = blogPosts
 
     if (searchTerm) {
@@ -54,303 +36,132 @@ export default function BlogClientPage() {
       )
     }
 
-    if (selectedCategory) {
-      filtered = filtered.filter((post) => post.category === selectedCategory)
-    }
-
-    if (selectedTag) {
-      filtered = filtered.filter((post) => post.tags.includes(selectedTag))
-    }
-
     setFilteredPosts(filtered)
-  }, [searchTerm, selectedCategory, selectedTag])
+    setCurrentPage(1) // Reset to first page when filtering
+  }, [searchTerm])
 
-  const clearFilters = () => {
-    setSearchTerm("")
-    setSelectedCategory(null)
-    setSelectedTag(null)
-  }
+  const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE)
+  const startIndex = (currentPage - 1) * POSTS_PER_PAGE
+  const endIndex = startIndex + POSTS_PER_PAGE
+  const currentPosts = filteredPosts.slice(startIndex, endIndex)
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
-        <div className="relative">
-          <div className="h-16 w-16 rounded-full border-4 border-emerald-400/30 border-t-emerald-400 animate-spin"></div>
-          <div className="mt-4 text-emerald-400 font-medium">Loading blog...</div>
-        </div>
-      </div>
-    )
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page)
+    window.scrollTo({ top: 0, behavior: "smooth" })
   }
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-white relative overflow-hidden">
-      {!isMobile && <CursorAlternative />}
-      {!isMobile && <RippleEffect />}
-      <DarkPatternBackground />
-      <BackToTop />
-
-      {/* Header */}
-      <header className="relative py-6 border-b border-zinc-800/50">
-        <div className="container mx-auto">
-          <div className="flex justify-between items-center">
-            <MagneticElement strength={40}>
-              <Link href="/" className="text-xl font-bold relative group" data-cursor="link" data-cursor-text="Home">
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-teal-500">
-                  Ali<span className="text-white">.</span>
-                </span>
-              </Link>
-            </MagneticElement>
-            <nav className="hidden md:flex gap-8 items-center">
-              {[
-                { name: "Home", href: "/" },
-                { name: "Blog", href: "/blog" },
-                { name: "Projects", href: "/projects" },
-                { name: "Contact", href: "/#contact" },
-              ].map((item) => (
-                <MagneticElement key={item.name} strength={40}>
-                  <Link
-                    href={item.href}
-                    className={`relative group ${item.href === "/blog" ? "text-emerald-400" : "text-white"}`}
-                    data-cursor="link"
-                    data-cursor-text={item.name}
-                  >
-                    {item.name}
-                    <span
-                      className={`absolute -bottom-1 left-0 h-0.5 bg-emerald-400 transition-all duration-300 ${
-                        item.href === "/blog" ? "w-full" : "w-0 group-hover:w-full"
-                      }`}
-                    ></span>
-                  </Link>
-                </MagneticElement>
-              ))}
-            </nav>
-            <MagneticElement strength={60}>
-              <Link href="/#contact">
-                <AnimatedButton
-                  variant="outline"
-                  className="text-emerald-400 hover:text-emerald-300 transition-all duration-300"
-                  dataCursorText="Contact Me"
-                >
-                  Contact Me
-                </AnimatedButton>
-              </Link>
-            </MagneticElement>
-          </div>
-        </div>
-      </header>
-
-      {/* Hero Section */}
-      <section className="relative py-20">
-        <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/10 to-transparent opacity-30"></div>
-        <div className="container mx-auto relative z-10">
-          <motion.div
-            className="max-w-4xl mx-auto text-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-              Insights &{" "}
+    <div className="min-h-screen bg-zinc-950 text-white">
+      <section className="py-20 bg-gradient-to-b from-emerald-500/5 to-transparent">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+              Blog &{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-500">
                 Articles
               </span>
             </h1>
             <p className="text-xl text-zinc-300 mb-8">
-              Explore my thoughts, tutorials, and insights on web development, design, and technology.
+              Insights, tutorials, and thoughts on web development, design, and technology.
             </p>
-          </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* Featured Post */}
       {featuredPost && (
-        <section className="relative pb-20">
-          <div className="container mx-auto">
-            <motion.div
-              className="mb-12"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
+        <section className="pb-20">
+          <div className="container mx-auto px-4">
+            <div className="mb-12">
               <h2 className="text-2xl font-bold mb-8 flex items-center">
-                <span className="bg-emerald-500/20 text-emerald-400 p-2 rounded-md mr-3">
+                <span className="bg-emerald-500/20 text-emerald-400 p-2 rounded-lg mr-3">
                   <ArrowRight className="h-5 w-5" />
                 </span>
                 Featured Post
               </h2>
-              <div className="grid md:grid-cols-2 gap-8 bg-zinc-900/50 backdrop-blur-sm rounded-xl overflow-hidden border border-zinc-800 hover:border-emerald-500/30 transition-all duration-300 group">
-                <div className="h-full overflow-hidden">
+              <div className="grid md:grid-cols-2 gap-8 bg-zinc-900/50 rounded-xl overflow-hidden border border-zinc-800 hover:border-emerald-500/30 transition-colors group">
+                <div className="h-64 md:h-full overflow-hidden">
                   <img
                     src={featuredPost.coverImage || "/placeholder.svg"}
                     alt={featuredPost.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                   />
                 </div>
                 <div className="p-8 flex flex-col justify-center">
                   <div className="flex items-center gap-3 mb-4">
-                    <Badge className="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 border-0">
-                      {featuredPost.category}
-                    </Badge>
+                    <Badge className="bg-emerald-500/20 text-emerald-400 border-0">{featuredPost.category}</Badge>
                     <span className="text-zinc-400 flex items-center text-sm">
                       <Calendar className="h-4 w-4 mr-1" /> {featuredPost.date}
                     </span>
                     <span className="text-zinc-400 flex items-center text-sm">
-                      <Clock className="h-4 w-4 mr-1" /> {featuredPost.readTime} min read
+                      <Clock className="h-4 w-4 mr-1" /> {featuredPost.readTime} min
                     </span>
                   </div>
                   <h3 className="text-2xl md:text-3xl font-bold mb-4 group-hover:text-emerald-400 transition-colors">
                     {featuredPost.title}
                   </h3>
                   <p className="text-zinc-300 mb-6">{featuredPost.excerpt}</p>
-                  <div className="mt-auto">
-                    <MagneticElement strength={50}>
-                      <Link href={`/blog/${featuredPost.slug}`}>
-                        <AnimatedButton dataCursorText="Read Article">
-                          Read Article <ArrowRight className="ml-2 h-4 w-4" />
-                        </AnimatedButton>
-                      </Link>
-                    </MagneticElement>
-                  </div>
+                  <Link href={`/blog/${featuredPost.slug}`}>
+                    <Button className="bg-emerald-500 hover:bg-emerald-600 text-black">
+                      Read Article <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </Link>
                 </div>
               </div>
-            </motion.div>
+            </div>
           </div>
         </section>
       )}
 
-      {/* Search and Filter */}
-      <section className="relative pb-12">
-        <div className="container mx-auto">
-          <motion.div
-            className="bg-zinc-900/50 backdrop-blur-sm rounded-xl p-6 border border-zinc-800 mb-12"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            <div className="grid md:grid-cols-3 gap-6">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-zinc-500 h-4 w-4" />
-                <Input
-                  type="text"
-                  placeholder="Search articles..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 bg-zinc-800/50 border-zinc-700 focus:border-emerald-400"
-                />
+      <section className="pb-20">
+        <div className="container mx-auto px-4">
+          <div className="grid lg:grid-cols-4 gap-8">
+            <div className="lg:col-span-3">
+              <div className="flex justify-between items-center mb-8">
+                <h2 className="text-2xl font-bold flex items-center">
+                  <span className="bg-emerald-500/20 text-emerald-400 p-2 rounded-lg mr-3">
+                    <Tag className="h-5 w-5" />
+                  </span>
+                  Latest Posts
+                </h2>
+                <div className="text-zinc-400">
+                  {filteredPosts.length} {filteredPosts.length === 1 ? "article" : "articles"}
+                </div>
               </div>
-              <div>
-                <select
-                  value={selectedCategory || ""}
-                  onChange={(e) => setSelectedCategory(e.target.value || null)}
-                  className="w-full bg-zinc-800/50 border border-zinc-700 rounded-md p-2 focus:outline-none focus:border-emerald-400 transition-colors"
-                >
-                  <option value="">All Categories</option>
-                  {categories.map((category) => (
-                    <option key={category} value={category}>
-                      {category}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="flex gap-2">
-                <Button
-                  variant="outline"
-                  className={`flex-1 ${
-                    searchTerm || selectedCategory || selectedTag
-                      ? "border-emerald-400 text-emerald-400"
-                      : "border-zinc-700 text-zinc-400"
-                  }`}
-                  onClick={clearFilters}
-                  disabled={!searchTerm && !selectedCategory && !selectedTag}
-                >
-                  <X className="mr-2 h-4 w-4" /> Clear Filters
-                </Button>
-                <Button className="bg-emerald-500 hover:bg-emerald-600 text-black">
-                  <Filter className="mr-2 h-4 w-4" /> Filter
-                </Button>
-              </div>
-            </div>
 
-            {/* Tags */}
-            <div className="mt-6 flex flex-wrap gap-2">
-              {uniqueTags.map((tag) => (
-                <Badge
-                  key={tag}
-                  variant="outline"
-                  className={`cursor-pointer hover:bg-zinc-800 transition-colors ${
-                    selectedTag === tag
-                      ? "bg-emerald-500/20 text-emerald-400 border-emerald-400"
-                      : "border-zinc-700 text-zinc-400"
-                  }`}
-                  onClick={() => setSelectedTag(selectedTag === tag ? null : tag)}
-                >
-                  {tag}
-                </Badge>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Blog Posts */}
-      <section className="relative pb-20">
-        <div className="container mx-auto">
-          <motion.div
-            className="mb-12"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
-            <div className="flex justify-between items-center mb-8">
-              <h2 className="text-2xl font-bold flex items-center">
-                <span className="bg-emerald-500/20 text-emerald-400 p-2 rounded-md mr-3">
-                  <Tag className="h-5 w-5" />
-                </span>
-                {selectedCategory || selectedTag ? "Filtered Articles" : "All Articles"}
-              </h2>
-              <div className="text-zinc-400">
-                {filteredPosts.length} {filteredPosts.length === 1 ? "article" : "articles"} found
-              </div>
-            </div>
-
-            {filteredPosts.length === 0 ? (
-              <div className="text-center py-20 bg-zinc-900/30 rounded-xl border border-zinc-800">
-                <div className="text-6xl mb-4">🔍</div>
-                <h3 className="text-2xl font-bold mb-2">No articles found</h3>
-                <p className="text-zinc-400 mb-6">Try adjusting your search or filter criteria</p>
-                <Button variant="outline" onClick={clearFilters} className="border-emerald-400 text-emerald-400">
-                  Clear Filters
-                </Button>
-              </div>
-            ) : (
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <AnimatePresence>
-                  {filteredPosts.map((post) => (
-                    <motion.div
-                      key={post.slug}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -20 }}
-                      transition={{ duration: 0.5 }}
-                      whileHover={{ y: -10 }}
-                    >
+              {currentPosts.length === 0 ? (
+                <div className="text-center py-20 bg-zinc-900/30 rounded-xl border border-zinc-800">
+                  <div className="text-6xl mb-4">🔍</div>
+                  <h3 className="text-2xl font-bold mb-2">No articles found</h3>
+                  <p className="text-zinc-400 mb-6">Try adjusting your search criteria</p>
+                  <Button
+                    variant="outline"
+                    onClick={() => setSearchTerm("")}
+                    className="border-emerald-400 text-emerald-400 bg-transparent"
+                  >
+                    Clear Search
+                  </Button>
+                </div>
+              ) : (
+                <>
+                  <div className="grid md:grid-cols-2 gap-8 mb-12">
+                    {currentPosts.map((post) => (
                       <Link
+                        key={post.slug}
                         href={`/blog/${post.slug}`}
-                        className="block h-full bg-zinc-800/50 rounded-xl overflow-hidden border border-zinc-700 hover:border-emerald-500/50 transition-colors group"
-                        data-cursor="link"
+                        className="block h-full bg-zinc-900/50 rounded-xl overflow-hidden border border-zinc-800 hover:border-emerald-500/50 transition-all duration-300 hover:-translate-y-1 group"
                       >
                         <div className="h-48 overflow-hidden">
                           <img
                             src={post.coverImage || "/placeholder.svg"}
                             alt={post.title}
-                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                           />
                         </div>
                         <div className="p-6">
                           <div className="flex items-center gap-2 mb-3">
-                            <span className="px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded-full text-xs">
+                            <Badge className="bg-emerald-500/20 text-emerald-400 border-0 text-xs">
                               {post.category}
-                            </span>
+                            </Badge>
                             <span className="text-zinc-500 text-xs">•</span>
                             <span className="text-zinc-400 text-xs">{post.date}</span>
                           </div>
@@ -375,72 +186,173 @@ export default function BlogClientPage() {
                           </div>
                         </div>
                       </Link>
-                    </motion.div>
-                  ))}
-                </AnimatePresence>
-              </div>
-            )}
-          </motion.div>
-        </div>
-      </section>
+                    ))}
+                  </div>
 
-      {/* Newsletter */}
-      <section className="relative py-20 bg-gradient-to-r from-emerald-900/20 to-teal-900/20">
-        <div className="container mx-auto">
-          <motion.div
-            className="max-w-3xl mx-auto text-center"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-3xl font-bold mb-4">Stay Updated</h2>
-            <p className="text-zinc-300 mb-8">
-              Subscribe to my newsletter to receive the latest articles, tutorials, and insights directly to your inbox.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto">
-              <Input
-                type="email"
-                placeholder="Your email address"
-                className="bg-zinc-800/70 border-zinc-700 focus:border-emerald-400"
-              />
-              <MagneticElement strength={50}>
-                <AnimatedButton dataCursorText="Subscribe">Subscribe</AnimatedButton>
-              </MagneticElement>
+                  {totalPages > 1 && (
+                    <div className="flex justify-center items-center gap-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => handlePageChange(currentPage - 1)}
+                        disabled={currentPage === 1}
+                        className="border-zinc-700 hover:border-emerald-400 hover:text-emerald-400 bg-transparent"
+                      >
+                        <ChevronLeft className="h-4 w-4" />
+                      </Button>
+
+                      {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                        <Button
+                          key={page}
+                          variant={currentPage === page ? "default" : "outline"}
+                          size="sm"
+                          onClick={() => handlePageChange(page)}
+                          className={
+                            currentPage === page
+                              ? "bg-emerald-500 hover:bg-emerald-600 text-black"
+                              : "border-zinc-700 hover:border-emerald-400 hover:text-emerald-400 bg-transparent"
+                          }
+                        >
+                          {page}
+                        </Button>
+                      ))}
+
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => handlePageChange(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                        className="border-zinc-700 hover:border-emerald-400 hover:text-emerald-400 bg-transparent"
+                      >
+                        <ChevronRight className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  )}
+                </>
+              )}
             </div>
-            <p className="text-xs text-zinc-400 mt-4">
-              By subscribing, you agree to our Privacy Policy and consent to receive updates from our company.
-            </p>
-          </motion.div>
-        </div>
-      </section>
 
-      {/* Footer */}
-      <footer className="bg-zinc-900/80 py-8 border-t border-zinc-800 backdrop-blur-sm">
-        <div className="container mx-auto text-center">
-          <p className="text-zinc-400">© {new Date().getFullYear()} Ali. All rights reserved.</p>
-          <div className="flex justify-center gap-6 mt-4">
-            {[
-              { icon: <Github className="h-5 w-5" />, href: "https://github.com", label: "GitHub" },
-              { icon: <Linkedin className="h-5 w-5" />, href: "https://linkedin.com", label: "LinkedIn" },
-              { icon: <Mail className="h-5 w-5" />, href: "mailto:contact@example.com", label: "Email" },
-            ].map((social, index) => (
-              <MagneticElement key={index} strength={80}>
-                <motion.div whileHover={{ scale: 1.2, rotate: 5, y: -5 }} whileTap={{ scale: 0.9 }}>
-                  <Link
-                    href={social.href}
-                    className="text-zinc-500 hover:text-emerald-400 transition-colors"
-                    data-cursor="link"
-                    data-cursor-text={social.label}
-                  >
-                    {social.icon}
-                  </Link>
-                </motion.div>
-              </MagneticElement>
-            ))}
+            <div className="lg:col-span-1 space-y-8">
+              <div className="bg-zinc-900/50 rounded-xl p-6 border border-zinc-800">
+                <h3 className="text-lg font-bold mb-4 flex items-center">
+                  <Search className="h-5 w-5 mr-2 text-emerald-400" />
+                  Search
+                </h3>
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-zinc-500 h-4 w-4" />
+                  <Input
+                    type="text"
+                    placeholder="Search articles..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="pl-10 bg-zinc-800/50 border-zinc-700 focus:border-emerald-400"
+                  />
+                </div>
+              </div>
+
+              <div className="bg-zinc-900/50 rounded-xl p-6 border border-zinc-800">
+                <h3 className="text-lg font-bold mb-4 flex items-center">
+                  <TrendingUp className="h-5 w-5 mr-2 text-emerald-400" />
+                  Popular Posts
+                </h3>
+                <div className="space-y-4">
+                  {popularPosts.map((post, index) => (
+                    <Link key={post.slug} href={`/blog/${post.slug}`} className="block group">
+                      <div className="flex gap-3">
+                        <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
+                          <img
+                            src={post.coverImage || "/placeholder.svg"}
+                            alt={post.title}
+                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                          />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-medium text-sm line-clamp-2 group-hover:text-emerald-400 transition-colors">
+                            {post.title}
+                          </h4>
+                          <div className="flex items-center gap-2 mt-1">
+                            <span className="text-xs text-zinc-500">{post.date}</span>
+                            <span className="text-xs text-zinc-500">•</span>
+                            <span className="text-xs text-zinc-500">{post.readTime} min</span>
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              <div className="bg-zinc-900/50 rounded-xl p-6 border border-zinc-800">
+                <h3 className="text-lg font-bold mb-4 flex items-center">
+                  <Tag className="h-5 w-5 mr-2 text-emerald-400" />
+                  Categories
+                </h3>
+                <div className="space-y-2">
+                  {categories.map((category) => {
+                    const count = blogPosts.filter((post) => post.category === category).length
+                    return (
+                      <div
+                        key={category}
+                        className="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-zinc-800/50 transition-colors cursor-pointer group"
+                      >
+                        <span className="text-sm group-hover:text-emerald-400 transition-colors">{category}</span>
+                        <Badge variant="outline" className="text-xs border-zinc-700 text-zinc-400">
+                          {count}
+                        </Badge>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+
+              <div className="bg-zinc-900/50 rounded-xl p-6 border border-zinc-800">
+                <h3 className="text-lg font-bold mb-4 flex items-center">
+                  <Star className="h-5 w-5 mr-2 text-emerald-400" />
+                  Editor's Pick
+                </h3>
+                <div className="space-y-4">
+                  {editorsPicks.map((post) => (
+                    <Link key={post.slug} href={`/blog/${post.slug}`} className="block group">
+                      <div className="space-y-2">
+                        <div className="w-full h-24 rounded-lg overflow-hidden">
+                          <img
+                            src={post.coverImage || "/placeholder.svg"}
+                            alt={post.title}
+                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                          />
+                        </div>
+                        <h4 className="font-medium text-sm line-clamp-2 group-hover:text-emerald-400 transition-colors">
+                          {post.title}
+                        </h4>
+                        <div className="flex items-center gap-2">
+                          <Badge className="bg-emerald-500/20 text-emerald-400 border-0 text-xs">{post.category}</Badge>
+                          <span className="text-xs text-zinc-500">{post.readTime} min</span>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-br from-emerald-900/20 to-teal-900/20 rounded-xl p-6 border border-emerald-800/30">
+                <h3 className="text-lg font-bold mb-2 flex items-center">
+                  <ArrowRight className="h-5 w-5 mr-2 text-emerald-400" />
+                  Stay Updated
+                </h3>
+                <p className="text-sm text-zinc-300 mb-4">Get the latest articles delivered to your inbox.</p>
+                <div className="space-y-3">
+                  <Input
+                    type="email"
+                    placeholder="Your email"
+                    className="bg-zinc-800/70 border-zinc-700 focus:border-emerald-400 text-sm"
+                  />
+                  <Button className="w-full bg-emerald-500 hover:bg-emerald-600 text-black text-sm">Subscribe</Button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </footer>
+      </section>
     </div>
   )
 }
