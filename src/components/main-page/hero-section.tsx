@@ -1,13 +1,7 @@
 "use client";
 
 import { useMobile } from "@/hooks/use-mobile";
-import {
-    motion,
-    useMotionValue,
-    useScroll,
-    useSpring,
-    useTransform
-} from "framer-motion";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 import {
     ArrowRight,
     Code,
@@ -17,65 +11,27 @@ import {
     Mail,
     Send,
     Sparkles,
-    Zap
+    Zap,
 } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { FaNodeJs, FaReact } from "react-icons/fa";
-import { SiMongodb, SiNextdotjs, SiTailwindcss, SiTypescript } from "react-icons/si";
+import {
+    SiMongodb,
+    SiNextdotjs,
+    SiTailwindcss,
+    SiTypescript,
+} from "react-icons/si";
 import AnimatedButton from "../animated-button";
 import MagneticElement from "../magnetic-element";
 
 export default function HomeSection() {
     const isMobile = useMobile();
-    const { scrollY } = useScroll();
-    
-    // Advanced scroll effects
-    const heroY = useTransform(scrollY, [0, 500], [0, -100]);
-    const heroOpacity = useTransform(scrollY, [0, 300], [1, 0.3]);
-    const heroScale = useTransform(scrollY, [0, 400], [1, 0.95]);
-    
+
     // Mouse position for parallax effects
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
     const smoothMouseX = useSpring(mouseX, { stiffness: 50, damping: 20 });
     const smoothMouseY = useSpring(mouseY, { stiffness: 50, damping: 20 });
-
-    // Floating elements
-    const [floatingElements, setFloatingElements] = useState<Array<{
-        id: number;
-        x: number;
-        y: number;
-        delay: number;
-        duration: number;
-    }>>([]);
-
-    useEffect(() => {
-        // Generate floating elements
-        const elements = Array.from({ length: 12 }, (_, i) => ({
-            id: i,
-            x: Math.random() * 100,
-            y: Math.random() * 100,
-            delay: Math.random() * 5,
-            duration: 10 + Math.random() * 10,
-        }));
-        setFloatingElements(elements);
-
-        const handleMouseMove = (e: MouseEvent) => {
-            const { clientX, clientY } = e;
-            const centerX = window.innerWidth / 2;
-            const centerY = window.innerHeight / 2;
-
-            const normalizedX = (clientX - centerX) / centerX;
-            const normalizedY = (clientY - centerY) / centerY;
-
-            mouseX.set(normalizedX * 10);
-            mouseY.set(normalizedY * 10);
-        };
-
-        window.addEventListener("mousemove", handleMouseMove);
-        return () => window.removeEventListener("mousemove", handleMouseMove);
-    }, [mouseX, mouseY]);
 
     const socialLinks = [
         {
@@ -122,11 +78,15 @@ export default function HomeSection() {
                 <motion.div
                     className="absolute inset-0 opacity-30"
                     style={{
-                        background: `radial-gradient(circle at ${50 + smoothMouseX.get()}% ${50 + smoothMouseY.get()}%, 
+                        background: `radial-gradient(circle at ${
+                            50 + smoothMouseX.get()
+                        }% ${50 + smoothMouseY.get()}%, 
                             rgba(16, 185, 129, 0.15) 0%, 
                             rgba(20, 184, 166, 0.1) 25%, 
                             transparent 50%),
-                        radial-gradient(circle at ${30 + smoothMouseX.get() * -1}% ${70 + smoothMouseY.get() * -1}%, 
+                        radial-gradient(circle at ${
+                            30 + smoothMouseX.get() * -1
+                        }% ${70 + smoothMouseY.get() * -1}%, 
                             rgba(6, 182, 212, 0.1) 0%, 
                             rgba(16, 185, 129, 0.05) 30%, 
                             transparent 60%)`,
@@ -142,51 +102,51 @@ export default function HomeSection() {
                 />
 
                 {/* Grid pattern */}
-                <div 
+                <div
                     className="absolute inset-0 opacity-10"
                     style={{
                         backgroundImage: `
                             linear-gradient(rgba(16, 185, 129, 0.1) 1px, transparent 1px),
                             linear-gradient(90deg, rgba(16, 185, 129, 0.1) 1px, transparent 1px)
                         `,
-                        backgroundSize: '50px 50px',
+                        backgroundSize: "50px 50px",
                     }}
                 />
             </div>
 
             {/* Floating Decorative Elements */}
-            {!isMobile && floatingElements.map((element) => (
-                <motion.div
-                    key={element.id}
-                    className="absolute w-2 h-2 bg-gradient-to-r from-emerald-400/60 to-teal-400/60 rounded-full"
-                    style={{
-                        left: `${element.x}%`,
-                        top: `${element.y}%`,
-                    }}
-                    animate={{
-                        y: [-20, 20, -20],
-                        x: [-10, 10, -10],
-                        opacity: [0.3, 0.8, 0.3],
-                        scale: [1, 1.5, 1],
-                    }}
-                    transition={{
-                        duration: element.duration,
-                        delay: element.delay,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                    }}
-                />
-            ))}
+            {!isMobile &&
+                Array.from({ length: 12 }, (_, i) => ({
+                    id: i,
+                    x: Math.random() * 100,
+                    y: Math.random() * 100,
+                    delay: Math.random() * 5,
+                    duration: 10 + Math.random() * 10,
+                })).map((element) => (
+                    <motion.div
+                        key={element.id}
+                        className="absolute w-2 h-2 bg-gradient-to-r from-emerald-400/60 to-teal-400/60 rounded-full"
+                        style={{
+                            left: `${element.x}%`,
+                            top: `${element.y}%`,
+                        }}
+                        animate={{
+                            y: [-20, 20, -20],
+                            x: [-10, 10, -10],
+                            opacity: [0.3, 0.8, 0.3],
+                            scale: [1, 1.5, 1],
+                        }}
+                        transition={{
+                            duration: element.duration,
+                            delay: element.delay,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                        }}
+                    />
+                ))}
 
             {/* Main Content */}
-            <motion.div 
-                className="container mx-auto py-20 md:py-32 flex flex-col-reverse md:flex-row items-center z-10"
-                style={{
-                    y: heroY,
-                    opacity: heroOpacity,
-                    scale: heroScale,
-                }}
-            >
+            <motion.div className="container mx-auto py-20 md:py-32 flex flex-col-reverse md:flex-row items-center z-10">
                 {/* Text Content */}
                 <motion.div
                     className="md:w-1/2 space-y-8"
@@ -204,10 +164,10 @@ export default function HomeSection() {
                         >
                             <motion.div
                                 animate={{ rotate: [0, 20, 0] }}
-                                transition={{ 
-                                    duration: 2, 
+                                transition={{
+                                    duration: 2,
                                     repeat: Infinity,
-                                    repeatDelay: 3 
+                                    repeatDelay: 3,
                                 }}
                             >
                                 <Sparkles className="h-6 w-6 text-emerald-400" />
@@ -215,8 +175,12 @@ export default function HomeSection() {
                             <motion.h2
                                 className="text-emerald-400 text-xl font-medium"
                                 style={{
-                                    x: !isMobile ? smoothMouseX.get() * -0.5 : 0,
-                                    y: !isMobile ? smoothMouseY.get() * -0.5 : 0,
+                                    x: !isMobile
+                                        ? smoothMouseX.get() * -0.5
+                                        : 0,
+                                    y: !isMobile
+                                        ? smoothMouseY.get() * -0.5
+                                        : 0,
                                 }}
                             >
                                 Hello, I'm
@@ -238,12 +202,16 @@ export default function HomeSection() {
                             <span className="absolute inset-0 bg-clip-text text-transparent bg-gradient-to-r from-emerald-400/20 via-teal-300/20 to-emerald-500/20 blur-sm scale-110">
                                 Mohammad Ali
                             </span>
-                            
+
                             {/* Main text with animated gradient */}
                             <motion.span
                                 className="relative bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-500"
                                 animate={{
-                                    backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                                    backgroundPosition: [
+                                        "0% 50%",
+                                        "100% 50%",
+                                        "0% 50%",
+                                    ],
                                 }}
                                 transition={{
                                     duration: 5,
@@ -288,14 +256,14 @@ export default function HomeSection() {
                             transition={{ duration: 0.5, delay: 0.8 }}
                         >
                             <motion.div
-                                animate={{ 
+                                animate={{
                                     scale: [1, 1.2, 1],
-                                    rotate: [0, 180, 360] 
+                                    rotate: [0, 180, 360],
                                 }}
-                                transition={{ 
-                                    duration: 3, 
+                                transition={{
+                                    duration: 3,
                                     repeat: Infinity,
-                                    ease: "easeInOut"
+                                    ease: "easeInOut",
                                 }}
                             >
                                 <Code className="h-8 w-8 text-teal-400" />
@@ -303,8 +271,12 @@ export default function HomeSection() {
                             <motion.h3
                                 className="text-2xl md:text-4xl text-zinc-300 font-semibold"
                                 style={{
-                                    x: !isMobile ? smoothMouseX.get() * -0.7 : 0,
-                                    y: !isMobile ? smoothMouseY.get() * -0.7 : 0,
+                                    x: !isMobile
+                                        ? smoothMouseX.get() * -0.7
+                                        : 0,
+                                    y: !isMobile
+                                        ? smoothMouseY.get() * -0.7
+                                        : 0,
                                 }}
                             >
                                 Full-Stack Developer
@@ -328,10 +300,12 @@ export default function HomeSection() {
                         >
                             A dedicated developer on a journey of continuous
                             learning and growth, creating{" "}
-                            <span className="text-emerald-400 font-semibold">impactful projects</span>
-                            {" "}with creativity and expertise.
+                            <span className="text-emerald-400 font-semibold">
+                                impactful projects
+                            </span>{" "}
+                            with creativity and expertise.
                         </motion.p>
-                        
+
                         {/* Stats */}
                         <motion.div
                             className="flex space-x-8 pt-4"
@@ -368,17 +342,20 @@ export default function HomeSection() {
                         transition={{ duration: 0.5, delay: 1.2 }}
                     >
                         <MagneticElement strength={80}>
-                            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                                <AnimatedButton 
+                            <motion.div
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                            >
+                                <AnimatedButton
                                     className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white shadow-lg shadow-emerald-500/25"
                                     dataCursorText="Let's Talk"
                                 >
                                     <motion.div
                                         animate={{ x: [0, 5, 0] }}
-                                        transition={{ 
-                                            duration: 2, 
+                                        transition={{
+                                            duration: 2,
                                             repeat: Infinity,
-                                            ease: "easeInOut" 
+                                            ease: "easeInOut",
                                         }}
                                     >
                                         Contact Me
@@ -389,20 +366,28 @@ export default function HomeSection() {
                         </MagneticElement>
 
                         <MagneticElement strength={60}>
-                            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                                <AnimatedButton
-                                    variant="outline"
-                                    className="border-2 border-emerald-400/50 text-emerald-400 hover:bg-emerald-400/10 backdrop-blur-sm"
-                                    dataCursorText="See Projects"
-                                >
-                                    View Projects
-                                    <ArrowRight className="ml-2 h-4 w-4" />
-                                </AnimatedButton>
+                            <motion.div
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                            >
+                                <Link href={"/projects"}>
+                                    <AnimatedButton
+                                        variant="outline"
+                                        className="border-2 border-emerald-400/50 text-emerald-400 hover:bg-emerald-400/10 backdrop-blur-sm"
+                                        dataCursorText="See Projects"
+                                    >
+                                        View Projects
+                                        <ArrowRight className="ml-2 h-4 w-4" />
+                                    </AnimatedButton>
+                                </Link>
                             </motion.div>
                         </MagneticElement>
 
                         <MagneticElement strength={60}>
-                            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                            <motion.div
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                            >
                                 <AnimatedButton
                                     variant="outline"
                                     className="border-2 border-zinc-600 text-zinc-300 hover:border-zinc-500 hover:text-white backdrop-blur-sm"
@@ -410,10 +395,10 @@ export default function HomeSection() {
                                 >
                                     <motion.div
                                         animate={{ y: [0, -2, 0] }}
-                                        transition={{ 
-                                            duration: 1.5, 
+                                        transition={{
+                                            duration: 1.5,
                                             repeat: Infinity,
-                                            ease: "easeInOut" 
+                                            ease: "easeInOut",
                                         }}
                                     >
                                         <Download className="mr-2 h-4 w-4" />
@@ -434,13 +419,13 @@ export default function HomeSection() {
                         {socialLinks.map((social, index) => (
                             <MagneticElement key={index} strength={100}>
                                 <motion.div
-                                    whileHover={{ 
+                                    whileHover={{
                                         scale: 1.1,
                                         rotate: [0, -10, 10, 0],
                                     }}
-                                    transition={{ 
+                                    transition={{
                                         rotate: { duration: 0.5 },
-                                        scale: { duration: 0.2 }
+                                        scale: { duration: 0.2 },
                                     }}
                                 >
                                     <Link
@@ -508,8 +493,14 @@ export default function HomeSection() {
                                     key={i}
                                     className="absolute w-3 h-3 bg-emerald-400 rounded-full"
                                     style={{
-                                        top: `${50 + 45 * Math.cos((i * Math.PI * 2) / 8)}%`,
-                                        left: `${50 + 45 * Math.sin((i * Math.PI * 2) / 8)}%`,
+                                        top: `${
+                                            50 +
+                                            45 * Math.cos((i * Math.PI * 2) / 8)
+                                        }%`,
+                                        left: `${
+                                            50 +
+                                            45 * Math.sin((i * Math.PI * 2) / 8)
+                                        }%`,
                                         transform: "translate(-50%, -50%)",
                                     }}
                                     animate={{
@@ -545,7 +536,7 @@ export default function HomeSection() {
                         >
                             <div className="w-full h-full relative overflow-hidden">
                                 {/* Animated border with lightning effect */}
-                                <motion.div 
+                                <motion.div
                                     className="absolute inset-0 rounded-[30%_70%_70%_30%/30%_30%_70%_70%] bg-gradient-to-r from-emerald-500 via-teal-400 to-emerald-500"
                                     animate={{
                                         borderRadius: [
@@ -580,7 +571,7 @@ export default function HomeSection() {
                                 </motion.div>
 
                                 {/* Image container */}
-                                <motion.div 
+                                <motion.div
                                     className="absolute inset-4 overflow-hidden rounded-[30%_70%_70%_30%/30%_30%_70%_70%] bg-zinc-900"
                                     animate={{
                                         borderRadius: [
@@ -601,7 +592,7 @@ export default function HomeSection() {
                                         alt="Ali - Full Stack Developer"
                                         className="w-full h-full object-cover"
                                     />
-                                    
+
                                     {/* Overlay gradient */}
                                     <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/20 via-transparent to-emerald-500/10" />
                                 </motion.div>
@@ -609,19 +600,51 @@ export default function HomeSection() {
 
                             {/* Tech stack indicators floating around image */}
                             {[
-                                { icon: <FaReact/>, name: "React", angle: 0 },
-                                { icon: <SiNextdotjs/>, name: "Next.js", angle: 60 },
-                                { icon: <FaNodeJs/>, name: "Node.js", angle: 120 },
-                                { icon: <SiTypescript/> , name: "TypeScript", angle: 180 },
-                                { icon: <SiTailwindcss/>, name: "Tailwind", angle: 240 },
-                                { icon: <SiMongodb/>, name: "MongoDB", angle: 300 },
+                                { icon: <FaReact />, name: "React", angle: 0 },
+                                {
+                                    icon: <SiNextdotjs />,
+                                    name: "Next.js",
+                                    angle: 60,
+                                },
+                                {
+                                    icon: <FaNodeJs />,
+                                    name: "Node.js",
+                                    angle: 120,
+                                },
+                                {
+                                    icon: <SiTypescript />,
+                                    name: "TypeScript",
+                                    angle: 180,
+                                },
+                                {
+                                    icon: <SiTailwindcss />,
+                                    name: "Tailwind",
+                                    angle: 240,
+                                },
+                                {
+                                    icon: <SiMongodb />,
+                                    name: "MongoDB",
+                                    angle: 300,
+                                },
                             ].map((tech, i) => (
                                 <motion.div
                                     key={tech.name}
                                     className="absolute w-12 h-12 bg-zinc-900/80 backdrop-blur-sm border border-emerald-400/30 rounded-full flex items-center justify-center text-xl text-emerald-700"
                                     style={{
-                                        top: `${50 + 60 * Math.cos((tech.angle * Math.PI) / 180)}%`,
-                                        left: `${50 + 60 * Math.sin((tech.angle * Math.PI) / 180)}%`,
+                                        top: `${
+                                            50 +
+                                            60 *
+                                                Math.cos(
+                                                    (tech.angle * Math.PI) / 180
+                                                )
+                                        }%`,
+                                        left: `${
+                                            50 +
+                                            60 *
+                                                Math.sin(
+                                                    (tech.angle * Math.PI) / 180
+                                                )
+                                        }%`,
                                         transform: "translate(-50%, -50%)",
                                     }}
                                     animate={{
@@ -633,7 +656,7 @@ export default function HomeSection() {
                                         repeat: Infinity,
                                         delay: i * 0.5,
                                     }}
-                                    whileHover={{ 
+                                    whileHover={{
                                         scale: 1.2,
                                         borderColor: "rgba(16, 185, 129, 0.8)",
                                     }}
@@ -647,13 +670,29 @@ export default function HomeSection() {
 
                         {/* Enhanced floating orbs with different sizes and colors */}
                         {[
-                            { size: 32, color: "emerald", position: { bottom: -16, right: -16 } },
-                            { size: 24, color: "teal", position: { top: -12, right: 20 } },
-                            { size: 20, color: "cyan", position: { bottom: 20, left: -12 } },
+                            {
+                                size: 32,
+                                color: "emerald",
+                                position: { bottom: -16, right: -16 },
+                            },
+                            {
+                                size: 24,
+                                color: "teal",
+                                position: { top: -12, right: 20 },
+                            },
+                            {
+                                size: 20,
+                                color: "cyan",
+                                position: { bottom: 20, left: -12 },
+                            },
                         ].map((orb, i) => (
                             <motion.div
                                 key={i}
-                                className={`absolute w-${orb.size/4} h-${orb.size/4} bg-gradient-to-r from-${orb.color}-500 to-${orb.color}-400 rounded-full blur-xl opacity-70`}
+                                className={`absolute w-${orb.size / 4} h-${
+                                    orb.size / 4
+                                } bg-gradient-to-r from-${orb.color}-500 to-${
+                                    orb.color
+                                }-400 rounded-full blur-xl opacity-70`}
                                 style={orb.position}
                                 animate={{
                                     scale: [1, 1.3, 1],
@@ -679,8 +718,14 @@ export default function HomeSection() {
                                 }}
                                 animate={{
                                     rotate: [0, 360],
-                                    x: [0, 150 * Math.cos((i * Math.PI * 2) / 8)],
-                                    y: [0, 150 * Math.sin((i * Math.PI * 2) / 8)],
+                                    x: [
+                                        0,
+                                        150 * Math.cos((i * Math.PI * 2) / 8),
+                                    ],
+                                    y: [
+                                        0,
+                                        150 * Math.sin((i * Math.PI * 2) / 8),
+                                    ],
                                 }}
                                 transition={{
                                     duration: 15,
@@ -695,7 +740,7 @@ export default function HomeSection() {
             </motion.div>
 
             {/* Enhanced Scroll Indicator */}
-            <motion.div 
+            <motion.div
                 className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center z-10"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -716,8 +761,8 @@ export default function HomeSection() {
                     </motion.div>
                     <motion.div
                         className="w-6 h-10 border-2 border-emerald-400/60 rounded-full flex justify-center relative group-hover:border-emerald-400 transition-colors"
-                        whileHover={{ 
-                            boxShadow: "0 0 20px rgba(16, 185, 129, 0.4)" 
+                        whileHover={{
+                            boxShadow: "0 0 20px rgba(16, 185, 129, 0.4)",
                         }}
                     >
                         <motion.div
@@ -733,7 +778,7 @@ export default function HomeSection() {
                             }}
                         />
                     </motion.div>
-                    <motion.span 
+                    <motion.span
                         className="text-xs text-zinc-500 mt-3 group-hover:text-zinc-400 transition-colors"
                         animate={{ opacity: [0.5, 1, 0.5] }}
                         transition={{ duration: 2, repeat: Infinity }}

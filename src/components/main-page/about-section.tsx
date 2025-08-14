@@ -1,6 +1,5 @@
 "use client";
 
-import AnimatedButton from "@/components/animated-button";
 import MagneticElement from "@/components/magnetic-element";
 import { Card, CardContent } from "@/components/ui/card";
 import { useMobile } from "@/hooks/use-mobile";
@@ -9,10 +8,9 @@ import {
     useMotionValue,
     useScroll,
     useSpring,
-    useTransform
+    useTransform,
 } from "framer-motion";
 import {
-    ArrowRight,
     Award,
     Code,
     Coffee,
@@ -21,9 +19,9 @@ import {
     Sparkles,
     Target,
     User,
-    Zap
+    Zap,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import SectionHeader from "../section-header";
 
 export default function AboutSection() {
     const isMobile = useMobile();
@@ -41,42 +39,6 @@ export default function AboutSection() {
     const sectionY = useTransform(scrollY, [0, 1000], [0, -50]);
     const backgroundOpacity = useTransform(scrollY, [0, 500], [0.1, 0.3]);
 
-    // Floating elements state
-    const [floatingElements, setFloatingElements] = useState<Array<{
-        id: number;
-        x: number;
-        y: number;
-        delay: number;
-        duration: number;
-    }>>([]);
-
-    useEffect(() => {
-        // Generate floating elements
-        const elements = Array.from({ length: 8 }, (_, i) => ({
-            id: i,
-            x: Math.random() * 100,
-            y: Math.random() * 100,
-            delay: Math.random() * 3,
-            duration: 8 + Math.random() * 6,
-        }));
-        setFloatingElements(elements);
-
-        const handleMouseMove = (e: MouseEvent) => {
-            const { clientX, clientY } = e;
-            const centerX = window.innerWidth / 2;
-            const centerY = window.innerHeight / 2;
-
-            const normalizedX = (clientX - centerX) / centerX;
-            const normalizedY = (clientY - centerY) / centerY;
-
-            mouseX.set(normalizedX * 8);
-            mouseY.set(normalizedY * 8);
-        };
-
-        window.addEventListener("mousemove", handleMouseMove);
-        return () => window.removeEventListener("mousemove", handleMouseMove);
-    }, [mouseX, mouseY]);
-
     const stats = [
         {
             title: "3+",
@@ -84,7 +46,7 @@ export default function AboutSection() {
             icon: <User className="h-6 w-6" />,
             color: "from-emerald-400 to-teal-500",
             bgColor: "bg-emerald-500/20",
-            description: "Professional development"
+            description: "Professional development",
         },
         {
             title: "50+",
@@ -92,7 +54,7 @@ export default function AboutSection() {
             icon: <Code className="h-6 w-6" />,
             color: "from-blue-400 to-cyan-500",
             bgColor: "bg-blue-500/20",
-            description: "Successful deliveries"
+            description: "Successful deliveries",
         },
         {
             title: "25+",
@@ -100,7 +62,7 @@ export default function AboutSection() {
             icon: <Heart className="h-6 w-6" />,
             color: "from-pink-400 to-rose-500",
             bgColor: "bg-pink-500/20",
-            description: "Satisfied customers"
+            description: "Satisfied customers",
         },
         {
             title: "15+",
@@ -108,7 +70,7 @@ export default function AboutSection() {
             icon: <Layers className="h-6 w-6" />,
             color: "from-purple-400 to-indigo-500",
             bgColor: "bg-purple-500/20",
-            description: "Tech stack mastery"
+            description: "Tech stack mastery",
         },
     ];
 
@@ -116,23 +78,23 @@ export default function AboutSection() {
         {
             icon: <Award className="h-5 w-5" />,
             title: "Top Performer",
-            description: "Consistently delivered high-quality projects"
+            description: "Consistently delivered high-quality projects",
         },
         {
             icon: <Target className="h-5 w-5" />,
             title: "Problem Solver",
-            description: "Expert at finding creative solutions"
+            description: "Expert at finding creative solutions",
         },
         {
             icon: <Zap className="h-5 w-5" />,
             title: "Fast Learner",
-            description: "Quick to adapt to new technologies"
+            description: "Quick to adapt to new technologies",
         },
         {
             icon: <Coffee className="h-5 w-5" />,
             title: "Team Player",
-            description: "Collaborative and supportive colleague"
-        }
+            description: "Collaborative and supportive colleague",
+        },
     ];
 
     return (
@@ -149,11 +111,15 @@ export default function AboutSection() {
                 <motion.div
                     className="absolute inset-0 opacity-20"
                     style={{
-                        background: `radial-gradient(circle at ${30 + smoothMouseX.get()}% ${40 + smoothMouseY.get()}%, 
+                        background: `radial-gradient(circle at ${
+                            30 + smoothMouseX.get()
+                        }% ${40 + smoothMouseY.get()}%, 
                             rgba(16, 185, 129, 0.15) 0%, 
                             rgba(20, 184, 166, 0.1) 25%, 
                             transparent 50%),
-                        radial-gradient(circle at ${70 + smoothMouseX.get() * -1}% ${60 + smoothMouseY.get() * -1}%, 
+                        radial-gradient(circle at ${
+                            70 + smoothMouseX.get() * -1
+                        }% ${60 + smoothMouseY.get() * -1}%, 
                             rgba(6, 182, 212, 0.1) 0%, 
                             rgba(16, 185, 129, 0.05) 30%, 
                             transparent 60%)`,
@@ -169,137 +135,61 @@ export default function AboutSection() {
                 />
 
                 {/* Grid pattern */}
-                <div 
+                <div
                     className="absolute inset-0 opacity-5"
                     style={{
                         backgroundImage: `
                             linear-gradient(rgba(16, 185, 129, 0.1) 1px, transparent 1px),
                             linear-gradient(90deg, rgba(16, 185, 129, 0.1) 1px, transparent 1px)
                         `,
-                        backgroundSize: '60px 60px',
+                        backgroundSize: "60px 60px",
                     }}
                 />
             </div>
 
             {/* Floating Decorative Elements */}
-            {!isMobile && floatingElements.map((element) => (
-                <motion.div
-                    key={element.id}
-                    className="absolute w-2 h-2 bg-gradient-to-r from-emerald-400/40 to-teal-400/40 rounded-full"
-                    style={{
-                        left: `${element.x}%`,
-                        top: `${element.y}%`,
-                    }}
-                    animate={{
-                        y: [-15, 15, -15],
-                        x: [-8, 8, -8],
-                        opacity: [0.2, 0.6, 0.2],
-                        scale: [1, 1.3, 1],
-                    }}
-                    transition={{
-                        duration: element.duration,
-                        delay: element.delay,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                    }}
-                />
-            ))}
+            {!isMobile &&
+                Array.from({ length: 8 }, (_, i) => ({
+                    id: i,
+                    x: Math.random() * 100,
+                    y: Math.random() * 100,
+                    delay: Math.random() * 3,
+                    duration: 8 + Math.random() * 6,
+                })).map((element) => (
+                    <motion.div
+                        key={element.id}
+                        className="absolute w-2 h-2 bg-gradient-to-r from-emerald-400/40 to-teal-400/40 rounded-full"
+                        style={{
+                            left: `${element.x}%`,
+                            top: `${element.y}%`,
+                        }}
+                        animate={{
+                            y: [-15, 15, -15],
+                            x: [-8, 8, -8],
+                            opacity: [0.2, 0.6, 0.2],
+                            scale: [1, 1.3, 1],
+                        }}
+                        transition={{
+                            duration: element.duration,
+                            delay: element.delay,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                        }}
+                    />
+                ))}
 
-            <motion.div 
+            <motion.div
                 className="container mx-auto relative z-10"
                 style={{ y: sectionY }}
             >
                 {/* Enhanced Section Header */}
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    className="flex flex-col items-center mb-16"
-                >
-                    <motion.div
-                        className="flex items-center space-x-3 mb-4"
-                        style={{
-                            x: !isMobile ? smoothMouseX.get() * -0.5 : 0,
-                            y: !isMobile ? smoothMouseY.get() * -0.5 : 0,
-                        }}
-                    >
-                        <motion.div
-                            animate={{ rotate: [0, 15, 0] }}
-                            transition={{ 
-                                duration: 3, 
-                                repeat: Infinity,
-                                repeatDelay: 2 
-                            }}
-                        >
-                            <Sparkles className="h-8 w-8 text-emerald-400" />
-                        </motion.div>
-                        <h2 className="text-4xl md:text-5xl font-bold text-center">
-                            About{" "}
-                            <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-500">
-                                Me
-                            </span>
-                        </h2>
-                    </motion.div>
-
-                    {/* Enhanced decorative line */}
-                    <motion.div
-                        className="relative"
-                        initial={{ width: 0 }}
-                        whileInView={{ width: "100px" }}
-                        transition={{ duration: 1, delay: 0.3 }}
-                        viewport={{ once: true }}
-                    >
-                        <div className="h-1 bg-gradient-to-r from-emerald-400 to-teal-500 rounded-full">
-                            <motion.div
-                                className="absolute inset-0 bg-gradient-to-r from-emerald-400 to-teal-500 rounded-full blur-sm"
-                                animate={{
-                                    opacity: [0.5, 1, 0.5],
-                                }}
-                                transition={{
-                                    duration: 2,
-                                    repeat: Infinity,
-                                }}
-                            />
-                        </div>
-                        
-                        {/* Glowing dots */}
-                        <motion.div
-                            className="absolute -left-2 top-1/2 w-2 h-2 bg-emerald-400 rounded-full transform -translate-y-1/2"
-                            animate={{
-                                scale: [1, 1.5, 1],
-                                opacity: [0.7, 1, 0.7],
-                            }}
-                            transition={{
-                                duration: 1.5,
-                                repeat: Infinity,
-                            }}
-                        />
-                        <motion.div
-                            className="absolute -right-2 top-1/2 w-2 h-2 bg-teal-400 rounded-full transform -translate-y-1/2"
-                            animate={{
-                                scale: [1, 1.5, 1],
-                                opacity: [0.7, 1, 0.7],
-                            }}
-                            transition={{
-                                duration: 1.5,
-                                repeat: Infinity,
-                                delay: 0.5,
-                            }}
-                        />
-                    </motion.div>
-
-                    <motion.p
-                        className="text-zinc-400 text-lg text-center max-w-2xl mt-6"
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        transition={{ duration: 0.8, delay: 0.5 }}
-                        viewport={{ once: true }}
-                    >
-                        Passionate about creating exceptional digital experiences through innovative development
-                    </motion.p>
-                </motion.div>
-
+                <SectionHeader
+                    title="About"
+                    highlight="Me"
+                    icon={<Sparkles className="h-8 w-8 text-emerald-400" />}
+                    description="Passionate about creating exceptional digital
+                        experiences through innovative development"
+                />
                 <div className="grid lg:grid-cols-2 gap-16 items-start">
                     {/* Enhanced Content Section */}
                     <motion.div
@@ -323,9 +213,19 @@ export default function AboutSection() {
                                 <div className="absolute -inset-4 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300" />
                                 <p className="text-zinc-300 leading-relaxed text-lg relative z-10">
                                     I'm a passionate{" "}
-                                    <span className="text-emerald-400 font-semibold">Full-Stack Developer</span>{" "}
-                                    with expertise in building responsive and performant web applications. My journey in web development started with a curiosity about how websites work, and it has evolved into a professional career where I continuously learn and apply{" "}
-                                    <span className="text-teal-400 font-semibold">cutting-edge technologies</span>.
+                                    <span className="text-emerald-400 font-semibold">
+                                        Full-Stack Developer
+                                    </span>{" "}
+                                    with expertise in building responsive and
+                                    performant web applications. My journey in
+                                    web development started with a curiosity
+                                    about how websites work, and it has evolved
+                                    into a professional career where I
+                                    continuously learn and apply{" "}
+                                    <span className="text-teal-400 font-semibold">
+                                        cutting-edge technologies
+                                    </span>
+                                    .
                                 </p>
                             </motion.div>
 
@@ -337,11 +237,22 @@ export default function AboutSection() {
                                 <div className="absolute -inset-4 bg-gradient-to-r from-teal-500/10 to-emerald-500/10 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300" />
                                 <p className="text-zinc-300 leading-relaxed text-lg relative z-10">
                                     I specialize in both{" "}
-                                    <span className="text-emerald-400 font-semibold">frontend</span>{" "}
+                                    <span className="text-emerald-400 font-semibold">
+                                        frontend
+                                    </span>{" "}
                                     and{" "}
-                                    <span className="text-teal-400 font-semibold">backend</span>{" "}
-                                    development, creating seamless user experiences while ensuring robust server-side functionality. My approach combines technical expertise with creative problem-solving to deliver solutions that{" "}
-                                    <span className="text-emerald-400 font-semibold">exceed expectations</span>.
+                                    <span className="text-teal-400 font-semibold">
+                                        backend
+                                    </span>{" "}
+                                    development, creating seamless user
+                                    experiences while ensuring robust
+                                    server-side functionality. My approach
+                                    combines technical expertise with creative
+                                    problem-solving to deliver solutions that{" "}
+                                    <span className="text-emerald-400 font-semibold">
+                                        exceed expectations
+                                    </span>
+                                    .
                                 </p>
                             </motion.div>
                         </div>
@@ -358,13 +269,17 @@ export default function AboutSection() {
                                 <motion.div
                                     key={index}
                                     className="group p-4 rounded-lg bg-zinc-800/30 border border-zinc-700/50 hover:border-emerald-400/50 transition-all duration-300 backdrop-blur-sm"
-                                    whileHover={{ 
+                                    whileHover={{
                                         scale: 1.05,
-                                        boxShadow: "0 10px 25px -5px rgba(16, 185, 129, 0.2)"
+                                        boxShadow:
+                                            "0 10px 25px -5px rgba(16, 185, 129, 0.2)",
                                     }}
                                     initial={{ opacity: 0, y: 20 }}
                                     whileInView={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 0.5, delay: 0.1 * index }}
+                                    transition={{
+                                        duration: 0.5,
+                                        delay: 0.1 * index,
+                                    }}
                                     viewport={{ once: true }}
                                 >
                                     <div className="flex items-start space-x-3">
@@ -382,59 +297,6 @@ export default function AboutSection() {
                                     </div>
                                 </motion.div>
                             ))}
-                        </motion.div>
-
-                        {/* Enhanced CTA Button */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, delay: 0.6 }}
-                            viewport={{ once: true }}
-                        >
-                            <MagneticElement strength={80}>
-                                <motion.div
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                >
-                                    <AnimatedButton 
-                                        className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white shadow-lg shadow-emerald-500/25 relative overflow-hidden group"
-                                        dataCursorText="More About Me"
-                                    >
-                                        {/* Animated background */}
-                                        <motion.div
-                                            className="absolute inset-0 bg-gradient-to-r from-teal-500 to-emerald-500"
-                                            initial={{ x: "-100%" }}
-                                            whileHover={{ x: "0%" }}
-                                            transition={{ duration: 0.3 }}
-                                        />
-                                        
-                                        <span className="relative flex items-center">
-                                            <motion.span
-                                                animate={{ x: [0, 3, 0] }}
-                                                transition={{ 
-                                                    duration: 2, 
-                                                    repeat: Infinity,
-                                                    ease: "easeInOut" 
-                                                }}
-                                            >
-                                                Learn More
-                                            </motion.span>
-                                            <motion.div
-                                                className="ml-2"
-                                                animate={{ x: [0, 5, 0] }}
-                                                transition={{ 
-                                                    duration: 2, 
-                                                    repeat: Infinity,
-                                                    ease: "easeInOut",
-                                                    delay: 0.1
-                                                }}
-                                            >
-                                                <ArrowRight className="h-4 w-4" />
-                                            </motion.div>
-                                        </span>
-                                    </AnimatedButton>
-                                </motion.div>
-                            </MagneticElement>
                         </motion.div>
                     </motion.div>
 
@@ -462,10 +324,12 @@ export default function AboutSection() {
                                     }}
                                     style={{
                                         x: !isMobile
-                                            ? smoothMouseX.get() * (index % 2 === 0 ? 1.5 : -1.5)
+                                            ? smoothMouseX.get() *
+                                              (index % 2 === 0 ? 1.5 : -1.5)
                                             : 0,
                                         y: !isMobile
-                                            ? smoothMouseY.get() * (index < 2 ? 1.5 : -1.5)
+                                            ? smoothMouseY.get() *
+                                              (index < 2 ? 1.5 : -1.5)
                                             : 0,
                                     }}
                                     data-cursor="button"
@@ -475,7 +339,11 @@ export default function AboutSection() {
                                         <motion.div
                                             className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-teal-500/5 to-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                                             animate={{
-                                                backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"],
+                                                backgroundPosition: [
+                                                    "0% 0%",
+                                                    "100% 100%",
+                                                    "0% 0%",
+                                                ],
                                             }}
                                             transition={{
                                                 duration: 8,
@@ -505,19 +373,23 @@ export default function AboutSection() {
                                             {/* Enhanced icon with animation */}
                                             <motion.div
                                                 className="flex justify-center mb-4"
-                                                whileHover={{ 
+                                                whileHover={{
                                                     rotate: [0, -10, 10, 0],
-                                                    scale: 1.1 
+                                                    scale: 1.1,
                                                 }}
                                                 transition={{ duration: 0.5 }}
                                             >
-                                                <div className={`p-4 rounded-full ${stat.bgColor} text-emerald-400 relative overflow-hidden group-hover:scale-110 transition-transform duration-300`}>
+                                                <div
+                                                    className={`p-4 rounded-full ${stat.bgColor} text-emerald-400 relative overflow-hidden group-hover:scale-110 transition-transform duration-300`}
+                                                >
                                                     {/* Pulsing background */}
                                                     <motion.div
                                                         className="absolute inset-0 bg-emerald-400/20 rounded-full"
                                                         animate={{
                                                             scale: [1, 1.2, 1],
-                                                            opacity: [0.5, 0.8, 0.5],
+                                                            opacity: [
+                                                                0.5, 0.8, 0.5,
+                                                            ],
                                                         }}
                                                         transition={{
                                                             duration: 2,
