@@ -4,16 +4,16 @@ import type React from "react";
 
 import { motion } from "framer-motion";
 import {
-  Clock,
-  Github,
-  Instagram,
-  Linkedin,
-  Mail,
-  MapPin,
-  Phone,
-  Send,
-  Sparkles,
-  Twitter,
+    Clock,
+    Github,
+    Instagram,
+    Linkedin,
+    Mail,
+    MapPin,
+    Phone,
+    Send,
+    Sparkles,
+    Twitter,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -318,7 +318,7 @@ export default function ContactSection() {
                                             name="name"
                                             value={formData.name}
                                             onChange={handleInputChange}
-                                            className="w-full bg-zinc-900/50 border border-zinc-600 rounded-lg px-4 py-3 text-white placeholder-zinc-400 focus:border-emerald-400 focus:outline-none transition-colors duration-200"
+                                            className="w-full bg-zinc-900/50 border border-zinc-600 rounded-lg px-4 py-3 text-white placeholder-zinc-400 focus:outline-none transition-colors duration-200"
                                             placeholder="Enter your name"
                                             required
                                         />
@@ -336,7 +336,7 @@ export default function ContactSection() {
                                             name="email"
                                             value={formData.email}
                                             onChange={handleInputChange}
-                                            className="w-full bg-zinc-900/50 border border-zinc-600 rounded-lg px-4 py-3 text-white placeholder-zinc-400 focus:border-emerald-400 focus:outline-none transition-colors duration-200"
+                                            className="w-full bg-zinc-900/50 border border-zinc-600 rounded-lg px-4 py-3 text-white placeholder-zinc-400 focus:outline-none transition-colors duration-200"
                                             placeholder="Enter your email"
                                             required
                                         />
@@ -356,7 +356,7 @@ export default function ContactSection() {
                                         name="subject"
                                         value={formData.subject}
                                         onChange={handleInputChange}
-                                        className="w-full bg-zinc-900/50 border border-zinc-600 rounded-lg px-4 py-3 text-white placeholder-zinc-400 focus:border-emerald-400 focus:outline-none transition-colors duration-200"
+                                        className="w-full bg-zinc-900/50 border border-zinc-600 rounded-lg px-4 py-3 text-white placeholder-zinc-400 focus:outline-none transition-colors duration-200"
                                         placeholder="What's this about?"
                                         required
                                     />
@@ -375,7 +375,7 @@ export default function ContactSection() {
                                         rows={6}
                                         value={formData.message}
                                         onChange={handleInputChange}
-                                        className="w-full bg-zinc-900/50 border border-zinc-600 rounded-lg px-4 py-3 text-white placeholder-zinc-400 focus:border-emerald-400 focus:outline-none transition-colors duration-200 resize-none"
+                                        className="w-full bg-zinc-900/50 border border-zinc-600 rounded-lg px-4 py-3 text-white placeholder-zinc-400 focus:outline-none transition-colors duration-200 resize-none"
                                         placeholder="Tell me about your project or idea..."
                                         required
                                     />
