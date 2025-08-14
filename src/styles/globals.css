@@ -137,7 +137,7 @@
 }
 
 /* Custom cursor styles */
-@media (min-width: 768px) {
+/* @media (min-width: 768px) {
   .cursor-none {
     cursor: none !important;
   }
@@ -151,7 +151,7 @@
   [data-cursor] {
     cursor: none !important;
   }
-}
+} */
 
 /* Add hardware acceleration for smoother animations */
 .hardware-accelerated {

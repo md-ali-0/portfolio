@@ -2,8 +2,8 @@ import BackToTop from "@/components/back-to-top";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import PageTransition from "@/components/page-transition";
+import RippleEffect from "@/components/ripple-effect";
 import ScrollProgress from "@/components/scroll-progress";
-import ThemeBackground from "@/components/theme-background";
 import { ThemeProvider } from "@/components/theme-provider";
 import { baseMetadata, generatePersonJsonLd } from "@/lib/metadata";
 import type { Metadata } from "next";
@@ -38,14 +38,14 @@ export default function RootLayout({
                     enableSystem
                     disableTransitionOnChange={false}
                 >
-                    <div className="min-h-screen bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white transition-colors duration-300">
-                        <ThemeBackground />
+                    <div className="min-h-screen bg-zinc-950 text-white transition-colors duration-300">
                         <ScrollProgress />
-                        <BackToTop />
                         <Navbar />
-                        <main className="pt-16 relative z-10">
+                        <main className="relative z-10">
                             <PageTransition>{children}</PageTransition>
                         </main>
+                        <RippleEffect />
+                        <BackToTop />
                         <Footer />
                     </div>
                 </ThemeProvider>

@@ -21,6 +21,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { FaNodeJs, FaReact } from "react-icons/fa";
+import { SiMongodb, SiNextdotjs, SiTailwindcss, SiTypescript } from "react-icons/si";
 import AnimatedButton from "../animated-button";
 import MagneticElement from "../magnetic-element";
 
@@ -99,7 +101,7 @@ export default function HomeSection() {
     return (
         <section
             id="home"
-            className="min-h-screen flex items-center pt-12 relative overflow-hidden"
+            className="min-h-screen flex items-center relative overflow-hidden"
         >
             {/* Enhanced Background Effects */}
             <div className="absolute inset-0">
@@ -606,17 +608,17 @@ export default function HomeSection() {
                             </div>
 
                             {/* Tech stack indicators floating around image */}
-                            {/* {[
-                                { icon: "⚛️", name: "React", angle: 0 },
-                                { icon: "📱", name: "Next.js", angle: 60 },
-                                { icon: "⚡", name: "Node.js", angle: 120 },
-                                { icon: "🚀", name: "TypeScript", angle: 180 },
-                                { icon: "🎨", name: "Tailwind", angle: 240 },
-                                { icon: "🔥", name: "MongoDB", angle: 300 },
+                            {[
+                                { icon: <FaReact/>, name: "React", angle: 0 },
+                                { icon: <SiNextdotjs/>, name: "Next.js", angle: 60 },
+                                { icon: <FaNodeJs/>, name: "Node.js", angle: 120 },
+                                { icon: <SiTypescript/> , name: "TypeScript", angle: 180 },
+                                { icon: <SiTailwindcss/>, name: "Tailwind", angle: 240 },
+                                { icon: <SiMongodb/>, name: "MongoDB", angle: 300 },
                             ].map((tech, i) => (
                                 <motion.div
                                     key={tech.name}
-                                    className="absolute w-12 h-12 bg-zinc-900/80 backdrop-blur-sm border border-emerald-400/30 rounded-full flex items-center justify-center text-xl"
+                                    className="absolute w-12 h-12 bg-zinc-900/80 backdrop-blur-sm border border-emerald-400/30 rounded-full flex items-center justify-center text-xl text-emerald-700"
                                     style={{
                                         top: `${50 + 60 * Math.cos((tech.angle * Math.PI) / 180)}%`,
                                         left: `${50 + 60 * Math.sin((tech.angle * Math.PI) / 180)}%`,
@@ -640,7 +642,7 @@ export default function HomeSection() {
                                 >
                                     {tech.icon}
                                 </motion.div>
-                            ))} */}
+                            ))}
                         </motion.div>
 
                         {/* Enhanced floating orbs with different sizes and colors */}

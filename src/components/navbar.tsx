@@ -7,34 +7,29 @@ import {
     useMotionValue,
     useScroll,
     useSpring,
-    useTransform
+    useTransform,
 } from "framer-motion";
 import { Download, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import AnimatedButton from "./animated-button";
-import CursorAlternative from "./cursor-alternative";
-import DarkPatternBackground from "./dark-pattern-background";
 import MagneticElement from "./magnetic-element";
-import RippleEffect from "./ripple-effect";
 
 export default function Navbar() {
     const isMobile = useMobile();
     const { scrollY } = useScroll();
-    
+
     // Enhanced scroll effects
     const headerOpacity = useTransform(scrollY, [0, 100], [0.95, 0.9]);
-    const headerBlur = useTransform(scrollY, [0, 100], [8, 20]);
-    const headerScale = useTransform(scrollY, [0, 100], [1, 0.98]);
+    const headerBlur = useTransform(scrollY, [0, 100], [8, 80]);
     const headerY = useTransform(scrollY, [0, 100], [0, -5]);
-    
+
     // Background gradient animation
     const backgroundOpacity = useTransform(scrollY, [0, 200], [0.5, 0.9]);
     const gradientPosition = useTransform(scrollY, [0, 1000], [0, 100]);
 
     const [activeSection, setActiveSection] = useState("home");
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [isHovered, setIsHovered] = useState(false);
 
     // Mouse position for parallax effects
     const mouseX = useMotionValue(0);
@@ -42,26 +37,28 @@ export default function Navbar() {
     const smoothMouseX = useSpring(mouseX, { stiffness: 50, damping: 20 });
     const smoothMouseY = useSpring(mouseY, { stiffness: 50, damping: 20 });
 
-
     useEffect(() => {
         const handleScroll = () => {
             const scrollPosition = window.scrollY + 100;
-            
+
             const sections = ["home", "about", "skills", "projects", "contact"];
-            
+
             for (const sectionId of sections) {
                 const element = document.getElementById(sectionId);
                 if (element) {
                     const offsetTop = element.offsetTop;
                     const offsetHeight = element.offsetHeight;
-                    
-                    if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+
+                    if (
+                        scrollPosition >= offsetTop &&
+                        scrollPosition < offsetTop + offsetHeight
+                    ) {
                         setActiveSection(sectionId);
                         break;
                     }
                 }
             }
-            
+
             // Handle edge case for home section at the very top
             if (window.scrollY < 100) {
                 setActiveSection("home");
@@ -111,192 +108,191 @@ export default function Navbar() {
     ];
 
     return (
-        <>
-            {!isMobile && <CursorAlternative />}
-            {!isMobile && <RippleEffect />}
-            <DarkPatternBackground />
-            
-            <motion.header
-                className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
+        <motion.header
+            className="sticky top-0 left-0 right-0 z-50 transition-all duration-500"
+            style={{
+                opacity: headerOpacity,
+                y: headerY,
+            }}
+        >
+            {/* Enhanced Background with Multiple Layers */}
+            <motion.div
+                className="absolute inset-0 overflow-hidden"
                 style={{
-                    opacity: headerOpacity,
-                    y: headerY,
-                    scale: headerScale,
+                    backdropFilter: headerBlur,
                 }}
-                onHoverStart={() => setIsHovered(true)}
-                onHoverEnd={() => setIsHovered(false)}
             >
-                {/* Enhanced Background with Multiple Layers */}
-                <motion.div 
-                    className="absolute inset-0 overflow-hidden"
+                {/* Base background */}
+                <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-zinc-950/60 via-zinc-900/70 to-zinc-950/60"
                     style={{
-                        backdropFilter: headerBlur,
+                        opacity: backgroundOpacity,
                     }}
-                >
-                    {/* Base background */}
-                    <motion.div
-                        className="absolute inset-0 bg-gradient-to-r from-zinc-950/60 via-zinc-900/70 to-zinc-950/60"
-                        style={{
-                            opacity: backgroundOpacity,
-                        }}
-                    />
-                    
-                    {/* Animated gradient overlay */}
-                    <motion.div
-                        className="absolute inset-0"
-                        style={{
-                            background: `linear-gradient(${gradientPosition}deg, 
+                />
+
+                {/* Animated gradient overlay */}
+                <motion.div
+                    className="absolute inset-0"
+                    style={{
+                        background: `linear-gradient(${gradientPosition}deg, 
                                 rgba(16, 185, 129, 0.1) 0%, 
                                 rgba(20, 184, 166, 0.05) 25%, 
                                 rgba(6, 182, 212, 0.1) 50%, 
                                 rgba(16, 185, 129, 0.05) 75%, 
                                 rgba(20, 184, 166, 0.1) 100%)`,
-                        }}
-                        animate={{
-                            opacity: isHovered ? 0.8 : 0.3,
-                        }}
-                        transition={{ duration: 0.3 }}
-                    />
+                    }}
+                    transition={{ duration: 0.3 }}
+                />
 
-                    {/* Shimmer effect */}
-                    <motion.div
-                        className="absolute inset-0"
-                        style={{
-                            background: `linear-gradient(90deg, 
+                {/* Shimmer effect */}
+                <motion.div
+                    className="absolute inset-0"
+                    style={{
+                        background: `linear-gradient(90deg, 
                                 transparent 0%, 
                                 rgba(16, 185, 129, 0.1) 40%, 
                                 rgba(16, 185, 129, 0.2) 50%, 
                                 rgba(16, 185, 129, 0.1) 60%, 
                                 transparent 100%)`,
-                            x: useTransform(scrollY, [0, 1000], [-100, 100]),
-                        }}
-                        animate={{
-                            x: isHovered ? ["-100%", "200%"] : "0%",
-                        }}
-                        transition={{
-                            duration: 2,
-                            repeat: isHovered ? Infinity : 0,
-                            repeatDelay: 3,
-                        }}
-                    />
+                        x: useTransform(scrollY, [0, 1000], [-100, 100]),
+                    }}
+                    transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        repeatDelay: 3,
+                    }}
+                />
 
-                    {/* Border gradients */}
-                    <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" />
-                    <motion.div
-                        className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-400/30 to-transparent"
-                        animate={{
-                            opacity: [0.3, 0.8, 0.3],
-                        }}
-                        transition={{
-                            duration: 3,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                        }}
-                    />
-                </motion.div>
+                {/* Border gradients */}
+                <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" />
+                <motion.div
+                    className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-400/30 to-transparent"
+                    animate={{
+                        opacity: [0.3, 0.8, 0.3],
+                    }}
+                    transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                    }}
+                />
+            </motion.div>
 
-                <div className="container mx-auto py-4 relative z-10">
-                    <nav className="flex justify-between items-center">
-                        {/* Enhanced Logo */}
-                        <MagneticElement strength={60}>
-                            <motion.div
-                                style={{
-                                    x: !isMobile ? smoothMouseX.get() * -2 : 0,
-                                    y: !isMobile ? smoothMouseY.get() * -2 : 0,
-                                }}
+            <div className="container mx-auto py-5 relative z-10">
+                <nav className="flex justify-between items-center">
+                    {/* Enhanced Logo */}
+                    <MagneticElement strength={60}>
+                        <motion.div
+                            style={{
+                                x: !isMobile ? smoothMouseX.get() * -2 : 0,
+                                y: !isMobile ? smoothMouseY.get() * -2 : 0,
+                            }}
+                        >
+                            <Link
+                                href="/"
+                                className="relative group"
+                                data-cursor="link"
+                                data-cursor-text="Home"
                             >
-                                <Link
-                                    href="/"
-                                    className="relative group"
-                                    data-cursor="link"
-                                    data-cursor-text="Home"
-                                >
-                                    {/* Glowing background */}
-                                    <motion.div
-                                        className="absolute -inset-2 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                                {/* Glowing background */}
+                                <motion.div
+                                    className="absolute -inset-2 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                                    animate={{
+                                        scale: [1, 1.05, 1],
+                                    }}
+                                    transition={{
+                                        duration: 2,
+                                        repeat: Infinity,
+                                        ease: "easeInOut",
+                                    }}
+                                />
+
+                                <motion.div className="relative text-2xl font-bold">
+                                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-500">
+                                        Ali
+                                    </span>
+                                    <motion.span
+                                        className="text-white ml-1"
                                         animate={{
-                                            scale: [1, 1.05, 1],
+                                            color: [
+                                                "#ffffff",
+                                                "#10b981",
+                                                "#ffffff",
+                                            ],
                                         }}
                                         transition={{
                                             duration: 2,
                                             repeat: Infinity,
                                             ease: "easeInOut",
                                         }}
+                                    >
+                                        .
+                                    </motion.span>
+
+                                    {/* Animated underline */}
+                                    <motion.span
+                                        className="absolute -bottom-2 left-0 h-1 bg-gradient-to-r from-emerald-400 to-teal-500 rounded-full"
+                                        initial={{ width: 0 }}
+                                        whileHover={{ width: "100%" }}
+                                        transition={{ duration: 0.3 }}
                                     />
-                                    
-                                    <motion.div className="relative text-2xl font-bold">
-                                        <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-500">
-                                            Ali
-                                        </span>
-                                        <motion.span 
-                                            className="text-white ml-1"
+
+                                    {/* Floating particles around logo */}
+                                    {[...Array(3)].map((_, i) => (
+                                        <motion.div
+                                            key={i}
+                                            className="absolute w-1 h-1 bg-emerald-400 rounded-full opacity-60"
+                                            style={{
+                                                top: `${-10 + i * 5}px`,
+                                                left: `${60 + i * 10}px`,
+                                            }}
                                             animate={{
-                                                color: ["#ffffff", "#10b981", "#ffffff"],
+                                                y: [0, -8, 0],
+                                                opacity: [0.6, 1, 0.6],
+                                                scale: [1, 1.2, 1],
                                             }}
                                             transition={{
-                                                duration: 2,
+                                                duration: 2 + i * 0.5,
                                                 repeat: Infinity,
-                                                ease: "easeInOut",
+                                                delay: i * 0.3,
                                             }}
-                                        >
-                                            .
-                                        </motion.span>
-                                        
-                                        {/* Animated underline */}
-                                        <motion.span
-                                            className="absolute -bottom-2 left-0 h-1 bg-gradient-to-r from-emerald-400 to-teal-500 rounded-full"
-                                            initial={{ width: 0 }}
-                                            whileHover={{ width: "100%" }}
-                                            transition={{ duration: 0.3 }}
                                         />
+                                    ))}
+                                </motion.div>
+                            </Link>
+                        </motion.div>
+                    </MagneticElement>
 
-                                        {/* Floating particles around logo */}
-                                        {[...Array(3)].map((_, i) => (
-                                            <motion.div
-                                                key={i}
-                                                className="absolute w-1 h-1 bg-emerald-400 rounded-full opacity-60"
-                                                style={{
-                                                    top: `${-10 + i * 5}px`,
-                                                    left: `${60 + i * 10}px`,
-                                                }}
-                                                animate={{
-                                                    y: [0, -8, 0],
-                                                    opacity: [0.6, 1, 0.6],
-                                                    scale: [1, 1.2, 1],
-                                                }}
-                                                transition={{
-                                                    duration: 2 + i * 0.5,
-                                                    repeat: Infinity,
-                                                    delay: i * 0.3,
-                                                }}
-                                            />
-                                        ))}
-                                    </motion.div>
-                                </Link>
-                            </motion.div>
-                        </MagneticElement>
-
-                        {/* Desktop Navigation */}
-                        <div className="hidden md:flex gap-8 items-center">
-                            {navItems.map((item, index) => (
-                                <MagneticElement key={item.name} strength={50}>
-                                    <motion.div
-                                        style={{
-                                            x: !isMobile ? smoothMouseX.get() * (index % 2 === 0 ? -1 : 1) : 0,
-                                            y: !isMobile ? smoothMouseY.get() * (index % 2 === 0 ? -1 : 1) : 0,
-                                        }}
-                                        initial={{ opacity: 0, y: -20 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ duration: 0.5, delay: index * 0.1 }}
+                    {/* Desktop Navigation */}
+                    <div className="hidden md:flex gap-8 items-center">
+                        {navItems.map((item, index) => (
+                            <MagneticElement key={item.name} strength={50}>
+                                <motion.div
+                                    style={{
+                                        x: !isMobile
+                                            ? smoothMouseX.get() *
+                                              (index % 2 === 0 ? -1 : 1)
+                                            : 0,
+                                        y: !isMobile
+                                            ? smoothMouseY.get() *
+                                              (index % 2 === 0 ? -1 : 1)
+                                            : 0,
+                                    }}
+                                    initial={{ opacity: 0, y: -20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{
+                                        duration: 0.5,
+                                        delay: index * 0.1,
+                                    }}
+                                >
+                                    <Link
+                                        href={item.href}
+                                        className="relative group py-2 px-1"
+                                        data-cursor="link"
+                                        data-cursor-text={item.name}
                                     >
-                                        <Link
-                                            href={item.href}
-                                            className="relative group py-2 px-1"
-                                            data-cursor="link"
-                                            data-cursor-text={item.name}
-                                        >
-                                            {/* Glowing background for active/hover */}
-                                            {/* <motion.div
+                                        {/* Glowing background for active/hover */}
+                                        {/* <motion.div
                                                 className="absolute -inset-3 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 rounded-lg opacity-0"
                                                 animate={{
                                                     opacity: activeSection === item.id ? 0.7 : 0,
@@ -304,34 +300,38 @@ export default function Navbar() {
                                                 whileHover={{ opacity: 0.5 }}
                                                 transition={{ duration: 0.3 }}
                                             /> */}
-                                            
-                                            <motion.span
-                                                className={`relative font-medium transition-all duration-300 ${
+
+                                        <motion.span
+                                            className={`relative font-medium transition-all duration-300 ${
+                                                activeSection === item.id
+                                                    ? "text-emerald-400"
+                                                    : "text-zinc-200 group-hover:text-emerald-400"
+                                            }`}
+                                            whileHover={{
+                                                scale: 1.05,
+                                                textShadow:
+                                                    "0 0 8px rgba(16, 185, 129, 0.5)",
+                                            }}
+                                        >
+                                            {item.name}
+                                        </motion.span>
+
+                                        {/* Enhanced underline */}
+                                        <motion.span
+                                            className="absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-emerald-400 to-teal-500 rounded-full"
+                                            initial={{ width: 0 }}
+                                            animate={{
+                                                width:
                                                     activeSection === item.id
-                                                        ? "text-emerald-400"
-                                                        : "text-zinc-200 group-hover:text-emerald-400"
-                                                }`}
-                                                whileHover={{
-                                                    scale: 1.05,
-                                                    textShadow: "0 0 8px rgba(16, 185, 129, 0.5)",
-                                                }}
-                                            >
-                                                {item.name}
-                                            </motion.span>
+                                                        ? "100%"
+                                                        : "0%",
+                                            }}
+                                            whileHover={{ width: "100%" }}
+                                            transition={{ duration: 0.3 }}
+                                        />
 
-                                            {/* Enhanced underline */}
-                                            <motion.span
-                                                className="absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-emerald-400 to-teal-500 rounded-full"
-                                                initial={{ width: 0 }}
-                                                animate={{
-                                                    width: activeSection === item.id ? "100%" : "0%",
-                                                }}
-                                                whileHover={{ width: "100%" }}
-                                                transition={{ duration: 0.3 }}
-                                            />
-
-                                            {/* Glowing dots */}
-                                            {/* {activeSection === item.id && (
+                                        {/* Glowing dots */}
+                                        {/* {activeSection === item.id && (
                                                 <motion.div
                                                     className="absolute -top-2 left-1/2 w-1 h-1 bg-emerald-400 rounded-full"
                                                     initial={{ scale: 0, x: "-50%" }}
@@ -351,212 +351,228 @@ export default function Navbar() {
                                                     />
                                                 </motion.div>
                                             )} */}
-                                        </Link>
-                                    </motion.div>
-                                </MagneticElement>
-                            ))}
-                        </div>
+                                    </Link>
+                                </motion.div>
+                            </MagneticElement>
+                        ))}
+                    </div>
 
-                        {/* Enhanced Resume Button */}
-                        <div className="flex items-center gap-4">
-                            <MagneticElement strength={80}>
-                                <motion.div
-                                    style={{
-                                        x: !isMobile ? smoothMouseX.get() * 2 : 0,
-                                        y: !isMobile ? smoothMouseY.get() * 2 : 0,
-                                    }}
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                >
-                                    <AnimatedButton
-                                        variant="outline"
-                                        className="relative border-2 border-emerald-400/50 text-emerald-400 hover:text-emerald-300 hover:border-emerald-400 transition-all duration-300 overflow-hidden group"
-                                        dataCursorText="Download CV"
-                                    >
-                                        {/* Animated background */}
-                                        {/* <motion.div
+                    {/* Enhanced Resume Button */}
+                    <div className="flex items-center gap-4">
+                        <MagneticElement strength={80}>
+                            <AnimatedButton
+                                variant="outline"
+                                className="relative border-2 border-emerald-400/50 text-emerald-400 hover:text-white hover:border-emerald-400 transition-all duration-300 overflow-hidden group"
+                                dataCursorText="Download CV"
+                            >
+                                {/* Animated background */}
+                                {/* <motion.div
                                             className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-teal-500/20"
                                             initial={{ x: "-100%" }}
                                             whileHover={{ x: "0%" }}
                                             transition={{ duration: 0.3 }}
                                         /> */}
-                                        
-                                        {/* Button content */}
-                                        <span className="relative flex items-center">
-                                            <motion.div
-                                                animate={{ rotate: [0, 10, -10, 0] }}
-                                                transition={{ 
-                                                    duration: 2, 
-                                                    repeat: Infinity,
-                                                    repeatDelay: 3 
-                                                }}
-                                            >
-                                                <Download className="mr-2 h-4 w-4" />
-                                            </motion.div>
-                                            Resume
-                                        </span>
 
-                                        {/* Glowing border */}
-                                        <motion.div
-                                            className="absolute inset-0 border-2 border-emerald-400/0 rounded-md"
-                                            whileHover={{
-                                                borderColor: "rgba(16, 185, 129, 0.5)",
-                                                boxShadow: "0 0 20px rgba(16, 185, 129, 0.3)",
-                                            }}
-                                            transition={{ duration: 0.3 }}
-                                        />
-                                    </AnimatedButton>
-                                </motion.div>
-                            </MagneticElement>
-
-                            {/* Mobile Menu Toggle */}
-                            {isMobile && (
-                                <MagneticElement strength={60}>
-                                    <motion.button
-                                        onClick={() => setIsMenuOpen(!isMenuOpen)}
-                                        className="md:hidden p-2 text-emerald-400 relative"
-                                        whileHover={{ scale: 1.1 }}
-                                        whileTap={{ scale: 0.9 }}
-                                        data-cursor="button"
+                                {/* Button content */}
+                                <span className="relative flex items-center">
+                                    <motion.div
+                                        animate={{
+                                            rotate: [0, 10, -10, 0],
+                                        }}
+                                        transition={{
+                                            duration: 3,
+                                            repeat: Infinity,
+                                            repeatDelay: 2,
+                                        }}
                                     >
-                                        <AnimatePresence mode="wait">
-                                            {isMenuOpen ? (
-                                                <motion.div
-                                                    key="close"
-                                                    initial={{ rotate: -90, opacity: 0 }}
-                                                    animate={{ rotate: 0, opacity: 1 }}
-                                                    exit={{ rotate: 90, opacity: 0 }}
-                                                    transition={{ duration: 0.2 }}
-                                                >
-                                                    <X className="h-6 w-6" />
-                                                </motion.div>
-                                            ) : (
-                                                <motion.div
-                                                    key="menu"
-                                                    initial={{ rotate: 90, opacity: 0 }}
-                                                    animate={{ rotate: 0, opacity: 1 }}
-                                                    exit={{ rotate: -90, opacity: 0 }}
-                                                    transition={{ duration: 0.2 }}
-                                                >
-                                                    <Menu className="h-6 w-6" />
-                                                </motion.div>
-                                            )}
-                                        </AnimatePresence>
+                                        <Download className="mr-2 h-4 w-4" />
+                                    </motion.div>
+                                    Resume
+                                </span>
 
-                                        {/* Ripple effect */}
-                                        <motion.div
-                                            className="absolute inset-0 rounded-full border border-emerald-400/30"
-                                            animate={{
-                                                scale: [1, 1.2, 1],
-                                                opacity: [0.5, 0, 0.5],
-                                            }}
-                                            transition={{
-                                                duration: 2,
-                                                repeat: Infinity,
-                                            }}
-                                        />
-                                    </motion.button>
-                                </MagneticElement>
-                            )}
-                        </div>
-                    </nav>
-                </div>
+                                {/* Glowing border */}
+                                <motion.div
+                                    className="absolute inset-0 border-2 border-emerald-400/0 rounded-md"
+                                    whileHover={{
+                                        borderColor: "rgba(16, 185, 129, 0.5)",
+                                        boxShadow:
+                                            "0 0 20px rgba(16, 185, 129, 0.3)",
+                                    }}
+                                    transition={{ duration: 0.3 }}
+                                />
+                            </AnimatedButton>
+                        </MagneticElement>
 
-                {/* Mobile Menu */}
-                <AnimatePresence>
-                    {isMenuOpen && isMobile && (
-                        <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: "auto" }}
-                            exit={{ opacity: 0, height: 0 }}
-                            transition={{ duration: 0.3 }}
-                            className="md:hidden border-t border-zinc-700/50 backdrop-blur-xl"
-                        >
-                            <motion.div
-                                className="absolute inset-0 bg-gradient-to-b from-zinc-900/95 to-zinc-950/95"
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                exit={{ opacity: 0 }}
-                            />
-                            
-                            <div className="container mx-auto py-6 relative z-10">
-                                <div className="flex flex-col space-y-4">
-                                    {navItems.map((item, index) => (
-                                        <motion.div
-                                            key={item.name}
-                                            initial={{ opacity: 0, x: -20 }}
-                                            animate={{ opacity: 1, x: 0 }}
-                                            exit={{ opacity: 0, x: -20 }}
-                                            transition={{ duration: 0.3, delay: index * 0.1 }}
-                                        >
-                                            <Link
-                                                href={item.href}
-                                                onClick={() => setIsMenuOpen(false)}
-                                                className={`block py-3 px-4 rounded-lg transition-all duration-300 ${
-                                                    activeSection === item.id
-                                                        ? "bg-emerald-500/20 text-emerald-400 border-l-4 border-emerald-400"
-                                                        : "text-zinc-300 hover:text-emerald-400 hover:bg-zinc-800/50"
-                                                }`}
-                                                data-cursor="link"
+                        {/* Mobile Menu Toggle */}
+                        {isMobile && (
+                            <MagneticElement strength={60}>
+                                <motion.button
+                                    onClick={() => setIsMenuOpen(!isMenuOpen)}
+                                    className="md:hidden p-2 text-emerald-400 relative"
+                                    whileHover={{ scale: 1.1 }}
+                                    whileTap={{ scale: 0.9 }}
+                                    data-cursor="button"
+                                >
+                                    <AnimatePresence mode="wait">
+                                        {isMenuOpen ? (
+                                            <motion.div
+                                                key="close"
+                                                initial={{
+                                                    rotate: -90,
+                                                    opacity: 0,
+                                                }}
+                                                animate={{
+                                                    rotate: 0,
+                                                    opacity: 1,
+                                                }}
+                                                exit={{
+                                                    rotate: 90,
+                                                    opacity: 0,
+                                                }}
+                                                transition={{ duration: 0.2 }}
                                             >
-                                                <span className="font-medium">{item.name}</span>
-                                                {/* {activeSection === item.id && (
+                                                <X className="h-6 w-6" />
+                                            </motion.div>
+                                        ) : (
+                                            <motion.div
+                                                key="menu"
+                                                initial={{
+                                                    rotate: 90,
+                                                    opacity: 0,
+                                                }}
+                                                animate={{
+                                                    rotate: 0,
+                                                    opacity: 1,
+                                                }}
+                                                exit={{
+                                                    rotate: -90,
+                                                    opacity: 0,
+                                                }}
+                                                transition={{ duration: 0.2 }}
+                                            >
+                                                <Menu className="h-6 w-6" />
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+
+                                    {/* Ripple effect */}
+                                    <motion.div
+                                        className="absolute inset-0 rounded-full border border-emerald-400/30"
+                                        animate={{
+                                            scale: [1, 1.2, 1],
+                                            opacity: [0.5, 0, 0.5],
+                                        }}
+                                        transition={{
+                                            duration: 2,
+                                            repeat: Infinity,
+                                        }}
+                                    />
+                                </motion.button>
+                            </MagneticElement>
+                        )}
+                    </div>
+                </nav>
+            </div>
+
+            {/* Mobile Menu */}
+            <AnimatePresence>
+                {isMenuOpen && isMobile && (
+                    <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="md:hidden border-t border-zinc-700/50 backdrop-blur-xl"
+                    >
+                        <motion.div
+                            className="absolute inset-0 bg-gradient-to-b from-zinc-900/95 to-zinc-950/95"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                        />
+
+                        <div className="container mx-auto py-6 relative z-10">
+                            <div className="flex flex-col space-y-4">
+                                {navItems.map((item, index) => (
+                                    <motion.div
+                                        key={item.name}
+                                        initial={{ opacity: 0, x: -20 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        exit={{ opacity: 0, x: -20 }}
+                                        transition={{
+                                            duration: 0.3,
+                                            delay: index * 0.1,
+                                        }}
+                                    >
+                                        <Link
+                                            href={item.href}
+                                            onClick={() => setIsMenuOpen(false)}
+                                            className={`block py-3 px-4 rounded-lg transition-all duration-300 ${
+                                                activeSection === item.id
+                                                    ? "bg-emerald-500/20 text-emerald-400 border-l-4 border-emerald-400"
+                                                    : "text-zinc-300 hover:text-emerald-400 hover:bg-zinc-800/50"
+                                            }`}
+                                            data-cursor="link"
+                                        >
+                                            <span className="font-medium">
+                                                {item.name}
+                                            </span>
+                                            {/* {activeSection === item.id && (
                                                     <motion.div
                                                         className="w-2 h-2 bg-emerald-400 rounded-full ml-2 inline-block"
                                                         animate={{ scale: [1, 1.3, 1] }}
                                                         transition={{ duration: 1, repeat: Infinity }}
                                                     />
                                                 )} */}
-                                            </Link>
-                                        </motion.div>
-                                    ))}
-                                </div>
+                                        </Link>
+                                    </motion.div>
+                                ))}
                             </div>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
-
-                {/* Decorative Elements */}
-                {!isMobile && (
-                    <>
-                        {/* Floating orbs */}
-                        <motion.div
-                            className="absolute top-2 left-20 w-2 h-2 bg-emerald-400/60 rounded-full"
-                            animate={{
-                                y: [0, -5, 0],
-                                opacity: [0.6, 1, 0.6],
-                            }}
-                            transition={{
-                                duration: 3,
-                                repeat: Infinity,
-                                ease: "easeInOut",
-                            }}
-                            style={{
-                                x: smoothMouseX.get() * 3,
-                                y: smoothMouseY.get() * 3,
-                            }}
-                        />
-                        
-                        <motion.div
-                            className="absolute top-4 right-32 w-1.5 h-1.5 bg-teal-400/60 rounded-full"
-                            animate={{
-                                y: [0, -8, 0],
-                                opacity: [0.4, 0.9, 0.4],
-                            }}
-                            transition={{
-                                duration: 4,
-                                repeat: Infinity,
-                                ease: "easeInOut",
-                                delay: 1,
-                            }}
-                            style={{
-                                x: smoothMouseX.get() * -2,
-                                y: smoothMouseY.get() * -2,
-                            }}
-                        />
-                    </>
+                        </div>
+                    </motion.div>
                 )}
-            </motion.header>
-        </>
+            </AnimatePresence>
+
+            {/* Decorative Elements */}
+            {!isMobile && (
+                <>
+                    {/* Floating orbs */}
+                    <motion.div
+                        className="absolute top-2 left-20 w-2 h-2 bg-emerald-400/60 rounded-full"
+                        animate={{
+                            y: [0, -5, 0],
+                            opacity: [0.6, 1, 0.6],
+                        }}
+                        transition={{
+                            duration: 3,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                        }}
+                        style={{
+                            x: smoothMouseX.get() * 3,
+                            y: smoothMouseY.get() * 3,
+                        }}
+                    />
+
+                    <motion.div
+                        className="absolute top-4 right-32 w-1.5 h-1.5 bg-teal-400/60 rounded-full"
+                        animate={{
+                            y: [0, -8, 0],
+                            opacity: [0.4, 0.9, 0.4],
+                        }}
+                        transition={{
+                            duration: 4,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                            delay: 1,
+                        }}
+                        style={{
+                            x: smoothMouseX.get() * -2,
+                            y: smoothMouseY.get() * -2,
+                        }}
+                    />
+                </>
+            )}
+        </motion.header>
     );
 }

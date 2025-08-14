@@ -5,22 +5,22 @@ import { Card, CardContent } from "@/components/ui/card"
 import { useMobile } from "@/hooks/use-mobile"
 import { motion, useMotionValue, useScroll, useSpring, useTransform } from "framer-motion"
 import {
-    Box,
-    Code,
-    Cpu,
-    Database,
-    Figma,
-    Github,
-    Globe,
-    Layers,
-    Package,
-    Server,
-    Sparkles,
-    Terminal,
-    TestTube,
-    Triangle,
-    Wrench,
-    Zap,
+  Box,
+  Code,
+  Cpu,
+  Database,
+  Figma,
+  Github,
+  Globe,
+  Layers,
+  Package,
+  Server,
+  Sparkles,
+  Terminal,
+  TestTube,
+  Triangle,
+  Wrench,
+  Zap,
 } from "lucide-react"
 import { useEffect, useState } from "react"
 
@@ -987,3 +987,4 @@ export default function SkillsSection() {
     </section>
   )
 }
+
