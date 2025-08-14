@@ -27,15 +27,13 @@ export default function AboutSection() {
     const isMobile = useMobile();
     const { scrollY } = useScroll();
 
-    // Mouse position for parallax effects
+    // Mouse position for parallax effects - matching navbar pattern
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
-
-    // Smoothed mouse values for parallax
     const smoothMouseX = useSpring(mouseX, { stiffness: 50, damping: 20 });
     const smoothMouseY = useSpring(mouseY, { stiffness: 50, damping: 20 });
 
-    // Scroll-based animations
+    // Scroll-based animations - matching hero section
     const sectionY = useTransform(scrollY, [0, 1000], [0, -50]);
     const backgroundOpacity = useTransform(scrollY, [0, 500], [0.1, 0.3]);
 
@@ -52,24 +50,24 @@ export default function AboutSection() {
             title: "50+",
             subtitle: "Projects Completed",
             icon: <Code className="h-6 w-6" />,
-            color: "from-blue-400 to-cyan-500",
-            bgColor: "bg-blue-500/20",
+            color: "from-emerald-400 to-teal-500",
+            bgColor: "bg-emerald-500/20",
             description: "Successful deliveries",
         },
         {
             title: "25+",
             subtitle: "Happy Clients",
             icon: <Heart className="h-6 w-6" />,
-            color: "from-pink-400 to-rose-500",
-            bgColor: "bg-pink-500/20",
+            color: "from-emerald-400 to-teal-500",
+            bgColor: "bg-emerald-500/20",
             description: "Satisfied customers",
         },
         {
             title: "15+",
             subtitle: "Technologies",
             icon: <Layers className="h-6 w-6" />,
-            color: "from-purple-400 to-indigo-500",
-            bgColor: "bg-purple-500/20",
+            color: "from-emerald-400 to-teal-500",
+            bgColor: "bg-emerald-500/20",
             description: "Tech stack mastery",
         },
     ];
@@ -99,80 +97,87 @@ export default function AboutSection() {
 
     return (
         <section id="about" className="py-20 md:py-32 relative overflow-hidden">
-            {/* Enhanced Background Effects */}
+            {/* Enhanced Background Effects - matching hero section pattern */}
             <div className="absolute inset-0">
-                {/* Base gradient */}
+                {/* Main gradient background */}
                 <motion.div
                     className="absolute inset-0 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950"
-                    style={{ opacity: backgroundOpacity }}
+                    animate={{
+                        backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"],
+                    }}
+                    transition={{
+                        duration: 20,
+                        repeat: Number.POSITIVE_INFINITY,
+                        ease: "linear",
+                    }}
                 />
 
-                {/* Animated mesh gradient */}
+                {/* Animated mesh gradient overlay - matching hero section */}
                 <motion.div
-                    className="absolute inset-0 opacity-20"
+                    className="absolute inset-0 opacity-30"
                     style={{
                         background: `radial-gradient(circle at ${
-                            30 + smoothMouseX.get()
-                        }% ${40 + smoothMouseY.get()}%, 
+                            50 + smoothMouseX.get()
+                        }% ${50 + smoothMouseY.get()}%, 
                             rgba(16, 185, 129, 0.15) 0%, 
                             rgba(20, 184, 166, 0.1) 25%, 
                             transparent 50%),
                         radial-gradient(circle at ${
-                            70 + smoothMouseX.get() * -1
-                        }% ${60 + smoothMouseY.get() * -1}%, 
+                            30 + smoothMouseX.get() * -1
+                        }% ${70 + smoothMouseY.get() * -1}%, 
                             rgba(6, 182, 212, 0.1) 0%, 
                             rgba(16, 185, 129, 0.05) 30%, 
                             transparent 60%)`,
                     }}
                     animate={{
-                        opacity: [0.15, 0.25, 0.15],
+                        opacity: [0.2, 0.4, 0.2],
                     }}
                     transition={{
-                        duration: 6,
-                        repeat: Infinity,
+                        duration: 8,
+                        repeat: Number.POSITIVE_INFINITY,
                         ease: "easeInOut",
                     }}
                 />
 
-                {/* Grid pattern */}
+                {/* Grid pattern - matching hero section */}
                 <div
-                    className="absolute inset-0 opacity-5"
+                    className="absolute inset-0 opacity-10"
                     style={{
                         backgroundImage: `
                             linear-gradient(rgba(16, 185, 129, 0.1) 1px, transparent 1px),
                             linear-gradient(90deg, rgba(16, 185, 129, 0.1) 1px, transparent 1px)
                         `,
-                        backgroundSize: "60px 60px",
+                        backgroundSize: "50px 50px",
                     }}
                 />
             </div>
 
-            {/* Floating Decorative Elements */}
+            {/* Floating Decorative Elements - matching hero section pattern */}
             {!isMobile &&
-                Array.from({ length: 8 }, (_, i) => ({
+                Array.from({ length: 12 }, (_, i) => ({
                     id: i,
                     x: Math.random() * 100,
                     y: Math.random() * 100,
-                    delay: Math.random() * 3,
-                    duration: 8 + Math.random() * 6,
+                    delay: Math.random() * 5,
+                    duration: 10 + Math.random() * 10,
                 })).map((element) => (
                     <motion.div
                         key={element.id}
-                        className="absolute w-2 h-2 bg-gradient-to-r from-emerald-400/40 to-teal-400/40 rounded-full"
+                        className="absolute w-2 h-2 bg-gradient-to-r from-emerald-400/60 to-teal-400/60 rounded-full"
                         style={{
                             left: `${element.x}%`,
                             top: `${element.y}%`,
                         }}
                         animate={{
-                            y: [-15, 15, -15],
-                            x: [-8, 8, -8],
-                            opacity: [0.2, 0.6, 0.2],
-                            scale: [1, 1.3, 1],
+                            y: [-20, 20, -20],
+                            x: [-10, 10, -10],
+                            opacity: [0.3, 0.8, 0.3],
+                            scale: [1, 1.5, 1],
                         }}
                         transition={{
                             duration: element.duration,
                             delay: element.delay,
-                            repeat: Infinity,
+                            repeat: Number.POSITIVE_INFINITY,
                             ease: "easeInOut",
                         }}
                     />
@@ -182,14 +187,14 @@ export default function AboutSection() {
                 className="container mx-auto relative z-10"
                 style={{ y: sectionY }}
             >
-                {/* Enhanced Section Header */}
+                {/* Enhanced Section Header - consistent with other sections */}
                 <SectionHeader
                     title="About"
                     highlight="Me"
                     icon={<Sparkles className="h-8 w-8 text-emerald-400" />}
-                    description="Passionate about creating exceptional digital
-                        experiences through innovative development"
+                    description="Passionate about creating exceptional digital experiences through innovative development"
                 />
+
                 <div className="grid lg:grid-cols-2 gap-16 items-start">
                     {/* Enhanced Content Section */}
                     <motion.div
@@ -203,14 +208,25 @@ export default function AboutSection() {
                             y: !isMobile ? smoothMouseY.get() * -1.5 : 0,
                         }}
                     >
-                        {/* Enhanced text content */}
+                        {/* Enhanced text content with hover effects */}
                         <div className="space-y-6">
                             <motion.div
-                                className="relative"
+                                className="relative group"
                                 whileHover={{ scale: 1.02 }}
                                 transition={{ duration: 0.3 }}
                             >
-                                <div className="absolute -inset-4 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300" />
+                                {/* Glowing background on hover - matching navbar pattern */}
+                                <motion.div
+                                    className="absolute -inset-4 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                                    animate={{
+                                        scale: [1, 1.05, 1],
+                                    }}
+                                    transition={{
+                                        duration: 2,
+                                        repeat: Number.POSITIVE_INFINITY,
+                                        ease: "easeInOut",
+                                    }}
+                                />
                                 <p className="text-zinc-300 leading-relaxed text-lg relative z-10">
                                     I'm a passionate{" "}
                                     <span className="text-emerald-400 font-semibold">
@@ -230,11 +246,22 @@ export default function AboutSection() {
                             </motion.div>
 
                             <motion.div
-                                className="relative"
+                                className="relative group"
                                 whileHover={{ scale: 1.02 }}
                                 transition={{ duration: 0.3 }}
                             >
-                                <div className="absolute -inset-4 bg-gradient-to-r from-teal-500/10 to-emerald-500/10 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300" />
+                                <motion.div
+                                    className="absolute -inset-4 bg-gradient-to-r from-teal-500/10 to-emerald-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                                    animate={{
+                                        scale: [1, 1.05, 1],
+                                    }}
+                                    transition={{
+                                        duration: 2,
+                                        repeat: Number.POSITIVE_INFINITY,
+                                        ease: "easeInOut",
+                                        delay: 1,
+                                    }}
+                                />
                                 <p className="text-zinc-300 leading-relaxed text-lg relative z-10">
                                     I specialize in both{" "}
                                     <span className="text-emerald-400 font-semibold">
@@ -257,7 +284,7 @@ export default function AboutSection() {
                             </motion.div>
                         </div>
 
-                        {/* Achievements Grid */}
+                        {/* Achievements Grid - enhanced with consistent styling */}
                         <motion.div
                             className="grid grid-cols-2 gap-4"
                             initial={{ opacity: 0, y: 20 }}
@@ -266,41 +293,81 @@ export default function AboutSection() {
                             viewport={{ once: true }}
                         >
                             {achievements.map((achievement, index) => (
-                                <motion.div
-                                    key={index}
-                                    className="group p-4 rounded-lg bg-zinc-800/30 border border-zinc-700/50 hover:border-emerald-400/50 transition-all duration-300 backdrop-blur-sm"
-                                    whileHover={{
-                                        scale: 1.05,
-                                        boxShadow:
-                                            "0 10px 25px -5px rgba(16, 185, 129, 0.2)",
-                                    }}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    transition={{
-                                        duration: 0.5,
-                                        delay: 0.1 * index,
-                                    }}
-                                    viewport={{ once: true }}
-                                >
-                                    <div className="flex items-start space-x-3">
-                                        <div className="p-2 rounded-full bg-emerald-500/20 text-emerald-400 group-hover:bg-emerald-500/30 transition-colors">
-                                            {achievement.icon}
+                                <MagneticElement key={index} strength={60}>
+                                    <motion.div
+                                        className="group p-4 rounded-lg bg-zinc-800/30 border border-zinc-700/50 hover:border-emerald-400/50 transition-all duration-300 backdrop-blur-sm relative overflow-hidden"
+                                        whileHover={{
+                                            scale: 1.05,
+                                            boxShadow:
+                                                "0 10px 25px -5px rgba(16, 185, 129, 0.2)",
+                                        }}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        transition={{
+                                            duration: 0.5,
+                                            delay: 0.1 * index,
+                                        }}
+                                        viewport={{ once: true }}
+                                        data-cursor="button"
+                                    >
+                                        {/* Animated background gradient - matching navbar pattern */}
+                                        <motion.div
+                                            className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-teal-500/5 to-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                                            animate={{
+                                                backgroundPosition: [
+                                                    "0% 0%",
+                                                    "100% 100%",
+                                                    "0% 0%",
+                                                ],
+                                            }}
+                                            transition={{
+                                                duration: 8,
+                                                repeat: Number.POSITIVE_INFINITY,
+                                                ease: "linear",
+                                            }}
+                                        />
+
+                                        <div className="flex items-start space-x-3 relative z-10">
+                                            <motion.div
+                                                className="p-2 rounded-full bg-emerald-500/20 text-emerald-400 group-hover:bg-emerald-500/30 transition-colors"
+                                                whileHover={{
+                                                    rotate: [0, -10, 10, 0],
+                                                    scale: 1.1,
+                                                }}
+                                                transition={{ duration: 0.5 }}
+                                            >
+                                                {achievement.icon}
+                                            </motion.div>
+                                            <div>
+                                                <h4 className="font-semibold text-white group-hover:text-emerald-400 transition-colors">
+                                                    {achievement.title}
+                                                </h4>
+                                                <p className="text-sm text-zinc-400 mt-1">
+                                                    {achievement.description}
+                                                </p>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <h4 className="font-semibold text-white group-hover:text-emerald-400 transition-colors">
-                                                {achievement.title}
-                                            </h4>
-                                            <p className="text-sm text-zinc-400 mt-1">
-                                                {achievement.description}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </motion.div>
+
+                                        {/* Floating particles - matching hero section */}
+                                        <motion.div
+                                            className="absolute top-2 right-2 w-2 h-2 bg-emerald-400/60 rounded-full"
+                                            animate={{
+                                                scale: [1, 1.5, 1],
+                                                opacity: [0.6, 1, 0.6],
+                                            }}
+                                            transition={{
+                                                duration: 2,
+                                                repeat: Number.POSITIVE_INFINITY,
+                                                delay: index * 0.4,
+                                            }}
+                                        />
+                                    </motion.div>
+                                </MagneticElement>
                             ))}
                         </motion.div>
                     </motion.div>
 
-                    {/* Enhanced Stats Grid */}
+                    {/* Enhanced Stats Grid - consistent with hero section styling */}
                     <motion.div
                         className="grid grid-cols-2 gap-6"
                         initial={{ opacity: 0, x: 50 }}
@@ -335,7 +402,7 @@ export default function AboutSection() {
                                     data-cursor="button"
                                 >
                                     <Card className="bg-zinc-800/40 border-zinc-700/50 hover:border-emerald-400/50 transition-all duration-500 backdrop-blur-sm overflow-hidden group relative">
-                                        {/* Animated background gradient */}
+                                        {/* Animated background gradient - matching hero section */}
                                         <motion.div
                                             className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-teal-500/5 to-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                                             animate={{
@@ -347,12 +414,12 @@ export default function AboutSection() {
                                             }}
                                             transition={{
                                                 duration: 8,
-                                                repeat: Infinity,
+                                                repeat: Number.POSITIVE_INFINITY,
                                                 ease: "linear",
                                             }}
                                         />
 
-                                        {/* Glowing border effect */}
+                                        {/* Glowing border effect - matching navbar */}
                                         <motion.div
                                             className="absolute inset-0 rounded-lg"
                                             animate={{
@@ -364,13 +431,13 @@ export default function AboutSection() {
                                             }}
                                             transition={{
                                                 duration: 3,
-                                                repeat: Infinity,
+                                                repeat: Number.POSITIVE_INFINITY,
                                                 delay: index * 0.5,
                                             }}
                                         />
 
                                         <CardContent className="p-8 text-center relative z-10">
-                                            {/* Enhanced icon with animation */}
+                                            {/* Enhanced icon with animation - matching hero section */}
                                             <motion.div
                                                 className="flex justify-center mb-4"
                                                 whileHover={{
@@ -382,7 +449,7 @@ export default function AboutSection() {
                                                 <div
                                                     className={`p-4 rounded-full ${stat.bgColor} text-emerald-400 relative overflow-hidden group-hover:scale-110 transition-transform duration-300`}
                                                 >
-                                                    {/* Pulsing background */}
+                                                    {/* Pulsing background - matching hero section */}
                                                     <motion.div
                                                         className="absolute inset-0 bg-emerald-400/20 rounded-full"
                                                         animate={{
@@ -393,7 +460,7 @@ export default function AboutSection() {
                                                         }}
                                                         transition={{
                                                             duration: 2,
-                                                            repeat: Infinity,
+                                                            repeat: Number.POSITIVE_INFINITY,
                                                             delay: index * 0.3,
                                                         }}
                                                     />
@@ -403,7 +470,7 @@ export default function AboutSection() {
                                                 </div>
                                             </motion.div>
 
-                                            {/* Enhanced number with counter animation */}
+                                            {/* Enhanced number with gradient - matching hero section */}
                                             <motion.h3
                                                 className={`text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r ${stat.color} mb-2`}
                                                 whileInView={{
@@ -414,6 +481,16 @@ export default function AboutSection() {
                                                     delay: 0.2 * index,
                                                 }}
                                                 viewport={{ once: true }}
+                                                style={{
+                                                    backgroundSize: "200% 200%",
+                                                }}
+                                                animate={{
+                                                    backgroundPosition: [
+                                                        "0% 50%",
+                                                        "100% 50%",
+                                                        "0% 50%",
+                                                    ],
+                                                }}
                                             >
                                                 {stat.title}
                                             </motion.h3>
@@ -426,7 +503,7 @@ export default function AboutSection() {
                                                 {stat.description}
                                             </p>
 
-                                            {/* Decorative elements */}
+                                            {/* Decorative elements - matching hero section */}
                                             <motion.div
                                                 className="absolute top-2 right-2 w-2 h-2 bg-emerald-400/60 rounded-full"
                                                 animate={{
@@ -435,7 +512,7 @@ export default function AboutSection() {
                                                 }}
                                                 transition={{
                                                     duration: 2,
-                                                    repeat: Infinity,
+                                                    repeat: Number.POSITIVE_INFINITY,
                                                     delay: index * 0.4,
                                                 }}
                                             />
@@ -448,7 +525,7 @@ export default function AboutSection() {
                                                 }}
                                                 transition={{
                                                     duration: 2.5,
-                                                    repeat: Infinity,
+                                                    repeat: Number.POSITIVE_INFINITY,
                                                     delay: index * 0.6,
                                                 }}
                                             />
@@ -460,7 +537,7 @@ export default function AboutSection() {
                     </motion.div>
                 </div>
 
-                {/* Additional decorative elements */}
+                {/* Additional decorative elements - matching hero section */}
                 {!isMobile && (
                     <>
                         {/* Large floating orbs */}
@@ -473,7 +550,7 @@ export default function AboutSection() {
                             }}
                             transition={{
                                 duration: 8,
-                                repeat: Infinity,
+                                repeat: Number.POSITIVE_INFINITY,
                                 ease: "easeInOut",
                             }}
                             style={{
@@ -491,40 +568,13 @@ export default function AboutSection() {
                             }}
                             transition={{
                                 duration: 6,
-                                repeat: Infinity,
+                                repeat: Number.POSITIVE_INFINITY,
                                 ease: "easeInOut",
                                 delay: 2,
                             }}
                             style={{
                                 x: smoothMouseX.get() * -2,
                                 y: smoothMouseY.get() * -2,
-                            }}
-                        />
-
-                        {/* Geometric shapes */}
-                        <motion.div
-                            className="absolute top-1/3 left-5 w-4 h-4 border-2 border-emerald-400/30 rotate-45"
-                            animate={{
-                                rotate: [45, 225, 45],
-                                scale: [1, 1.2, 1],
-                            }}
-                            transition={{
-                                duration: 10,
-                                repeat: Infinity,
-                                ease: "linear",
-                            }}
-                        />
-
-                        <motion.div
-                            className="absolute bottom-1/3 right-8 w-6 h-6 border-2 border-teal-400/30 rounded-full"
-                            animate={{
-                                scale: [1, 1.3, 1],
-                                opacity: [0.3, 0.7, 0.3],
-                            }}
-                            transition={{
-                                duration: 4,
-                                repeat: Infinity,
-                                ease: "easeInOut",
                             }}
                         />
                     </>
