@@ -1,11 +1,10 @@
 import BackToTop from "@/components/back-to-top";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
-import PageTransition from "@/components/page-transition";
 import RippleEffect from "@/components/ripple-effect";
 import ScrollProgress from "@/components/scroll-progress";
 import { ThemeProvider } from "@/components/theme-provider";
-import { baseMetadata, generatePersonJsonLd } from "@/lib/metadata";
+import { baseMetadata } from "@/lib/metadata";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import type React from "react";
@@ -22,15 +21,6 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en" suppressHydrationWarning>
-            <head>
-                <link rel="canonical" href="https://md-ali.vercel.app" />
-                <script
-                    type="application/ld+json"
-                    dangerouslySetInnerHTML={{
-                        __html: JSON.stringify(generatePersonJsonLd()),
-                    }}
-                />
-            </head>
             <body className={inter.className}>
                 <ThemeProvider
                     attribute="class"
@@ -42,7 +32,7 @@ export default function RootLayout({
                         <ScrollProgress />
                         <Navbar />
                         <main className="relative z-10">
-                            <PageTransition>{children}</PageTransition>
+                           {children}
                         </main>
                         <RippleEffect />
                         <BackToTop />

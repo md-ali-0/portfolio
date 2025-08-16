@@ -3,26 +3,18 @@
 import { useMobile } from "@/hooks/use-mobile";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import {
-    ArrowRight,
-    Code,
-    Download,
-    Github,
-    Linkedin,
-    Mail,
-    Send,
-    Sparkles,
-    Zap,
+  ArrowRight,
+  Code,
+  Download,
+  Github,
+  Linkedin,
+  Mail,
+  Send,
+  Sparkles,
+  Zap,
 } from "lucide-react";
 import Link from "next/link";
-import { FaNodeJs, FaReact } from "react-icons/fa";
-import {
-    SiMongodb,
-    SiNextdotjs,
-    SiTailwindcss,
-    SiTypescript,
-} from "react-icons/si";
 import AnimatedButton from "../animated-button";
-import MagneticElement from "../magnetic-element";
 
 export default function HomeSection() {
     const isMobile = useMobile();
@@ -35,19 +27,19 @@ export default function HomeSection() {
 
     const socialLinks = [
         {
-            icon: <Github className="h-6 w-6" />,
+            icon: <Github className="h-5 w-5 sm:h-6 sm:w-6" />,
             href: "https://github.com",
             label: "GitHub",
             color: "hover:text-emerald-400",
         },
         {
-            icon: <Linkedin className="h-6 w-6" />,
+            icon: <Linkedin className="h-5 w-5 sm:h-6 sm:w-6" />,
             href: "https://linkedin.com",
             label: "LinkedIn",
             color: "hover:text-blue-400",
         },
         {
-            icon: <Mail className="h-6 w-6" />,
+            icon: <Mail className="h-5 w-5 sm:h-6 sm:w-6" />,
             href: "mailto:contact@example.com",
             label: "Email",
             color: "hover:text-teal-400",
@@ -69,7 +61,7 @@ export default function HomeSection() {
                     }}
                     transition={{
                         duration: 20,
-                        repeat: Infinity,
+                        repeat: Number.POSITIVE_INFINITY,
                         ease: "linear",
                     }}
                 />
@@ -96,7 +88,7 @@ export default function HomeSection() {
                     }}
                     transition={{
                         duration: 8,
-                        repeat: Infinity,
+                        repeat: Number.POSITIVE_INFINITY,
                         ease: "easeInOut",
                     }}
                 />
@@ -109,55 +101,25 @@ export default function HomeSection() {
                             linear-gradient(rgba(16, 185, 129, 0.1) 1px, transparent 1px),
                             linear-gradient(90deg, rgba(16, 185, 129, 0.1) 1px, transparent 1px)
                         `,
-                        backgroundSize: "50px 50px",
+                        backgroundSize:
+                            "30px 30px sm:40px sm:40px md:50px md:50px",
                     }}
                 />
             </div>
 
-            {/* Floating Decorative Elements */}
-            {!isMobile &&
-                Array.from({ length: 12 }, (_, i) => ({
-                    id: i,
-                    x: Math.random() * 100,
-                    y: Math.random() * 100,
-                    delay: Math.random() * 5,
-                    duration: 10 + Math.random() * 10,
-                })).map((element) => (
-                    <motion.div
-                        key={element.id}
-                        className="absolute w-2 h-2 bg-gradient-to-r from-emerald-400/60 to-teal-400/60 rounded-full"
-                        style={{
-                            left: `${element.x}%`,
-                            top: `${element.y}%`,
-                        }}
-                        animate={{
-                            y: [-20, 20, -20],
-                            x: [-10, 10, -10],
-                            opacity: [0.3, 0.8, 0.3],
-                            scale: [1, 1.5, 1],
-                        }}
-                        transition={{
-                            duration: element.duration,
-                            delay: element.delay,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                        }}
-                    />
-                ))}
-
             {/* Main Content */}
-            <motion.div className="container mx-auto py-20 md:py-32 flex flex-col-reverse md:flex-row items-center z-10">
+            <motion.div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 md:py-24 lg:py-32 xl:py-40 flex flex-col-reverse lg:flex-row items-center lg:justify-between z-10">
                 {/* Text Content */}
                 <motion.div
-                    className="md:w-1/2 space-y-8"
+                    className="lg:w-1/2 space-y-4 sm:space-y-6 md:space-y-8 text-center lg:text-left"
                     initial={{ opacity: 0, x: -50 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.8, delay: 0.2 }}
                 >
                     {/* Greeting with animated typing effect */}
-                    <div className="space-y-4">
+                    <div className="space-y-2 sm:space-y-3 md:space-y-4">
                         <motion.div
-                            className="flex items-center space-x-2"
+                            className="flex items-center justify-center lg:justify-start space-x-2"
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5, delay: 0.4 }}
@@ -166,14 +128,14 @@ export default function HomeSection() {
                                 animate={{ rotate: [0, 20, 0] }}
                                 transition={{
                                     duration: 2,
-                                    repeat: Infinity,
+                                    repeat: Number.POSITIVE_INFINITY,
                                     repeatDelay: 3,
                                 }}
                             >
-                                <Sparkles className="h-6 w-6 text-emerald-400" />
+                                <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-emerald-400" />
                             </motion.div>
                             <motion.h2
-                                className="text-emerald-400 text-xl font-medium"
+                                className="text-emerald-400 text-base sm:text-lg md:text-xl lg:text-xl xl:text-2xl font-medium"
                                 style={{
                                     x: !isMobile
                                         ? smoothMouseX.get() * -0.5
@@ -187,9 +149,8 @@ export default function HomeSection() {
                             </motion.h2>
                         </motion.div>
 
-                        {/* Enhanced Name with advanced gradient */}
                         <motion.h1
-                            className="text-5xl md:text-7xl font-bold relative"
+                            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold relative leading-tight"
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 0.6 }}
@@ -215,7 +176,7 @@ export default function HomeSection() {
                                 }}
                                 transition={{
                                     duration: 5,
-                                    repeat: Infinity,
+                                    repeat: Number.POSITIVE_INFINITY,
                                     ease: "linear",
                                 }}
                                 style={{
@@ -225,32 +186,31 @@ export default function HomeSection() {
                                 Mohammad Ali
                             </motion.span>
 
-                            {/* Floating particles around name */}
-                            {[...Array(6)].map((_, i) => (
-                                <motion.div
-                                    key={i}
-                                    className="absolute w-1 h-1 bg-emerald-400 rounded-full"
-                                    style={{
-                                        top: `${20 + i * 10}%`,
-                                        left: `${100 + i * 5}%`,
-                                    }}
-                                    animate={{
-                                        y: [0, -15, 0],
-                                        opacity: [0.4, 1, 0.4],
-                                        scale: [1, 1.5, 1],
-                                    }}
-                                    transition={{
-                                        duration: 2 + i * 0.3,
-                                        repeat: Infinity,
-                                        delay: i * 0.2,
-                                    }}
-                                />
-                            ))}
+                            {!isMobile &&
+                                [...Array(6)].map((_, i) => (
+                                    <motion.div
+                                        key={i}
+                                        className="absolute w-1 h-1 bg-emerald-400 rounded-full"
+                                        style={{
+                                            top: `${20 + i * 10}%`,
+                                            left: `${100 + i * 5}%`,
+                                        }}
+                                        animate={{
+                                            y: [0, -15, 0],
+                                            opacity: [0.4, 1, 0.4],
+                                            scale: [1, 1.5, 1],
+                                        }}
+                                        transition={{
+                                            duration: 2 + i * 0.3,
+                                            repeat: Number.POSITIVE_INFINITY,
+                                            delay: i * 0.2,
+                                        }}
+                                    />
+                                ))}
                         </motion.h1>
 
-                        {/* Enhanced Role Title */}
                         <motion.div
-                            className="flex items-center space-x-3"
+                            className="flex items-center justify-center lg:justify-start space-x-2 md:space-x-3"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ duration: 0.5, delay: 0.8 }}
@@ -262,14 +222,14 @@ export default function HomeSection() {
                                 }}
                                 transition={{
                                     duration: 3,
-                                    repeat: Infinity,
+                                    repeat: Number.POSITIVE_INFINITY,
                                     ease: "easeInOut",
                                 }}
                             >
-                                <Code className="h-8 w-8 text-teal-400" />
+                                <Code className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 lg:h-8 lg:w-8 text-teal-400" />
                             </motion.div>
                             <motion.h3
-                                className="text-2xl md:text-4xl text-zinc-300 font-semibold"
+                                className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl text-zinc-300 font-semibold"
                                 style={{
                                     x: !isMobile
                                         ? smoothMouseX.get() * -0.7
@@ -286,13 +246,13 @@ export default function HomeSection() {
 
                     {/* Enhanced Description */}
                     <motion.div
-                        className="space-y-4"
+                        className="space-y-3 sm:space-y-4"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.5, delay: 1 }}
                     >
                         <motion.p
-                            className="text-zinc-400 text-lg leading-relaxed max-w-xl"
+                            className="text-zinc-400 text-sm sm:text-base md:text-lg lg:text-lg xl:text-xl leading-relaxed max-w-xl mx-auto lg:mx-0"
                             style={{
                                 x: !isMobile ? smoothMouseX.get() * -0.3 : 0,
                                 y: !isMobile ? smoothMouseY.get() * -0.3 : 0,
@@ -306,9 +266,8 @@ export default function HomeSection() {
                             with creativity and expertise.
                         </motion.p>
 
-                        {/* Stats */}
                         <motion.div
-                            className="flex space-x-8 pt-4"
+                            className="flex flex-wrap justify-center lg:justify-start gap-4 sm:gap-6 md:gap-8 lg:gap-10 pt-3 sm:pt-4"
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5, delay: 1.1 }}
@@ -323,10 +282,10 @@ export default function HomeSection() {
                                     className="text-center"
                                     whileHover={{ scale: 1.05 }}
                                 >
-                                    <div className="text-2xl font-bold text-emerald-400">
+                                    <div className="text-lg sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl font-bold text-emerald-400">
                                         {stat.number}
                                     </div>
-                                    <div className="text-sm text-zinc-500">
+                                    <div className="text-xs sm:text-sm md:text-sm lg:text-base text-zinc-500">
                                         {stat.label}
                                     </div>
                                 </motion.div>
@@ -334,117 +293,107 @@ export default function HomeSection() {
                         </motion.div>
                     </motion.div>
 
-                    {/* Enhanced Action Buttons */}
                     <motion.div
-                        className="flex flex-wrap gap-4 pt-6"
+                        className="flex flex-col sm:flex-row flex-wrap justify-center lg:justify-start gap-3 sm:gap-4 md:gap-4 lg:gap-5 pt-4 sm:pt-6"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 1.2 }}
                     >
-                        <MagneticElement strength={80}>
-                            <motion.div
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
+                        <motion.div
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                        >
+                            <AnimatedButton
+                                className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white shadow-lg shadow-emerald-500/25 w-full sm:w-auto text-sm sm:text-base px-4 sm:px-6 py-2 sm:py-3"
+                                dataCursorText="Let's Talk"
                             >
-                                <AnimatedButton
-                                    className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white shadow-lg shadow-emerald-500/25"
-                                    dataCursorText="Let's Talk"
+                                <motion.div
+                                    animate={{ x: [0, 5, 0] }}
+                                    transition={{
+                                        duration: 2,
+                                        repeat: Number.POSITIVE_INFINITY,
+                                        ease: "easeInOut",
+                                    }}
                                 >
-                                    <motion.div
-                                        animate={{ x: [0, 5, 0] }}
-                                        transition={{
-                                            duration: 2,
-                                            repeat: Infinity,
-                                            ease: "easeInOut",
-                                        }}
-                                    >
-                                        Contact Me
-                                    </motion.div>
-                                    <Send className="ml-2 h-4 w-4" />
-                                </AnimatedButton>
-                            </motion.div>
-                        </MagneticElement>
+                                    Contact Me
+                                </motion.div>
+                                <Send className="ml-2 h-4 w-4" />
+                            </AnimatedButton>
+                        </motion.div>
 
-                        <MagneticElement strength={60}>
-                            <motion.div
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                            >
-                                <Link href={"/projects"}>
-                                    <AnimatedButton
-                                        variant="outline"
-                                        className="border-2 border-emerald-400/50 text-emerald-400 hover:bg-emerald-400/10 backdrop-blur-sm"
-                                        dataCursorText="See Projects"
-                                    >
-                                        View Projects
-                                        <ArrowRight className="ml-2 h-4 w-4" />
-                                    </AnimatedButton>
-                                </Link>
-                            </motion.div>
-                        </MagneticElement>
-
-                        <MagneticElement strength={60}>
-                            <motion.div
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                            >
+                        <motion.div
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                        >
+                            <Link href={"/projects"}>
                                 <AnimatedButton
                                     variant="outline"
-                                    className="border-2 border-zinc-600 text-zinc-300 hover:border-zinc-500 hover:text-white backdrop-blur-sm"
-                                    dataCursorText="Download CV"
+                                    className="border-2 border-emerald-400/50 text-emerald-400 hover:bg-emerald-400/10 backdrop-blur-sm w-full sm:w-auto text-sm sm:text-base px-4 sm:px-6 py-2 sm:py-3"
+                                    dataCursorText="See Projects"
                                 >
-                                    <motion.div
-                                        animate={{ y: [0, -2, 0] }}
-                                        transition={{
-                                            duration: 1.5,
-                                            repeat: Infinity,
-                                            ease: "easeInOut",
-                                        }}
-                                    >
-                                        <Download className="mr-2 h-4 w-4" />
-                                    </motion.div>
-                                    Resume
+                                    View Projects
+                                    <ArrowRight className="ml-2 h-4 w-4" />
                                 </AnimatedButton>
-                            </motion.div>
-                        </MagneticElement>
+                            </Link>
+                        </motion.div>
+
+                        <motion.div
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                        >
+                            <AnimatedButton
+                                variant="outline"
+                                className="border-2 border-zinc-600 text-zinc-300 hover:border-zinc-500 hover:text-white backdrop-blur-sm w-full sm:w-auto text-sm sm:text-base px-4 sm:px-6 py-2 sm:py-3"
+                                dataCursorText="Download CV"
+                            >
+                                <motion.div
+                                    animate={{ y: [0, -2, 0] }}
+                                    transition={{
+                                        duration: 1.5,
+                                        repeat: Number.POSITIVE_INFINITY,
+                                        ease: "easeInOut",
+                                    }}
+                                >
+                                    <Download className="mr-2 h-4 w-4" />
+                                </motion.div>
+                                Resume
+                            </AnimatedButton>
+                        </motion.div>
                     </motion.div>
 
-                    {/* Enhanced Social Links */}
                     <motion.div
-                        className="flex gap-6 pt-8"
+                        className="flex justify-center lg:justify-start gap-3 sm:gap-4 md:gap-5 lg:gap-6 pt-4 sm:pt-6 md:pt-8"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.5, delay: 1.4 }}
                     >
                         {socialLinks.map((social, index) => (
-                            <MagneticElement key={index} strength={100}>
-                                <motion.div
-                                    whileHover={{
-                                        scale: 1.1,
-                                        rotate: [0, -10, 10, 0],
-                                    }}
-                                    transition={{
-                                        rotate: { duration: 0.5 },
-                                        scale: { duration: 0.2 },
-                                    }}
+                            <motion.div
+                                key={index}
+                                whileHover={{
+                                    scale: 1.1,
+                                    rotate: [0, -10, 10, 0],
+                                }}
+                                transition={{
+                                    rotate: { duration: 0.5 },
+                                    scale: { duration: 0.2 },
+                                }}
+                            >
+                                <Link
+                                    href={social.href}
+                                    className={`text-zinc-400 ${social.color} transition-all duration-300 p-2 sm:p-3 md:p-3 lg:p-4 rounded-full border border-zinc-700 hover:border-emerald-400/50 backdrop-blur-sm bg-zinc-900/30 hover:bg-zinc-800/50 block`}
+                                    data-cursor="link"
+                                    data-cursor-text={social.label}
                                 >
-                                    <Link
-                                        href={social.href}
-                                        className={`text-zinc-400 ${social.color} transition-all duration-300 p-3 rounded-full border border-zinc-700 hover:border-emerald-400/50 backdrop-blur-sm bg-zinc-900/30 hover:bg-zinc-800/50 block`}
-                                        data-cursor="link"
-                                        data-cursor-text={social.label}
-                                    >
-                                        {social.icon}
-                                    </Link>
-                                </motion.div>
-                            </MagneticElement>
+                                    {social.icon}
+                                </Link>
+                            </motion.div>
                         ))}
                     </motion.div>
                 </motion.div>
 
-                {/* Enhanced Image Section */}
                 <motion.div
-                    className="md:w-1/2 mb-12 md:mb-0 flex justify-center"
+                    className="lg:w-1/2 mb-8 sm:mb-10 md:mb-12 lg:mb-0 flex justify-center"
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.8, delay: 0.4 }}
@@ -456,8 +405,8 @@ export default function HomeSection() {
                 >
                     <div className="relative">
                         {/* Large decorative background */}
-                        <motion.div
-                            className="absolute -inset-20 rounded-full opacity-30"
+                        <div
+                            className="absolute -inset-6 sm:-inset-8 md:-inset-12 lg:-inset-16 xl:-inset-20 rounded-full opacity-30"
                             style={{
                                 background: `
                                     radial-gradient(circle at 30% 30%, rgba(16, 185, 129, 0.2) 0%, transparent 50%),
@@ -465,128 +414,36 @@ export default function HomeSection() {
                                     radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.1) 0%, transparent 60%)
                                 `,
                             }}
-                            animate={{
-                                scale: [1, 1.1, 1],
-                                rotate: [0, 10, 0],
-                            }}
-                            transition={{
-                                duration: 12,
-                                repeat: Infinity,
-                                ease: "easeInOut",
-                            }}
                         />
 
                         {/* Outer rotating ring with enhanced design */}
                         <motion.div
-                            className="absolute -top-8 -left-8 w-[calc(100%+64px)] h-[calc(100%+64px)] rounded-full"
+                            className="absolute -top-3 -left-3 sm:-top-4 sm:-left-4 md:-top-6 md:-left-6 lg:-top-8 lg:-left-8 w-[calc(100%+24px)] sm:w-[calc(100%+32px)] md:w-[calc(100%+48px)] lg:w-[calc(100%+64px)] h-[calc(100%+24px)] sm:h-[calc(100%+32px)] md:h-[calc(100%+48px)] lg:h-[calc(100%+64px)] rounded-full"
                             animate={{ rotate: [0, 360] }}
                             transition={{
                                 duration: 50,
-                                repeat: Infinity,
+                                repeat: Number.POSITIVE_INFINITY,
                                 ease: "linear",
                             }}
                         >
-                            <div className="w-full h-full rounded-full border-4 border-dashed border-emerald-400/40" />
-                            {/* Dots on the ring */}
-                            {[...Array(8)].map((_, i) => (
-                                <motion.div
-                                    key={i}
-                                    className="absolute w-3 h-3 bg-emerald-400 rounded-full"
-                                    style={{
-                                        top: `${
-                                            50 +
-                                            45 * Math.cos((i * Math.PI * 2) / 8)
-                                        }%`,
-                                        left: `${
-                                            50 +
-                                            45 * Math.sin((i * Math.PI * 2) / 8)
-                                        }%`,
-                                        transform: "translate(-50%, -50%)",
-                                    }}
-                                    animate={{
-                                        scale: [1, 1.5, 1],
-                                        opacity: [0.5, 1, 0.5],
-                                    }}
-                                    transition={{
-                                        duration: 2,
-                                        repeat: Infinity,
-                                        delay: i * 0.25,
-                                    }}
-                                />
-                            ))}
+                            <div className="w-full h-full rounded-full border-2 sm:border-2 md:border-3 lg:border-4 border-dashed border-emerald-400/40" />
                         </motion.div>
 
-                        {/* Middle ring */}
                         <motion.div
-                            className="absolute -top-4 -left-4 w-[calc(100%+32px)] h-[calc(100%+32px)] rounded-full border-2 border-emerald-400/60"
-                            animate={{ rotate: [360, 0] }}
-                            transition={{
-                                duration: 35,
-                                repeat: Infinity,
-                                ease: "linear",
-                            }}
-                        />
-
-                        {/* Profile image with advanced styling */}
-                        <motion.div
-                            className="w-72 h-72 md:w-96 md:h-96 relative z-10"
+                            className="w-48 h-48 sm:w-56 sm:h-56 md:w-72 md:h-72 lg:w-80 lg:h-80 xl:w-96 xl:h-96 relative z-10"
                             whileHover={{ scale: 1.05 }}
                             transition={{ duration: 0.3 }}
                             data-cursor="image"
                         >
                             <div className="w-full h-full relative overflow-hidden">
                                 {/* Animated border with lightning effect */}
-                                <motion.div
-                                    className="absolute inset-0 rounded-[30%_70%_70%_30%/30%_30%_70%_70%] bg-gradient-to-r from-emerald-500 via-teal-400 to-emerald-500"
-                                    animate={{
-                                        borderRadius: [
-                                            "30% 70% 70% 30% / 30% 30% 70% 70%",
-                                            "70% 30% 30% 70% / 70% 70% 30% 30%",
-                                            "50% 50% 50% 50% / 50% 50% 50% 50%",
-                                            "30% 70% 70% 30% / 30% 30% 70% 70%",
-                                        ],
-                                    }}
-                                    transition={{
-                                        duration: 10,
-                                        repeat: Infinity,
-                                        ease: "easeInOut",
-                                    }}
-                                >
+                                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-emerald-500/40 via-teal-400/40 to-emerald-500/40">
                                     {/* Lightning effect */}
-                                    <motion.div
-                                        className="absolute inset-0 rounded-[inherit]"
-                                        animate={{
-                                            boxShadow: [
-                                                "0 0 20px rgba(16, 185, 129, 0.5)",
-                                                "0 0 40px rgba(16, 185, 129, 0.8)",
-                                                "0 0 20px rgba(16, 185, 129, 0.5)",
-                                            ],
-                                        }}
-                                        transition={{
-                                            duration: 3,
-                                            repeat: Infinity,
-                                            ease: "easeInOut",
-                                        }}
-                                    />
-                                </motion.div>
+                                    <div className="absolute inset-0 rounded-[inherit]" />
+                                </div>
 
                                 {/* Image container */}
-                                <motion.div
-                                    className="absolute inset-4 overflow-hidden rounded-[30%_70%_70%_30%/30%_30%_70%_70%] bg-zinc-900"
-                                    animate={{
-                                        borderRadius: [
-                                            "30% 70% 70% 30% / 30% 30% 70% 70%",
-                                            "70% 30% 30% 70% / 70% 70% 30% 30%",
-                                            "50% 50% 50% 50% / 50% 50% 50% 50%",
-                                            "30% 70% 70% 30% / 30% 30% 70% 70%",
-                                        ],
-                                    }}
-                                    transition={{
-                                        duration: 10,
-                                        repeat: Infinity,
-                                        ease: "easeInOut",
-                                    }}
-                                >
+                                <div className="absolute inset-1 sm:inset-1 md:inset-2 lg:inset-2 overflow-hidden rounded-full bg-zinc-900">
                                     <img
                                         src="/profile-image.png"
                                         alt="Ali - Full Stack Developer"
@@ -595,153 +452,45 @@ export default function HomeSection() {
 
                                     {/* Overlay gradient */}
                                     <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/20 via-transparent to-emerald-500/10" />
-                                </motion.div>
+                                </div>
                             </div>
-
-                            {/* Tech stack indicators floating around image */}
-                            {[
-                                { icon: <FaReact />, name: "React", angle: 0 },
-                                {
-                                    icon: <SiNextdotjs />,
-                                    name: "Next.js",
-                                    angle: 60,
-                                },
-                                {
-                                    icon: <FaNodeJs />,
-                                    name: "Node.js",
-                                    angle: 120,
-                                },
-                                {
-                                    icon: <SiTypescript />,
-                                    name: "TypeScript",
-                                    angle: 180,
-                                },
-                                {
-                                    icon: <SiTailwindcss />,
-                                    name: "Tailwind",
-                                    angle: 240,
-                                },
-                                {
-                                    icon: <SiMongodb />,
-                                    name: "MongoDB",
-                                    angle: 300,
-                                },
-                            ].map((tech, i) => (
-                                <motion.div
-                                    key={tech.name}
-                                    className="absolute w-12 h-12 bg-zinc-900/80 backdrop-blur-sm border border-emerald-400/30 rounded-full flex items-center justify-center text-xl text-emerald-700"
-                                    style={{
-                                        top: `${
-                                            50 +
-                                            60 *
-                                                Math.cos(
-                                                    (tech.angle * Math.PI) / 180
-                                                )
-                                        }%`,
-                                        left: `${
-                                            50 +
-                                            60 *
-                                                Math.sin(
-                                                    (tech.angle * Math.PI) / 180
-                                                )
-                                        }%`,
-                                        transform: "translate(-50%, -50%)",
-                                    }}
-                                    animate={{
-                                        y: [0, -10, 0],
-                                        scale: [1, 1.1, 1],
-                                    }}
-                                    transition={{
-                                        duration: 3 + i * 0.5,
-                                        repeat: Infinity,
-                                        delay: i * 0.5,
-                                    }}
-                                    whileHover={{
-                                        scale: 1.2,
-                                        borderColor: "rgba(16, 185, 129, 0.8)",
-                                    }}
-                                    data-cursor="tech"
-                                    title={tech.name}
-                                >
-                                    {tech.icon}
-                                </motion.div>
-                            ))}
                         </motion.div>
 
-                        {/* Enhanced floating orbs with different sizes and colors */}
                         {[
                             {
-                                size: 32,
-                                color: "emerald",
-                                position: { bottom: -16, right: -16 },
-                            },
-                            {
                                 size: 24,
-                                color: "teal",
-                                position: { top: -12, right: 20 },
+                                color: "emerald",
+                                position: { bottom: -8, right: -8 },
+                                smPosition: { bottom: -10, right: -10 },
+                                mdPosition: { bottom: -12, right: -12 },
                             },
                             {
-                                size: 20,
+                                size: 18,
+                                color: "teal",
+                                position: { top: -6, right: 12 },
+                                smPosition: { top: -8, right: 15 },
+                                mdPosition: { top: -8, right: 15 },
+                            },
+                            {
+                                size: 16,
                                 color: "cyan",
-                                position: { bottom: 20, left: -12 },
+                                position: { bottom: 12, left: -6 },
+                                smPosition: { bottom: 15, left: -8 },
+                                mdPosition: { bottom: 15, left: -8 },
                             },
                         ].map((orb, i) => (
-                            <motion.div
+                            <div
                                 key={i}
-                                className={`absolute w-${orb.size / 4} h-${
-                                    orb.size / 4
-                                } bg-gradient-to-r from-${orb.color}-500 to-${
-                                    orb.color
-                                }-400 rounded-full blur-xl opacity-70`}
+                                className={`absolute w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 lg:w-8 lg:h-8 bg-gradient-to-r from-${orb.color}-500 to-${orb.color}-400 rounded-full blur-xl opacity-70`}
                                 style={orb.position}
-                                animate={{
-                                    scale: [1, 1.3, 1],
-                                    opacity: [0.5, 0.8, 0.5],
-                                }}
-                                transition={{
-                                    duration: 4 + i,
-                                    repeat: Infinity,
-                                    delay: i * 0.8,
-                                }}
-                            />
-                        ))}
-
-                        {/* Orbiting particles */}
-                        {[...Array(8)].map((_, i) => (
-                            <motion.div
-                                key={i}
-                                className="absolute w-2 h-2 rounded-full bg-emerald-400/80"
-                                style={{
-                                    top: `${50}%`,
-                                    left: `${50}%`,
-                                    transform: "translate(-50%, -50%)",
-                                }}
-                                animate={{
-                                    rotate: [0, 360],
-                                    x: [
-                                        0,
-                                        150 * Math.cos((i * Math.PI * 2) / 8),
-                                    ],
-                                    y: [
-                                        0,
-                                        150 * Math.sin((i * Math.PI * 2) / 8),
-                                    ],
-                                }}
-                                transition={{
-                                    duration: 15,
-                                    repeat: Infinity,
-                                    ease: "linear",
-                                    delay: i * 0.3,
-                                }}
                             />
                         ))}
                     </div>
                 </motion.div>
             </motion.div>
 
-            {/* Enhanced Scroll Indicator */}
             <motion.div
-                className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center z-10"
+                className="hidden lg:flex absolute bottom-6 xl:bottom-10 left-1/2 transform -translate-x-1/2 flex-col items-center z-10"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 2 }}
@@ -751,37 +500,40 @@ export default function HomeSection() {
                     animate={{ y: [0, 10, 0] }}
                     transition={{
                         duration: 2,
-                        repeat: Infinity,
+                        repeat: Number.POSITIVE_INFINITY,
                         ease: "easeInOut",
                     }}
                     whileHover={{ scale: 1.1 }}
                 >
                     <motion.div className="text-emerald-400 mb-2 group-hover:text-emerald-300 transition-colors">
-                        <Zap className="h-6 w-6" />
+                        <Zap className="h-5 w-5 lg:h-6 lg:w-6" />
                     </motion.div>
                     <motion.div
-                        className="w-6 h-10 border-2 border-emerald-400/60 rounded-full flex justify-center relative group-hover:border-emerald-400 transition-colors"
+                        className="w-5 h-8 lg:w-6 lg:h-10 border-2 border-emerald-400/60 rounded-full flex justify-center relative group-hover:border-emerald-400 transition-colors"
                         whileHover={{
                             boxShadow: "0 0 20px rgba(16, 185, 129, 0.4)",
                         }}
                     >
                         <motion.div
-                            className="w-1 h-3 bg-emerald-400 rounded-full mt-2"
+                            className="w-1 h-2 lg:h-3 bg-emerald-400 rounded-full mt-1 lg:mt-2"
                             animate={{
-                                y: [0, 12, 0],
+                                y: [0, 10, 0],
                                 opacity: [1, 0.3, 1],
                             }}
                             transition={{
                                 duration: 1.5,
-                                repeat: Infinity,
+                                repeat: Number.POSITIVE_INFINITY,
                                 ease: "easeInOut",
                             }}
                         />
                     </motion.div>
                     <motion.span
-                        className="text-xs text-zinc-500 mt-3 group-hover:text-zinc-400 transition-colors"
+                        className="text-xs text-zinc-500 mt-2 lg:mt-3 group-hover:text-zinc-400 transition-colors"
                         animate={{ opacity: [0.5, 1, 0.5] }}
-                        transition={{ duration: 2, repeat: Infinity }}
+                        transition={{
+                            duration: 2,
+                            repeat: Number.POSITIVE_INFINITY,
+                        }}
                     >
                         Explore More
                     </motion.span>

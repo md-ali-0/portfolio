@@ -133,7 +133,7 @@ const ProjectCard = ({
                 viewport={{ once: true }}
             >
                
-                    <Card className="bg-gradient-to-br from-zinc-800/90 via-zinc-800/70 to-zinc-900/90 border border-emerald-400/30 hover:border-emerald-400/60 transition-all duration-700 h-full backdrop-blur-xl overflow-hidden relative h-full">
+                    <Card className="bg-gradient-to-br from-zinc-800/90 via-zinc-800/70 to-zinc-900/90 border border-emerald-400/30 hover:border-emerald-400/60 transition-all duration-700 backdrop-blur-xl overflow-hidden relative h-full">
                         {/* Enhanced featured badge */}
                         <motion.div
                             className="absolute top-6 right-6 z-20"
