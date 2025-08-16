@@ -1,32 +1,32 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { notFound } from "next/navigation"
-import { motion } from "framer-motion"
-import Link from "next/link"
-import {
-  ArrowLeft,
-  Calendar,
-  Clock,
-  Tag,
-  Share2,
-  Bookmark,
-  Heart,
-  MessageCircle,
-  Github,
-  Linkedin,
-  Mail,
-} from "lucide-react"
-import { Button } from "@/components/ui/button"
+import AnimatedButton from "@/components/animated-button"
+import BackToTop from "@/components/back-to-top"
 import CursorAlternative from "@/components/cursor-alternative"
 import DarkPatternBackground from "@/components/dark-pattern-background"
-import RippleEffect from "@/components/ripple-effect"
-import BackToTop from "@/components/back-to-top"
 import MagneticElement from "@/components/magnetic-element"
-import AnimatedButton from "@/components/animated-button"
-import { useMobile } from "@/hooks/use-mobile"
+import RippleEffect from "@/components/ripple-effect"
+import { Button } from "@/components/ui/button"
 import { blogPosts } from "@/data/blog-data"
+import { useMobile } from "@/hooks/use-mobile"
 import { generateBlogJsonLd } from "@/lib/metadata"
+import { motion } from "framer-motion"
+import {
+  ArrowLeft,
+  Bookmark,
+  Calendar,
+  Clock,
+  Github,
+  Heart,
+  Linkedin,
+  Mail,
+  MessageCircle,
+  Share2,
+  Tag,
+} from "lucide-react"
+import Link from "next/link"
+import { notFound } from "next/navigation"
+import { useEffect, useState } from "react"
 
 export default function BlogPostClient({ params }: { params: { slug: string } }) {
   const slug = params.slug

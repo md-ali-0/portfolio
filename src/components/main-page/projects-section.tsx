@@ -5,11 +5,11 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { useMobile } from "@/hooks/use-mobile";
 import {
-  motion,
-  useMotionValue,
-  useScroll,
-  useSpring,
-  useTransform,
+    motion,
+    useMotionValue,
+    useScroll,
+    useSpring,
+    useTransform,
 } from "framer-motion";
 import { ArrowRight, ExternalLink, Github, Rocket, Star } from "lucide-react";
 import AnimatedButton from "../animated-button";
@@ -132,8 +132,8 @@ const ProjectCard = ({
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
             >
-                <MagneticElement strength={20} className="h-full">
-                    <Card className="bg-gradient-to-br from-zinc-800/90 via-zinc-800/70 to-zinc-900/90 border border-emerald-400/30 hover:border-emerald-400/60 transition-all duration-700 h-full backdrop-blur-xl overflow-hidden relative">
+               
+                    <Card className="bg-gradient-to-br from-zinc-800/90 via-zinc-800/70 to-zinc-900/90 border border-emerald-400/30 hover:border-emerald-400/60 transition-all duration-700 h-full backdrop-blur-xl overflow-hidden relative h-full">
                         {/* Enhanced featured badge */}
                         <motion.div
                             className="absolute top-6 right-6 z-20"
@@ -294,7 +294,6 @@ const ProjectCard = ({
                             </CardContent>
                         </div>
                     </Card>
-                </MagneticElement>
             </motion.div>
         );
     }
@@ -309,7 +308,7 @@ const ProjectCard = ({
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
             >
-                <MagneticElement strength={10}>
+                
                     <Card className="bg-gradient-to-r from-zinc-800/90 via-zinc-800/70 to-zinc-900/90 border border-teal-400/30 hover:border-teal-400/60 transition-all duration-700 h-64 backdrop-blur-xl overflow-hidden relative">
                         {/* Diagonal accent line */}
                         <motion.div
@@ -427,7 +426,6 @@ const ProjectCard = ({
                             </CardContent>
                         </div>
                     </Card>
-                </MagneticElement>
             </motion.div>
         );
     }
@@ -442,7 +440,7 @@ const ProjectCard = ({
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
             >
-                <MagneticElement strength={55}>
+                
                     <Card className="bg-gradient-to-b from-zinc-800/90 via-zinc-800/70 to-zinc-900/90 border border-purple-400/30 hover:border-purple-400/60 transition-all duration-700 h-full backdrop-blur-xl overflow-hidden relative">
                         {/* Corner accent animations */}
                         <motion.div
@@ -557,7 +555,6 @@ const ProjectCard = ({
                             </div>
                         </CardContent>
                     </Card>
-                </MagneticElement>
             </motion.div>
         );
     }
@@ -572,7 +569,6 @@ const ProjectCard = ({
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
             >
-                <MagneticElement strength={40}>
                     <Card className="bg-gradient-to-br from-zinc-800/90 via-zinc-800/70 to-zinc-900/90 border border-orange-400/30 hover:border-orange-400/60 transition-all duration-700 h-full backdrop-blur-xl overflow-hidden relative">
                         {/* Pulsing glow effect */}
                         <motion.div
@@ -672,7 +668,6 @@ const ProjectCard = ({
                             </CardContent>
                         </div>
                     </Card>
-                </MagneticElement>
             </motion.div>
         );
     }
@@ -686,7 +681,6 @@ const ProjectCard = ({
             transition={{ duration: 0.5, delay: index * 0.1 }}
             viewport={{ once: true }}
         >
-            <MagneticElement strength={50}>
                 <Card className="bg-gradient-to-br from-zinc-800/90 via-zinc-800/70 to-zinc-900/90 border border-emerald-400/20 hover:border-emerald-400/50 transition-all duration-500 h-full backdrop-blur-xl overflow-hidden relative group-hover:shadow-2xl group-hover:shadow-emerald-400/20">
                     {/* Enhanced animated border */}
                     <motion.div
@@ -823,7 +817,6 @@ const ProjectCard = ({
                         </div>
                     </CardContent>
                 </Card>
-            </MagneticElement>
         </motion.div>
     );
 };

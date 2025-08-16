@@ -1,6 +1,5 @@
 "use client";
 
-import MagneticElement from "@/components/magnetic-element";
 import { Card, CardContent } from "@/components/ui/card";
 import { useMobile } from "@/hooks/use-mobile";
 import {
@@ -293,7 +292,7 @@ export default function AboutSection() {
                             viewport={{ once: true }}
                         >
                             {achievements.map((achievement, index) => (
-                                <MagneticElement key={index} strength={60}>
+                                
                                     <motion.div
                                         className="group p-4 rounded-lg bg-zinc-800/30 border border-zinc-700/50 hover:border-emerald-400/50 transition-all duration-300 backdrop-blur-sm relative overflow-hidden"
                                         whileHover={{
@@ -362,7 +361,6 @@ export default function AboutSection() {
                                             }}
                                         />
                                     </motion.div>
-                                </MagneticElement>
                             ))}
                         </motion.div>
                     </motion.div>
@@ -376,7 +374,6 @@ export default function AboutSection() {
                         viewport={{ once: true, margin: "-100px" }}
                     >
                         {stats.map((stat, index) => (
-                            <MagneticElement key={index} strength={60}>
                                 <motion.div
                                     initial={{ opacity: 0, y: 30 }}
                                     whileInView={{ opacity: 1, y: 0 }}
@@ -532,7 +529,6 @@ export default function AboutSection() {
                                         </CardContent>
                                     </Card>
                                 </motion.div>
-                            </MagneticElement>
                         ))}
                     </motion.div>
                 </div>

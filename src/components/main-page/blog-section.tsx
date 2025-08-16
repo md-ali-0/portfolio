@@ -82,7 +82,6 @@ const BlogCard = ({ post, index }: { post: any; index: number }) => {
             viewport={{ once: true }}
             whileHover={{ y: -10, rotateX: 5 }}
         >
-            <MagneticElement strength={30}>
                 <Card className="bg-gradient-to-br from-zinc-900/95 via-zinc-800/90 to-zinc-900/95 border-0 h-full backdrop-blur-xl overflow-hidden relative group-hover:shadow-2xl group-hover:shadow-emerald-400/25 transition-all duration-700">
                     {/* Animated gradient border */}
                     <motion.div
@@ -261,7 +260,6 @@ const BlogCard = ({ post, index }: { post: any; index: number }) => {
                         </CardContent>
                     </div>
                 </Card>
-            </MagneticElement>
         </motion.div>
     );
 };

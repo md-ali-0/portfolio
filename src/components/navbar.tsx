@@ -13,7 +13,6 @@ import { Download, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import AnimatedButton from "./animated-button";
-import MagneticElement from "./magnetic-element";
 
 export default function Navbar() {
     const isMobile = useMobile();
@@ -181,7 +180,6 @@ export default function Navbar() {
             <div className="container mx-auto py-5 relative z-10">
                 <nav className="flex justify-between items-center">
                     {/* Enhanced Logo */}
-                    <MagneticElement strength={60}>
                         <motion.div
                             style={{
                                 x: !isMobile ? smoothMouseX.get() * -2 : 0,
@@ -261,12 +259,10 @@ export default function Navbar() {
                                 </motion.div>
                             </Link>
                         </motion.div>
-                    </MagneticElement>
 
                     {/* Desktop Navigation */}
                     <div className="hidden md:flex gap-8 items-center">
                         {navItems.map((item, index) => (
-                            <MagneticElement key={item.name} strength={50}>
                                 <motion.div
                                     style={{
                                         x: !isMobile
@@ -353,13 +349,11 @@ export default function Navbar() {
                                             )} */}
                                     </Link>
                                 </motion.div>
-                            </MagneticElement>
                         ))}
                     </div>
 
                     {/* Enhanced Resume Button */}
                     <div className="flex items-center gap-4">
-                        <MagneticElement strength={80}>
                             <AnimatedButton
                                 variant="outline"
                                 className="relative border-2 border-emerald-400/50 text-emerald-400 hover:text-white hover:border-emerald-400 transition-all duration-300 overflow-hidden group"
@@ -401,11 +395,9 @@ export default function Navbar() {
                                     transition={{ duration: 0.3 }}
                                 />
                             </AnimatedButton>
-                        </MagneticElement>
 
                         {/* Mobile Menu Toggle */}
                         {isMobile && (
-                            <MagneticElement strength={60}>
                                 <motion.button
                                     onClick={() => setIsMenuOpen(!isMenuOpen)}
                                     className="md:hidden p-2 text-emerald-400 relative"
@@ -468,7 +460,6 @@ export default function Navbar() {
                                         }}
                                     />
                                 </motion.button>
-                            </MagneticElement>
                         )}
                     </div>
                 </nav>
