@@ -238,7 +238,7 @@ export default function Navbar() {
                                 {/* Floating particles around logo */}
                                 {[...Array(3)].map((_, i) => (
                                     <motion.div
-                                        key={i}
+                                        key={`particle-${i}`}
                                         className="absolute w-1 h-1 bg-emerald-400 rounded-full opacity-60"
                                         style={{
                                             top: `${-10 + i * 5}px`,
@@ -280,6 +280,7 @@ export default function Navbar() {
                                     duration: 0.5,
                                     delay: index * 0.1,
                                 }}
+                                key={index}
                             >
                                 <Link
                                     href={item.href}
@@ -481,7 +482,7 @@ export default function Navbar() {
                             <div className="flex flex-col space-y-2 sm:space-y-3">
                                 {navItems.map((item, index) => (
                                     <motion.div
-                                        key={item.name}
+                                        key={index}
                                         initial={{ opacity: 0, x: -20 }}
                                         animate={{ opacity: 1, x: 0 }}
                                         exit={{ opacity: 0, x: -20 }}

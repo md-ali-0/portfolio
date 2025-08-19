@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
 import type { ReactNode } from "react";
@@ -9,6 +10,7 @@ interface SectionHeaderProps {
     highlight?: string;
     description?: string;
     icon?: ReactNode;
+    className?: string;
 }
 
 export default function SectionHeader({
@@ -16,10 +18,11 @@ export default function SectionHeader({
     highlight,
     description,
     icon,
+    className,
 }: SectionHeaderProps) {
     return (
         <motion.div
-            className="relative flex flex-col md:flex-row md:items-center md:justify-center mb-8 text-center md:text-left gap-4"
+            className={cn("relative flex flex-col md:flex-row md:items-center md:justify-center mb-12 text-center md:text-left gap-4", className)}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}

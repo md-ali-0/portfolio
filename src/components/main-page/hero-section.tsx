@@ -3,15 +3,15 @@
 import { useMobile } from "@/hooks/use-mobile";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import {
-  ArrowRight,
-  Code,
-  Download,
-  Github,
-  Linkedin,
-  Mail,
-  Send,
-  Sparkles,
-  Zap,
+    ArrowRight,
+    Code,
+    Download,
+    Github,
+    Linkedin,
+    Mail,
+    Send,
+    Sparkles,
+    Zap,
 } from "lucide-react";
 import Link from "next/link";
 import AnimatedButton from "../animated-button";
