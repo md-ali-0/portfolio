@@ -3,12 +3,12 @@
 import { useMobile } from "@/hooks/use-mobile";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import {
-  ArrowRight,
-  Briefcase,
-  Code,
-  Database,
-  Globe,
-  Server,
+    ArrowRight,
+    Briefcase,
+    Code,
+    Database,
+    Globe,
+    Server,
 } from "lucide-react";
 import { useEffect } from "react";
 
@@ -376,29 +376,6 @@ export default function AboutSection() {
 
                             <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-emerald-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-2xl" />
 
-                            <div className="absolute inset-0 overflow-hidden rounded-xl sm:rounded-2xl">
-                                {[...Array(3)].map((_, i) => (
-                                    <motion.div
-                                        key={i}
-                                        className="absolute w-1 h-1 bg-emerald-400/40 rounded-full opacity-0 group-hover:opacity-100"
-                                        style={{
-                                            left: `${20 + i * 30}%`,
-                                            top: `${20 + i * 20}%`,
-                                        }}
-                                        animate={{
-                                            y: [0, -20, 0],
-                                            x: [0, 10, 0],
-                                            scale: [0, 1, 0],
-                                        }}
-                                        transition={{
-                                            duration: 2,
-                                            repeat: Number.POSITIVE_INFINITY,
-                                            delay: i * 0.3,
-                                        }}
-                                    />
-                                ))}
-                            </div>
-
                             <div className="relative z-10 text-center">
                                 <motion.div
                                     className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-18 lg:h-18 bg-zinc-800/60 border border-zinc-700/60 rounded-xl mb-3 sm:mb-4 md:mb-6 text-emerald-400 group-hover:border-emerald-400/60 group-hover:bg-emerald-500/20 transition-all duration-500 backdrop-blur-sm"
@@ -482,7 +459,7 @@ export default function AboutSection() {
                                         }`}
                                         whileHover={{ scale: 1.02 }}
                                     >
-                                        <div className="morph-card p-8 relative overflow-hidden">
+                                        <div className="morph-card p-8 relative overflow-hidden rounded-xl sm:rounded-2xl">
                                             <div
                                                 className={`absolute inset-0 bg-gradient-to-br ${exp.color} opacity-5`}
                                             />
