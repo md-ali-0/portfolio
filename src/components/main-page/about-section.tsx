@@ -3,12 +3,12 @@
 import { useMobile } from "@/hooks/use-mobile";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import {
-    ArrowRight,
-    Briefcase,
-    Code,
-    Database,
-    Globe,
-    Server,
+  ArrowRight,
+  Briefcase,
+  Code,
+  Database,
+  Globe,
+  Server,
 } from "lucide-react";
 import { useEffect } from "react";
 
@@ -128,43 +128,13 @@ export default function AboutSection() {
         >
             <div className="absolute inset-0">
                 {/* Main gradient background */}
-                <motion.div
+                <div
                     className="absolute inset-0 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950"
-                    animate={{
-                        backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"],
-                    }}
-                    transition={{
-                        duration: 20,
-                        repeat: Number.POSITIVE_INFINITY,
-                        ease: "linear",
-                    }}
+                    
                 />
 
-                <div className="absolute inset-0">
-                    {[...Array(isMobile ? 15 : 30)].map((_, i) => (
-                        <motion.div
-                            key={i}
-                            className="absolute w-1 h-1 bg-emerald-400/30 rounded-full"
-                            style={{
-                                left: `${Math.random() * 100}%`,
-                                top: `${Math.random() * 100}%`,
-                            }}
-                            animate={{
-                                y: [0, -100, 0],
-                                opacity: [0, 1, 0],
-                                scale: [0, 1, 0],
-                            }}
-                            transition={{
-                                duration: Math.random() * 3 + 2,
-                                repeat: Number.POSITIVE_INFINITY,
-                                delay: Math.random() * 2,
-                            }}
-                        />
-                    ))}
-                </div>
-
                 {/* Animated mesh gradient overlay */}
-                <motion.div
+                <div
                     className="absolute inset-0 opacity-30"
                     style={{
                         background: `radial-gradient(circle at ${
@@ -179,14 +149,6 @@ export default function AboutSection() {
                             rgba(6, 182, 212, 0.1) 0%, 
                             rgba(16, 185, 129, 0.05) 30%, 
                             transparent 60%)`,
-                    }}
-                    animate={{
-                        opacity: [0.2, 0.4, 0.2],
-                    }}
-                    transition={{
-                        duration: 8,
-                        repeat: Number.POSITIVE_INFINITY,
-                        ease: "easeInOut",
                     }}
                 />
 
@@ -293,7 +255,7 @@ export default function AboutSection() {
                     transition={{ duration: 0.8, delay: 0.2 }}
                 >
                     <motion.h2
-                        className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-slate-400 leading-tight mb-4 sm:mb-6"
+                        className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl/tight font-bold text-slate-400 leading-loose mb-4 sm:mb-6"
                         whileInView={{
                             backgroundPosition: [
                                 "0% 50%",
@@ -348,29 +310,10 @@ export default function AboutSection() {
                     transition={{ duration: 0.8, delay: 0.6 }}
                 >
                     {services.map((service, index) => (
-                        <motion.div
+                        <div
                             key={index}
                             className="relative p-4 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl backdrop-blur-md bg-zinc-900/40 border border-zinc-700/60 hover:border-emerald-500/40 transition-all duration-500 group overflow-hidden"
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{
-                                duration: 0.6,
-                                delay: 0.6 + index * 0.15,
-                            }}
-                            whileHover={{
-                                y: isMobile ? -5 : -15,
-                                scale: isMobile ? 1.02 : 1.05,
-                                rotateY: isMobile ? 0 : 5,
-                            }}
-                            whileTap={{ scale: 0.98 }}
-                            style={{
-                                x: !isMobile
-                                    ? smoothMouseX.get() * (0.3 + index * 0.1)
-                                    : 0,
-                                y: !isMobile
-                                    ? smoothMouseY.get() * (0.3 + index * 0.1)
-                                    : 0,
-                            }}
+                            
                         >
                             <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-gradient-to-br from-white/10 via-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
@@ -396,7 +339,7 @@ export default function AboutSection() {
                                     {service.description}
                                 </p>
                             </div>
-                        </motion.div>
+                        </div>
                     ))}
                 </motion.div>
 
@@ -426,7 +369,7 @@ export default function AboutSection() {
 
                     <div className="relative mx-auto">
                         {/* Central timeline line */}
-                        <div className="absolute left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-emerald-500 via-teal-500 to-cyan-500 hidden lg:block" />
+                        <div className="absolute left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-emerald-600 via-teal-500 to-emerald-700 hidden lg:block rounded-md" />
 
                         <div className="space-y-16">
                             {experiences.map((exp, index) => (

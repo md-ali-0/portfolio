@@ -114,7 +114,7 @@ export default function ContactSection() {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
                     viewport={{ once: true }}
-                    className="flex flex-col items-center mb-16"
+                    className="flex flex-col items-center mb-12"
                 >
                     <motion.div
                         className="relative mb-6"
@@ -216,7 +216,7 @@ export default function ContactSection() {
                     </motion.p>
                 </motion.div>
 
-                <div className="grid lg:grid-cols-5 gap-12 max-w-6xl mx-auto">
+                <div className="grid lg:grid-cols-5 gap-12 mx-auto">
                     {/* Contact Info */}
                     <motion.div
                         className="lg:col-span-2 space-y-6"

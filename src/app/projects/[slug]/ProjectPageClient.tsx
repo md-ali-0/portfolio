@@ -1,13 +1,13 @@
 "use client"
-import { notFound } from "next/navigation"
-import Link from "next/link"
-import { Calendar, Tag, Github, ExternalLink, ArrowRight } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import MagneticElement from "@/components/magnetic-element"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import { projects } from "@/data/projects-data"
 import { generateProjectJsonLd } from "@/lib/metadata"
-import MagneticElement from "@/components/magnetic-element"
 import { motion } from "framer-motion"
+import { ArrowRight, Calendar, ExternalLink, Github, Tag } from "lucide-react"
+import Link from "next/link"
+import { notFound } from "next/navigation"
 
 export default function ProjectPageClient({ params }: { params: { slug: string } }) {
   const project = projects.find((p) => p.slug === params.slug)
@@ -89,7 +89,7 @@ export default function ProjectPageClient({ params }: { params: { slug: string }
       </section>
 
       {/* Featured Image */}
-      <section className="relative mb-16">
+      <section className="relative mb-12">
         <div className="container mx-auto">
           <motion.div
             className="max-w-5xl mx-auto rounded-xl overflow-hidden shadow-2xl shadow-emerald-500/10"

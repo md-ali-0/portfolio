@@ -51,7 +51,7 @@ export default function SectionHeader({
                             transition={{ duration: 0.6, delay: 0.2 }}
                             whileHover={{ scale: 1.05 }}
                         >
-                            <div className="size-10 md:size-12 bg-gradient-to-br from-emerald-400/20 to-teal-400/20 rounded-xl flex items-center justify-center backdrop-blur-sm border border-emerald-400/30">
+                            <div className="size-10 md:size-12 bg-gradient-to-br from-emerald-400/10 to-teal-400/10 rounded-xl flex items-center justify-center backdrop-blur-sm border border-emerald-400/20">
                                 {icon}
                             </div>
                         </motion.div>
@@ -87,7 +87,7 @@ export default function SectionHeader({
                                 whileInView={{ opacity: 1, scale: 1 }}
                                 transition={{ duration: 0.6, delay: 0.5 }}
                             >
-                                <span className="text-2xl md:text-4xl font-medium text-emerald-300 relative">
+                                <span className="text-2xl md:text-5xl font-medium text-emerald-400 relative">
                                     {highlight}
                                     <motion.div
                                         className="absolute -bottom-0.5 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-emerald-400 to-transparent"
@@ -113,29 +113,6 @@ export default function SectionHeader({
                         </motion.p>
                     )}
                 </div>
-            </div>
-
-            <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                {[...Array(3)].map((_, i) => (
-                    <motion.div
-                        key={i}
-                        className="absolute w-1 h-1 bg-emerald-400/40 rounded-full"
-                        style={{
-                            left: `${30 + i * 20}%`,
-                            top: `${40 + (i % 2) * 20}%`,
-                        }}
-                        animate={{
-                            y: [0, -10, 0],
-                            opacity: [0.2, 0.6, 0.2],
-                        }}
-                        transition={{
-                            duration: 4 + i * 0.5,
-                            repeat: Number.POSITIVE_INFINITY,
-                            delay: i * 0.6,
-                            ease: "easeInOut",
-                        }}
-                    />
-                ))}
             </div>
         </motion.div>
     );
