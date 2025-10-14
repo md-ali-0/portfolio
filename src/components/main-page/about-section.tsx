@@ -3,12 +3,12 @@
 import { useMobile } from "@/hooks/use-mobile";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import {
-  ArrowRight,
-  Briefcase,
-  Code,
-  Database,
-  Globe,
-  Server,
+    ArrowRight,
+    Briefcase,
+    Code,
+    Database,
+    Globe,
+    Server,
 } from "lucide-react";
 import { useEffect } from "react";
 
@@ -128,37 +128,16 @@ export default function AboutSection() {
         >
             <div className="absolute inset-0">
                 {/* Main gradient background */}
-                <div
-                    className="absolute inset-0 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950"
-                    
-                />
+                <div className="absolute inset-0 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950" />
 
                 {/* Animated mesh gradient overlay */}
-                <div
-                    className="absolute inset-0 opacity-30"
-                    style={{
-                        background: `radial-gradient(circle at ${
-                            50 + smoothMouseX.get()
-                        }% ${50 + smoothMouseY.get()}%, 
-                            rgba(16, 185, 129, 0.15) 0%, 
-                            rgba(20, 184, 166, 0.1) 25%, 
-                            transparent 50%),
-                        radial-gradient(circle at ${
-                            30 + smoothMouseX.get() * -1
-                        }% ${70 + smoothMouseY.get() * -1}%, 
-                            rgba(6, 182, 212, 0.1) 0%, 
-                            rgba(16, 185, 129, 0.05) 30%, 
-                            transparent 60%)`,
-                    }}
-                />
-
                 <div
                     className="absolute inset-0 opacity-5 sm:opacity-10"
                     style={{
                         backgroundImage: `
-                            linear-gradient(rgba(16, 185, 129, 0.1) 1px, transparent 1px),
-                            linear-gradient(90deg, rgba(16, 185, 129, 0.1) 1px, transparent 1px)
-                        `,
+              linear-gradient(rgba(16, 185, 129, 0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(16, 185, 129, 0.1) 1px, transparent 1px)
+            `,
                         backgroundSize:
                             "20px 20px sm:30px sm:30px md:40px md:40px lg:50px lg:50px",
                     }}
@@ -166,84 +145,84 @@ export default function AboutSection() {
             </div>
 
             <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 relative z-10">
+                {/* Simplified stats section with simple, clean cards */}
                 <motion.div
                     className="relative mb-12 sm:mb-16 md:mb-20 lg:mb-24"
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
-                    style={{
-                        x: !isMobile ? smoothMouseX.get() * -0.5 : 0,
-                        y: !isMobile ? smoothMouseY.get() * -0.5 : 0,
-                    }}
                 >
-                    <div className="relative p-4 sm:p-6 md:p-8 lg:p-10 xl:p-12 rounded-xl sm:rounded-2xl lg:rounded-3xl backdrop-blur-md bg-zinc-900/40 border border-zinc-700/60 shadow-2xl">
-                        <div className="absolute inset-0 rounded-xl sm:rounded-2xl lg:rounded-3xl bg-gradient-to-br from-white/10 via-emerald-500/5 to-transparent" />
-
-                        <div className="absolute inset-0 rounded-xl sm:rounded-2xl lg:rounded-3xl bg-emerald-500/5 blur-xl" />
-
-                        <div className="relative grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8 lg:gap-10 xl:gap-12">
-                            {statistics.map((stat, index) => (
-                                <motion.div
-                                    key={index}
-                                    className="text-center group"
-                                    initial={{ opacity: 0, y: 30 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{
-                                        duration: 0.6,
-                                        delay: index * 0.15,
-                                    }}
-                                    whileHover={{
-                                        scale: isMobile ? 1.02 : 1.05,
-                                        y: -5,
-                                    }}
-                                    whileTap={{ scale: 0.98 }}
-                                >
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-10">
+                        {statistics.map((stat, index) => (
+                            <motion.div
+                                key={index}
+                                className="relative group"
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{
+                                    duration: 0.6,
+                                    delay: index * 0.15,
+                                }}
+                            >
+                                <div className="relative h-full p-8 md:p-10 rounded-2xl bg-gradient-to-br from-zinc-900/80 to-zinc-900/40 backdrop-blur-sm overflow-hidden">
+                                    {/* Animated corner accents */}
                                     <motion.div
-                                        className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-1 sm:mb-2 md:mb-3 relative"
-                                        animate={{
-                                            backgroundPosition: [
-                                                "0% 50%",
-                                                "100% 50%",
-                                                "0% 50%",
-                                            ],
-                                        }}
+                                        className="absolute top-0 left-0 w-10 h-10 border-t-2 border-l-2 border-emerald-500/50 rounded-tl-2xl"
+                                        initial={{ opacity: 0, scale: 0 }}
+                                        animate={{ opacity: 1, scale: 1 }}
                                         transition={{
-                                            duration: 5,
-                                            repeat: Number.POSITIVE_INFINITY,
-                                            ease: "linear",
+                                            delay: index * 0.15 + 0.3,
+                                            duration: 0.5,
                                         }}
-                                        style={{
-                                            background:
-                                                "linear-gradient(90deg, #10b981, #14b8a6, #06b6d4, #10b981)",
-                                            backgroundSize: "300% 300%",
-                                            WebkitBackgroundClip: "text",
-                                            WebkitTextFillColor: "transparent",
-                                            backgroundClip: "text",
+                                    />
+                                    <motion.div
+                                        className="absolute bottom-0 right-0 w-10 h-10 border-b-2 border-r-2 border-teal-500/50 rounded-br-2xl"
+                                        initial={{ opacity: 0, scale: 0 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        transition={{
+                                            delay: index * 0.15 + 0.4,
+                                            duration: 0.5,
                                         }}
-                                    >
-                                        {stat.number}
-                                        <motion.div
-                                            className="absolute -top-1 -right-1 w-2 h-2 bg-emerald-400 rounded-full opacity-0 group-hover:opacity-100"
-                                            animate={{
-                                                scale: [0, 1, 0],
-                                                rotate: [0, 180, 360],
-                                            }}
-                                            transition={{
-                                                duration: 1,
-                                                repeat: Number.POSITIVE_INFINITY,
-                                                delay: 0.5,
-                                            }}
-                                        />
-                                    </motion.div>
-                                    <div className="text-white text-xs sm:text-sm md:text-base lg:text-lg font-medium">
-                                        {stat.label}
+                                    />
+
+                                    {/* Glow effect on hover */}
+                                    <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 via-teal-500/0 to-cyan-500/0 group-hover:from-emerald-500/10 group-hover:via-teal-500/5 group-hover:to-cyan-500/10 transition-all duration-500" />
+
+                                    <div className="relative flex items-center justify-between gap-6">
+                                        <div className="flex-1">
+                                            <motion.div
+                                                className="text-3xl md:text-5xl lg:text-6xl font-black bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-500 mb-2"
+                                                whileHover={{ scale: 1.05 }}
+                                                transition={{
+                                                    type: "spring",
+                                                    stiffness: 300,
+                                                }}
+                                            >
+                                                {stat.number}
+                                            </motion.div>
+                                            <div className="space-y-1">
+                                                <div className="text-zinc-400 text-base">
+                                                    {stat.label}
+                                                </div>
+                                                <div className="text-white text-lg font-bold">
+                                                    {stat.sublabel}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* Vertical divider with gradient */}
+                                        <div className="w-1 h-24 bg-gradient-to-b from-emerald-500/20 via-teal-500/40 to-cyan-500/20 rounded-full" />
+
+                                        {/* Index number */}
+                                        <div className="text-4xl md:text-6xl font-black text-zinc-800/30 group-hover:text-emerald-500/10 transition-colors duration-500">
+                                            {(index + 1)
+                                                .toString()
+                                                .padStart(2, "0")}
+                                        </div>
                                     </div>
-                                    <div className="text-emerald-400 text-xs sm:text-sm md:text-base lg:text-lg font-medium">
-                                        {stat.sublabel}
-                                    </div>
-                                </motion.div>
-                            ))}
-                        </div>
+                                </div>
+                            </motion.div>
+                        ))}
                     </div>
                 </motion.div>
 
@@ -251,8 +230,8 @@ export default function AboutSection() {
                     className="text-center mb-16 sm:mb-20 md:mb-24"
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
                     transition={{ duration: 0.8, delay: 0.2 }}
+                    viewport={{ once: true }}
                 >
                     <motion.h2
                         className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl/tight font-bold text-slate-400 leading-loose mb-4 sm:mb-6"
@@ -310,36 +289,78 @@ export default function AboutSection() {
                     transition={{ duration: 0.8, delay: 0.6 }}
                 >
                     {services.map((service, index) => (
-                        <div
+                        <motion.div
                             key={index}
-                            className="relative p-4 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl backdrop-blur-md bg-zinc-900/40 border border-zinc-700/60 hover:border-emerald-500/40 transition-all duration-500 group overflow-hidden"
-                            
+                            className={`relative group`}
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: index * 0.1 }}
+                            viewport={{ once: true }}
                         >
-                            <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-gradient-to-br from-white/10 via-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                            <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-emerald-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-2xl" />
-
-                            <div className="relative z-10 text-center">
+                            <div
+                                className={`relative h-full p-8 md:p-10 rounded-2xl bg-zinc-900/60 backdrop-blur-sm border border-zinc-800 overflow-hidden group-hover:border-emerald-500/50 transition-all duration-500`}
+                            >
+                                {/* Animated gradient background */}
                                 <motion.div
-                                    className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-18 lg:h-18 bg-zinc-800/60 border border-zinc-700/60 rounded-xl mb-3 sm:mb-4 md:mb-6 text-emerald-400 group-hover:border-emerald-400/60 group-hover:bg-emerald-500/20 transition-all duration-500 backdrop-blur-sm"
+                                    className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 via-teal-500/0 to-cyan-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                                    initial={false}
                                     whileHover={{
-                                        scale: 1.15,
-                                        rotate: [0, -10, 10, 0],
-                                        boxShadow:
-                                            "0 0 40px rgba(16, 185, 129, 0.4)",
+                                        background: [
+                                            "linear-gradient(135deg, rgba(16,185,129,0) 0%, rgba(20,184,166,0) 50%, rgba(6,182,212,0) 100%)",
+                                            "linear-gradient(135deg, rgba(16,185,129,0.05) 0%, rgba(20,184,166,0.03) 50%, rgba(6,182,212,0.05) 100%)",
+                                        ],
                                     }}
                                     transition={{ duration: 0.5 }}
+                                />
+
+                                {/* Grid pattern overlay */}
+                                <div
+                                    className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-500"
+                                    style={{
+                                        backgroundImage: `
+                        linear-gradient(rgba(16, 185, 129, 0.3) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(16, 185, 129, 0.3) 1px, transparent 1px)
+                      `,
+                                        backgroundSize: "20px 20px",
+                                    }}
+                                />
+
+                                <div
+                                    className={`relative z-10`}
                                 >
-                                    {service.icon}
-                                </motion.div>
-                                <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-white mb-2 sm:mb-3 md:mb-4 group-hover:text-emerald-100 transition-colors duration-300">
-                                    {service.title}
-                                </h3>
-                                <p className="text-zinc-400 text-xs sm:text-sm md:text-base leading-relaxed group-hover:text-zinc-300 transition-colors duration-300">
-                                    {service.description}
-                                </p>
+                                    <motion.div
+                                        className={`inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-emerald-500/20 to-teal-500/20 rounded-2xl mb-6 text-emerald-400 border border-emerald-500/20 group-hover:border-emerald-400/40 group-hover:shadow-lg group-hover:shadow-emerald-500/20 transition-all duration-500`}
+                                        whileHover={{
+                                            scale: 1.1,
+                                            rotate: [0, -5, 5, 0],
+                                        }}
+                                        transition={{ duration: 0.5 }}
+                                    >
+                                        {service.icon}
+                                    </motion.div>
+
+                                    <div
+                                    >
+                                        <h3
+                                            className={`text-xl md:text-2xl font-bold text-white mb-3 group-hover:text-emerald-100 transition-colors duration-300`}
+                                        >
+                                            {service.title}
+                                        </h3>
+                                        <p
+                                            className={`text-zinc-400 text-sm md:text-base leading-relaxed group-hover:text-zinc-300 transition-colors duration-300`}
+                                        >
+                                            {service.description}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                {/* Corner accent */}
+                                <motion.div
+                                    className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-emerald-500/0 to-teal-500/20 rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                                    initial={false}
+                                />
                             </div>
-                        </div>
+                        </motion.div>
                     ))}
                 </motion.div>
 
