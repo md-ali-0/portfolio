@@ -1,542 +1,199 @@
-"use client";
+"use client"
 
-import { useMobile } from "@/hooks/use-mobile";
-import {
-  motion,
-  useMotionValue,
-  useScroll,
-  useSpring,
-  useTransform,
-} from "framer-motion";
-import {
-  Box,
-  Code,
-  Cpu,
-  Database,
-  Figma,
-  Github,
-  Globe,
-  Server,
-  Sparkles,
-  Star,
-  Triangle,
-  Wrench,
-  Zap,
-} from "lucide-react";
-import type React from "react";
-import { useState } from "react";
-import SectionHeader from "../section-header";
+import { motion } from "framer-motion"
+import { useEffect, useState } from "react"
 
-export default function SkillsSection() {
-    const isMobile = useMobile();
-    const { scrollY } = useScroll();
-    const [activeCategory, setActiveCategory] = useState("all");
+export default function SkillsSectionV4() {
+  const [selectedCategory, setSelectedCategory] = useState("all")
+  const [mounted, setMounted] = useState(false)
 
-    // Mouse position for parallax effects
-    const mouseX = useMotionValue(0);
-    const mouseY = useMotionValue(0);
-    const smoothMouseX = useSpring(mouseX, { stiffness: 50, damping: 20 });
-    const smoothMouseY = useSpring(mouseY, { stiffness: 50, damping: 20 });
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
-    // Scroll-based animations
-    const sectionY = useTransform(scrollY, [0, 1500], [0, -50]);
+  const skillsData = {
+    all: [
+      { name: "React", level: 95, category: "frontend", color: "from-blue-500 to-cyan-500" },
+      { name: "Next.js", level: 92, category: "frontend", color: "from-slate-400 to-slate-600" },
+      { name: "TypeScript", level: 90, category: "frontend", color: "from-blue-600 to-blue-400" },
+      { name: "Tailwind CSS", level: 94, category: "frontend", color: "from-cyan-400 to-blue-500" },
+      { name: "Node.js", level: 88, category: "backend", color: "from-green-600 to-emerald-500" },
+      { name: "Express", level: 87, category: "backend", color: "from-yellow-600 to-yellow-400" },
+      { name: "PostgreSQL", level: 85, category: "database", color: "from-blue-700 to-blue-500" },
+      { name: "MongoDB", level: 86, category: "database", color: "from-green-600 to-green-400" },
+      { name: "Git", level: 93, category: "tools", color: "from-orange-600 to-red-500" },
+      { name: "Docker", level: 82, category: "tools", color: "from-blue-500 to-cyan-400" },
+      { name: "AWS", level: 80, category: "tools", color: "from-orange-500 to-yellow-500" },
+      { name: "GraphQL", level: 84, category: "backend", color: "from-pink-500 to-rose-500" },
+    ],
+    frontend: [
+      { name: "React", level: 95, category: "frontend", color: "from-blue-500 to-cyan-500" },
+      { name: "Next.js", level: 92, category: "frontend", color: "from-slate-400 to-slate-600" },
+      { name: "TypeScript", level: 90, category: "frontend", color: "from-blue-600 to-blue-400" },
+      { name: "Tailwind CSS", level: 94, category: "frontend", color: "from-cyan-400 to-blue-500" },
+    ],
+    backend: [
+      { name: "Node.js", level: 88, category: "backend", color: "from-green-600 to-emerald-500" },
+      { name: "Express", level: 87, category: "backend", color: "from-yellow-600 to-yellow-400" },
+      { name: "GraphQL", level: 84, category: "backend", color: "from-pink-500 to-rose-500" },
+    ],
+    database: [
+      { name: "PostgreSQL", level: 85, category: "database", color: "from-blue-700 to-blue-500" },
+      { name: "MongoDB", level: 86, category: "database", color: "from-green-600 to-green-400" },
+    ],
+    tools: [
+      { name: "Git", level: 93, category: "tools", color: "from-orange-600 to-red-500" },
+      { name: "Docker", level: 82, category: "tools", color: "from-blue-500 to-cyan-400" },
+      { name: "AWS", level: 80, category: "tools", color: "from-orange-500 to-yellow-500" },
+    ],
+  }
 
-    const skills = [
-        // Frontend Skills
-        {
-            name: "React",
-            icon: <Globe className="h-5 w-5" />,
-            category: "frontend",
-            color: "emerald",
-            description: "Building dynamic user interfaces",
-            experience: "2+ years",
-            projects: "18+",
-            level: 95,
-        },
-        {
-            name: "Next.js",
-            icon: <Triangle className="h-5 w-5" />,
-            category: "frontend",
-            color: "teal",
-            description: "Full-stack React framework",
-        },
-        {
-            name: "TypeScript",
-            icon: <Code className="h-5 w-5" />,
-            category: "frontend",
-            color: "emerald",
-            description: "Type-safe development",
-        },
-        {
-            name: "Tailwind CSS",
-            icon: <Zap className="h-5 w-5" />,
-            category: "frontend",
-            color: "cyan",
-            description: "Utility-first CSS framework",
-        },
-        {
-            name: "Framer Motion",
-            icon: <Sparkles className="h-5 w-5" />,
-            category: "frontend",
-            color: "teal",
-            description: "Animation and interaction library",
-        },
+  const categories = [
+    { id: "all", label: "All Skills" },
+    { id: "frontend", label: "Frontend" },
+    { id: "backend", label: "Backend" },
+    { id: "database", label: "Database" },
+    { id: "tools", label: "Tools" },
+  ]
 
-        // Backend Skills
-        {
-            name: "Node.js",
-            icon: <Server className="h-5 w-5" />,
-            category: "backend",
-            color: "teal",
-            description: "Server-side JavaScript runtime",
-        },
-        {
-            name: "MongoDB",
-            icon: <Database className="h-5 w-5" />,
-            category: "backend",
-            color: "emerald",
-            description: "NoSQL document database",
-        },
-        {
-            name: "PostgreSQL",
-            icon: <Database className="h-5 w-5" />,
-            category: "backend",
-            color: "cyan",
-            description: "Advanced relational database",
-        },
-        {
-            name: "GraphQL",
-            icon: <Globe className="h-5 w-5" />,
-            category: "backend",
-            color: "teal",
-            description: "Query language for APIs",
-        },
+  const skills = skillsData[selectedCategory as keyof typeof skillsData]
 
-        // Tools
-        {
-            name: "Git",
-            icon: <Github className="h-5 w-5" />,
-            category: "tools",
-            color: "emerald",
-            description: "Version control system",
-        },
-        {
-            name: "Docker",
-            icon: <Box className="h-5 w-5" />,
-            category: "tools",
-            color: "cyan",
-            description: "Application containerization",
-        },
-        {
-            name: "Figma",
-            icon: <Figma className="h-5 w-5" />,
-            category: "tools",
-            color: "teal",
-            description: "UI/UX design platform",
-        },
-    ];
+  if (!mounted) return null
 
-    const categories = [
-        {
-            key: "all",
-            label: "All Skills",
-            icon: <Cpu className="h-4 w-4" />,
-            count: skills.length,
-        },
-        {
-            key: "frontend",
-            label: "Frontend",
-            icon: <Code className="h-4 w-4" />,
-            count: skills.filter((s) => s.category === "frontend").length,
-        },
-        {
-            key: "backend",
-            label: "Backend",
-            icon: <Server className="h-4 w-4" />,
-            count: skills.filter((s) => s.category === "backend").length,
-        },
-        {
-            key: "tools",
-            label: "Tools",
-            icon: <Wrench className="h-4 w-4" />,
-            count: skills.filter((s) => s.category === "tools").length,
-        },
-    ];
-
-    const filteredSkills =
-        activeCategory === "all"
-            ? skills
-            : skills.filter((skill) => skill.category === activeCategory);
-
-    const handleMouseMove = (e: React.MouseEvent) => {
-        if (!isMobile) {
-            const rect = e.currentTarget.getBoundingClientRect();
-            const x = (e.clientX - rect.left - rect.width / 2) / rect.width;
-            const y = (e.clientY - rect.top - rect.height / 2) / rect.height;
-            mouseX.set(x * 20);
-            mouseY.set(y * 20);
-        }
-    };
-
-    return (
-        <section
-            id="skills"
-            className="min-h-screen py-20 md:py-32 relative overflow-hidden"
-            onMouseMove={handleMouseMove}
-        >
-            {/* Enhanced Background Effects - Matching Hero Section */}
-            <div className="absolute inset-0">
-                {/* Main gradient background */}
-                <motion.div
-                    className="absolute inset-0 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950"
-                    animate={{
-                        backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"],
-                    }}
-                    transition={{
-                        duration: 20,
-                        repeat: Number.POSITIVE_INFINITY,
-                        ease: "linear",
-                    }}
-                />
-
-                {/* Animated mesh gradient overlay */}
-                <motion.div
-                    className="absolute inset-0 opacity-30"
-                    style={{
-                        background: `radial-gradient(circle at ${
-                            50 + smoothMouseX.get()
-                        }% ${50 + smoothMouseY.get()}%, 
-              rgba(16, 185, 129, 0.15) 0%, 
-              rgba(20, 184, 166, 0.1) 25%, 
-              transparent 50%),
-            radial-gradient(circle at ${30 + smoothMouseX.get() * -1}% ${
-                            70 + smoothMouseY.get() * -1
-                        }%, 
-              rgba(6, 182, 212, 0.1) 0%, 
-              rgba(16, 185, 129, 0.05) 30%, 
-              transparent 60%)`,
-                    }}
-                    animate={{
-                        opacity: [0.2, 0.4, 0.2],
-                    }}
-                    transition={{
-                        duration: 8,
-                        repeat: Number.POSITIVE_INFINITY,
-                        ease: "easeInOut",
-                    }}
-                />
-
-                {/* Grid pattern */}
-                <div
-                    className="absolute inset-0 opacity-10"
-                    style={{
-                        backgroundImage: `
+  return (
+    <section id="skills" className="min-h-screen relative overflow-hidden py-12 sm:py-16 md:py-20 lg:py-24 xl:py-32">
+      {/* Background */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950" />
+        <div
+          className="absolute inset-0 opacity-5 sm:opacity-10"
+          style={{
+            backgroundImage: `
               linear-gradient(rgba(16, 185, 129, 0.1) 1px, transparent 1px),
               linear-gradient(90deg, rgba(16, 185, 129, 0.1) 1px, transparent 1px)
             `,
-                        backgroundSize: "40px 40px",
-                    }}
-                />
-            </div>
+            backgroundSize: "20px 20px sm:30px sm:30px md:40px md:40px lg:50px lg:50px",
+          }}
+        />
+      </div>
 
-            {/* Floating Particles - Matching Hero Section */}
-            {!isMobile &&
-                Array.from({ length: 20 }, (_, i) => ({
-                    id: i,
-                    x: Math.random() * 100,
-                    y: Math.random() * 100,
-                    delay: Math.random() * 2,
-                    duration: 6 + Math.random() * 4,
-                    size: 0.5 + Math.random() * 1.5,
-                })).map((particle) => (
-                    <motion.div
-                        key={particle.id}
-                        className="absolute rounded-full bg-gradient-to-r from-emerald-400/20 to-teal-400/20 blur-sm"
-                        style={{
-                            left: `${particle.x}%`,
-                            top: `${particle.y}%`,
-                            width: `${particle.size * 4}px`,
-                            height: `${particle.size * 4}px`,
-                        }}
-                        animate={{
-                            y: [-20, 20, -20],
-                            x: [-10, 10, -10],
-                            opacity: [0.2, 0.6, 0.2],
-                            scale: [1, 1.5, 1],
-                        }}
-                        transition={{
-                            duration: particle.duration,
-                            delay: particle.delay,
-                            repeat: Number.POSITIVE_INFINITY,
-                            ease: "easeInOut",
-                        }}
-                    />
-                ))}
+      <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 relative z-10">
+        {/* Header */}
+        <motion.div
+          className="text-center mb-12 sm:mb-16 md:mb-20"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+        >
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
+            Technical{" "}
+            <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent">
+              Expertise
+            </span>
+          </h2>
+          <p className="text-zinc-400 text-base sm:text-lg max-w-2xl mx-auto">
+            Proficient in modern technologies and frameworks for building scalable applications
+          </p>
+        </motion.div>
 
-            <motion.div
-                className="container mx-auto relative z-10"
-                style={{ y: sectionY }}
+        {/* Category Tabs */}
+        <motion.div
+          className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-12 sm:mb-16 md:mb-20"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          viewport={{ once: true }}
+        >
+          {categories.map((cat) => (
+            <motion.button
+              key={cat.id}
+              onClick={() => setSelectedCategory(cat.id)}
+              className={`px-4 sm:px-6 py-2 sm:py-3 rounded-full font-semibold transition-all duration-300 ${
+                selectedCategory === cat.id
+                  ? "bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/50"
+                  : "bg-zinc-800/50 text-zinc-300 hover:bg-zinc-700/50 border border-zinc-700/50"
+              }`}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-                <SectionHeader
-                    title="Technical"
-                    highlight="Skills"
-                    icon={<Cpu className="h-8 w-8 text-emerald-400" />}
-                    description="A showcase of my development expertise and technical proficiency"
+              {cat.label}
+            </motion.button>
+          ))}
+        </motion.div>
+
+        <motion.div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6" layout>
+          {skills.map((skill, index) => (
+            <motion.div
+              key={skill.name}
+              className="relative group"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{
+                duration: 0.5,
+                delay: index * 0.1,
+              }}
+              layout
+            >
+              <div className="relative h-full p-4 sm:p-6 rounded-2xl bg-gradient-to-br from-zinc-900/60 to-zinc-900/20 backdrop-blur-xl overflow-hidden transition-all duration-500 group-hover:brightness-125 group-hover:shadow-2xl group-hover:shadow-emerald-500/20">
+                {/* Top-left corner accent */}
+                <motion.div
+                  className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-emerald-500/60 rounded-tl-2xl"
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{
+                    delay: index * 0.1 + 0.2,
+                    duration: 0.5,
+                  }}
                 />
 
-                {/* Enhanced Category Filter */}
+                {/* Bottom-right corner accent */}
                 <motion.div
-                    className="flex justify-center mb-16"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.8 }}
-                    viewport={{ once: true }}
-                >
-                    <div className="flex flex-wrap justify-center bg-zinc-900/30 backdrop-blur-sm border border-emerald-500/20 rounded-2xl p-2 gap-2">
-                        {categories.map((category, index) => (
-                            <motion.button
-                                key={category.key}
-                                onClick={() => setActiveCategory(category.key)}
-                                className={`flex items-center space-x-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 relative overflow-hidden ${
-                                    activeCategory === category.key
-                                        ? "text-black shadow-lg shadow-emerald-500/25"
-                                        : "text-zinc-400 hover:text-white hover:bg-zinc-800/50"
-                                }`}
-                                whileHover={{ scale: 1.05, y: -2 }}
-                                whileTap={{ scale: 0.95 }}
-                                initial={{ opacity: 0, x: -20 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                transition={{
-                                    duration: 0.5,
-                                    delay: index * 0.1,
-                                    type: "spring",
-                                    stiffness: 200,
-                                }}
-                                viewport={{ once: true }}
-                            >
-                                {activeCategory === category.key && (
-                                    <motion.div
-                                        className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-xl"
-                                        layoutId="activeTab"
-                                        transition={{
-                                            type: "spring",
-                                            stiffness: 500,
-                                            damping: 30,
-                                        }}
-                                    />
-                                )}
-                                <span className="relative z-10 flex items-center space-x-2">
-                                    <motion.div
-                                        animate={{
-                                            rotate:
-                                                activeCategory === category.key
-                                                    ? [0, 360]
-                                                    : 0,
-                                        }}
-                                        transition={{ duration: 0.5 }}
-                                    >
-                                        {category.icon}
-                                    </motion.div>
-                                    <span className="text-sm font-medium">
-                                        {category.label}
-                                    </span>
-                                    <span
-                                        className={`text-xs px-2 py-1 rounded-full ${
-                                            activeCategory === category.key
-                                                ? "bg-black/20 text-black"
-                                                : "bg-emerald-500/20 text-emerald-400"
-                                        }`}
-                                    >
-                                        {category.count}
-                                    </span>
-                                </span>
-                            </motion.button>
-                        ))}
-                    </div>
-                </motion.div>
+                  className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-teal-500/60 rounded-br-2xl"
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{
+                    delay: index * 0.1 + 0.3,
+                    duration: 0.5,
+                  }}
+                />
 
-                {/* Enhanced Skills Grid */}
-                <motion.div
-                    className="max-w-7xl mx-auto"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    transition={{ duration: 0.8 }}
-                    viewport={{ once: true }}
-                >
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
-                        {filteredSkills.map((skill, index) => {
-                            const colorClasses = {
-                                emerald: {
-                                    border: "border-emerald-500/20 hover:border-emerald-500/50",
-                                    gradient:
-                                        "from-emerald-500/5 via-transparent to-teal-500/5",
-                                    iconBg: "from-emerald-500 to-teal-500",
-                                    glow: "shadow-emerald-500/25",
-                                    particles:
-                                        "from-emerald-400/30 to-teal-400/30",
-                                },
-                                teal: {
-                                    border: "border-teal-500/20 hover:border-teal-500/50",
-                                    gradient:
-                                        "from-teal-500/5 via-transparent to-emerald-500/5",
-                                    iconBg: "from-teal-500 to-emerald-500",
-                                    glow: "shadow-teal-500/25",
-                                    particles:
-                                        "from-teal-400/30 to-emerald-400/30",
-                                },
-                                cyan: {
-                                    border: "border-cyan-500/20 hover:border-cyan-500/50",
-                                    gradient:
-                                        "from-cyan-500/5 via-transparent to-teal-500/5",
-                                    iconBg: "from-cyan-500 to-teal-500",
-                                    glow: "shadow-cyan-500/25",
-                                    particles:
-                                        "from-cyan-400/30 to-teal-400/30",
-                                },
-                            };
+                <div
+                  className={`absolute inset-0 bg-gradient-to-br ${skill.color} opacity-0 group-hover:opacity-10 transition-all duration-500`}
+                />
 
-                            const colors =
-                                colorClasses[
-                                    skill.color as keyof typeof colorClasses
-                                ];
+                {/* Grid pattern overlay */}
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500"
+                  style={{
+                    backgroundImage: `
+                      linear-gradient(rgba(16, 185, 129, 0.3) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(16, 185, 129, 0.3) 1px, transparent 1px)
+                    `,
+                    backgroundSize: "20px 20px",
+                  }}
+                />
 
-                            return (
-                                <motion.div
-                                    key={`${skill.name}-${activeCategory}`}
-                                    className={`bg-zinc-900/40 backdrop-blur-sm border ${colors.border} rounded-2xl overflow-hidden group transition-all duration-500 relative`}
-                                    initial={{ opacity: 0, y: 30, scale: 0.9 }}
-                                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                                    exit={{ opacity: 0, y: -30, scale: 0.9 }}
-                                    layout
-                                >
-                                    {/* Enhanced Background Gradient */}
-                                    <motion.div
-                                        className={`absolute inset-0 bg-gradient-to-br ${colors.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-700`}
-                                        animate={{
-                                            backgroundPosition: [
-                                                "0% 0%",
-                                                "100% 100%",
-                                                "0% 0%",
-                                            ],
-                                        }}
-                                        transition={{
-                                            duration: 15,
-                                            repeat: Number.POSITIVE_INFINITY,
-                                            ease: "linear",
-                                        }}
-                                    />
+                <div className="relative z-10 flex flex-col items-center justify-center h-full text-center">
+                  <h3 className="text-lg sm:text-xl font-bold bg-gradient-to-r from-white to-zinc-200 group-hover:from-emerald-100 group-hover:to-cyan-100 bg-clip-text text-transparent transition-all duration-300">
+                    {skill.name}
+                  </h3>
 
-                                    {/* Floating Particles on Hover */}
-                                    {!isMobile && (
-                                        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 overflow-hidden">
-                                            {Array.from(
-                                                { length: 6 },
-                                                (_, i) => (
-                                                    <motion.div
-                                                        key={i}
-                                                        className={`absolute w-1 h-1 bg-gradient-to-r ${colors.particles} rounded-full blur-sm`}
-                                                        style={{
-                                                            left: `${
-                                                                15 + i * 12
-                                                            }%`,
-                                                            top: `${
-                                                                20 +
-                                                                (i % 2) * 40
-                                                            }%`,
-                                                        }}
-                                                        animate={{
-                                                            y: [-15, 15, -15],
-                                                            x: [-8, 8, -8],
-                                                            opacity: [
-                                                                0.2, 0.8, 0.2,
-                                                            ],
-                                                            scale: [1, 1.5, 1],
-                                                        }}
-                                                        transition={{
-                                                            duration:
-                                                                3 + i * 0.5,
-                                                            repeat: Number.POSITIVE_INFINITY,
-                                                            ease: "easeInOut",
-                                                            delay: i * 0.2,
-                                                        }}
-                                                    />
-                                                )
-                                            )}
-                                        </div>
-                                    )}
-
-                                    <div className="p-6 text-center relative z-10">
-                                        {/* Enhanced Icon */}
-                                        <div className="flex justify-center mb-4">
-                                            <motion.div
-                                                className={`p-4 rounded-2xl bg-gradient-to-r ${colors.iconBg} text-black relative overflow-hidden`}
-                                                whileHover={{
-                                                    rotate: [0, -10, 10, 0],
-                                                    scale: 1.1,
-                                                }}
-                                                transition={{ duration: 0.5 }}
-                                            >
-                                                <motion.div
-                                                    className="absolute inset-0 bg-white/20 rounded-2xl"
-                                                    animate={{
-                                                        x: ["-100%", "100%"],
-                                                        opacity: [0, 0.5, 0],
-                                                    }}
-                                                    transition={{
-                                                        duration: 2,
-                                                        repeat: Number.POSITIVE_INFINITY,
-                                                        repeatDelay: 3,
-                                                        ease: "easeInOut",
-                                                    }}
-                                                />
-                                                {skill.icon}
-                                            </motion.div>
-                                        </div>
-
-                                        {/* Enhanced Title */}
-                                        <motion.h3
-                                            className="text-lg md:text-xl font-bold text-white mb-2"
-                                            style={{
-                                                x: !isMobile
-                                                    ? smoothMouseX.get() * -0.2
-                                                    : 0,
-                                            }}
-                                        >
-                                            {skill.name}
-                                        </motion.h3>
-
-                                        {/* Enhanced Description */}
-                                        <motion.p
-                                            className="text-zinc-400 text-sm leading-relaxed mb-4"
-                                            style={{
-                                                y: !isMobile
-                                                    ? smoothMouseY.get() * -0.1
-                                                    : 0,
-                                            }}
-                                        >
-                                            {skill.description}
-                                        </motion.p>
-                                    </div>
-
-                                    {/* Corner Decorations */}
-                                    <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                                        <motion.div
-                                            animate={{ rotate: [0, 360] }}
-                                            transition={{
-                                                duration: 8,
-                                                repeat: Number.POSITIVE_INFINITY,
-                                                ease: "linear",
-                                            }}
-                                        >
-                                            <Star className="h-3 w-3 text-emerald-400/50" />
-                                        </motion.div>
-                                    </div>
-                                </motion.div>
-                            );
-                        })}
-                    </div>
-                </motion.div>
+                  <motion.div
+                    className={`mt-3 inline-block px-2 sm:px-3 py-1 bg-gradient-to-r ${skill.color}/10 text-xs sm:text-sm rounded-full border border-${skill.color}/20 border-opacity-30 group-hover:border-opacity-60 transition-all duration-300`}
+                    whileHover={{ scale: 1.05, y: -2 }}
+                  >
+                    <span className={`bg-gradient-to-r ${skill.color} bg-clip-text text-transparent font-semibold`}>
+                      {skill.category.charAt(0).toUpperCase() + skill.category.slice(1)}
+                    </span>
+                  </motion.div>
+                </div>
+              </div>
             </motion.div>
-        </section>
-    );
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  )
 }
