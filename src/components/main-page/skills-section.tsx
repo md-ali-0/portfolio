@@ -1,6 +1,18 @@
 "use client"
 
 import { motion } from "framer-motion"
+import {
+  Code,
+  Container,
+  Database,
+  FileCode,
+  GitBranch,
+  Globe,
+  Layers,
+  Palette,
+  Server,
+  Wrench
+} from "lucide-react"
 import { useEffect, useState } from "react"
 
 export default function SkillsSectionV4() {
@@ -10,6 +22,20 @@ export default function SkillsSectionV4() {
   useEffect(() => {
     setMounted(true)
   }, [])
+
+  // Map skills to icons
+  const skillIcons: Record<string, React.ReactNode> = {
+    "React": <Layers className="w-5 h-5" />,
+    "Next.js": <Globe className="w-5 h-5" />,
+    "TypeScript": <FileCode className="w-5 h-5" />,
+    "Tailwind CSS": <Palette className="w-5 h-5" />,
+    "Node.js": <Server className="w-5 h-5" />,
+    "Express": <Code className="w-5 h-5" />,
+    "PostgreSQL": <Database className="w-5 h-5" />,
+    "MongoDB": <Database className="w-5 h-5" />,
+    "Git": <GitBranch className="w-5 h-5" />,
+    "Docker": <Container className="w-5 h-5" />,
+  }
 
   const skillsData = {
     all: [
@@ -22,9 +48,7 @@ export default function SkillsSectionV4() {
       { name: "PostgreSQL", level: 85, category: "database", color: "from-blue-700 to-blue-500" },
       { name: "MongoDB", level: 86, category: "database", color: "from-green-600 to-green-400" },
       { name: "Git", level: 93, category: "tools", color: "from-orange-600 to-red-500" },
-      { name: "Docker", level: 82, category: "tools", color: "from-blue-500 to-cyan-400" },
-      { name: "AWS", level: 80, category: "tools", color: "from-orange-500 to-yellow-500" },
-      { name: "GraphQL", level: 84, category: "backend", color: "from-pink-500 to-rose-500" },
+      { name: "Docker", level: 82, category: "tools", color: "from-blue-500 to-cyan-400" }
     ],
     frontend: [
       { name: "React", level: 95, category: "frontend", color: "from-blue-500 to-cyan-500" },
@@ -44,7 +68,6 @@ export default function SkillsSectionV4() {
     tools: [
       { name: "Git", level: 93, category: "tools", color: "from-orange-600 to-red-500" },
       { name: "Docker", level: 82, category: "tools", color: "from-blue-500 to-cyan-400" },
-      { name: "AWS", level: 80, category: "tools", color: "from-orange-500 to-yellow-500" },
     ],
   }
 
@@ -61,133 +84,86 @@ export default function SkillsSectionV4() {
   if (!mounted) return null
 
   return (
-    <section id="skills" className="min-h-screen relative overflow-hidden py-12 sm:py-16 md:py-20 lg:py-24 xl:py-32">
+    <section id="skills" className="min-h-screen relative overflow-hidden py-16 sm:py-20 md:py-24 lg:py-28">
       {/* Background */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950" />
-        <div
-          className="absolute inset-0 opacity-5 sm:opacity-10"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(16, 185, 129, 0.1) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(16, 185, 129, 0.1) 1px, transparent 1px)
-            `,
-            backgroundSize: "20px 20px sm:30px sm:30px md:40px md:40px lg:50px lg:50px",
-          }}
-        />
       </div>
 
-      <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <motion.div
-          className="text-center mb-12 sm:mb-16 md:mb-20"
-          initial={{ opacity: 0, y: 30 }}
+          className="text-center mb-12 sm:mb-16"
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
-            Technical{" "}
-            <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent">
-              Expertise
-            </span>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            Technical <span className="text-emerald-400">Skills</span>
           </h2>
-          <p className="text-zinc-400 text-base sm:text-lg max-w-2xl mx-auto">
-            Proficient in modern technologies and frameworks for building scalable applications
+          <p className="text-zinc-400 max-w-xl mx-auto">
+            Technologies and tools I use to build amazing digital experiences
           </p>
         </motion.div>
 
         {/* Category Tabs */}
         <motion.div
-          className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-12 sm:mb-16 md:mb-20"
-          initial={{ opacity: 0, y: 20 }}
+          className="flex flex-wrap justify-center gap-2 mb-10 sm:mb-12"
+          initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
           viewport={{ once: true }}
         >
           {categories.map((cat) => (
-            <motion.button
+            <button
               key={cat.id}
               onClick={() => setSelectedCategory(cat.id)}
-              className={`px-4 sm:px-6 py-2 sm:py-3 rounded-full font-semibold transition-all duration-300 ${
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                 selectedCategory === cat.id
-                  ? "bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/50"
-                  : "bg-zinc-800/50 text-zinc-300 hover:bg-zinc-700/50 border border-zinc-700/50"
+                  ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
+                  : "bg-zinc-800/50 text-zinc-400 hover:bg-zinc-700/50 hover:text-zinc-200"
               }`}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
             >
               {cat.label}
-            </motion.button>
+            </button>
           ))}
         </motion.div>
 
-        <motion.div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6" layout>
+        {/* Skills Grid - Simple and Clean */}
+        <motion.div 
+          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"
+          layout
+        >
           {skills.map((skill, index) => (
             <motion.div
               key={skill.name}
-              className="relative group"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
+              className="group relative"
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 15 }}
               transition={{
-                duration: 0.5,
-                delay: index * 0.1,
+                duration: 0.4,
+                delay: index * 0.05,
               }}
               layout
             >
-              <div className="relative h-full p-4 sm:p-6 rounded-2xl bg-gradient-to-br from-zinc-900/60 to-zinc-900/20 backdrop-blur-xl overflow-hidden transition-all duration-500 group-hover:brightness-125 group-hover:shadow-2xl group-hover:shadow-emerald-500/20">
-                {/* Top-left corner accent */}
-                <motion.div
-                  className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-emerald-500/60 rounded-tl-2xl"
-                  initial={{ opacity: 0, scale: 0 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{
-                    delay: index * 0.1 + 0.2,
-                    duration: 0.5,
-                  }}
-                />
+              <div className="h-full p-4 rounded-xl bg-zinc-900/50 border border-zinc-800 hover:border-emerald-500/30 transition-all duration-300 flex flex-col items-center text-center">
+                {/* Icon container */}
+                <div className={`flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br ${skill.color} mb-3`}>
+                  <div className="text-white">
+                    {skillIcons[skill.name] || <Wrench className="w-5 h-5" />}
+                  </div>
+                </div>
+                
+                {/* Skill name */}
+                <h3 className="text-sm font-semibold text-white mb-1">
+                  {skill.name}
+                </h3>
 
-                {/* Bottom-right corner accent */}
-                <motion.div
-                  className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-teal-500/60 rounded-br-2xl"
-                  initial={{ opacity: 0, scale: 0 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{
-                    delay: index * 0.1 + 0.3,
-                    duration: 0.5,
-                  }}
-                />
-
-                <div
-                  className={`absolute inset-0 bg-gradient-to-br ${skill.color} opacity-0 group-hover:opacity-10 transition-all duration-500`}
-                />
-
-                {/* Grid pattern overlay */}
-                <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500"
-                  style={{
-                    backgroundImage: `
-                      linear-gradient(rgba(16, 185, 129, 0.3) 1px, transparent 1px),
-                      linear-gradient(90deg, rgba(16, 185, 129, 0.3) 1px, transparent 1px)
-                    `,
-                    backgroundSize: "20px 20px",
-                  }}
-                />
-
-                <div className="relative z-10 flex flex-col items-center justify-center h-full text-center">
-                  <h3 className="text-lg sm:text-xl font-bold bg-gradient-to-r from-white to-zinc-200 group-hover:from-emerald-100 group-hover:to-cyan-100 bg-clip-text text-transparent transition-all duration-300">
-                    {skill.name}
-                  </h3>
-
-                  <motion.div
-                    className={`mt-3 inline-block px-2 sm:px-3 py-1 bg-gradient-to-r ${skill.color}/10 text-xs sm:text-sm rounded-full border border-${skill.color}/20 border-opacity-30 group-hover:border-opacity-60 transition-all duration-300`}
-                    whileHover={{ scale: 1.05, y: -2 }}
-                  >
-                    <span className={`bg-gradient-to-r ${skill.color} bg-clip-text text-transparent font-semibold`}>
-                      {skill.category.charAt(0).toUpperCase() + skill.category.slice(1)}
-                    </span>
-                  </motion.div>
+                {/* Category */}
+                <div className="text-[10px] text-zinc-500 uppercase tracking-wider">
+                  {skill.category}
                 </div>
               </div>
             </motion.div>
