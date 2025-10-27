@@ -177,7 +177,7 @@ export default function Navbar() {
                 />
             </motion.div>
 
-            <div className="container mx-auto py-5 relative z-10">
+            <div className="container mx-auto py-5 relative z-10 sm:px-6 lg:px-8">
                 <nav className="flex justify-between items-center">
                     {/* Enhanced Logo */}
                     <motion.div
