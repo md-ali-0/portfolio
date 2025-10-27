@@ -1,7 +1,7 @@
 "use client";
 
 import { useMobile } from "@/hooks/use-mobile";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion, useMotionValue } from "framer-motion";
 import {
     ArrowRight,
     Briefcase,
@@ -18,9 +18,7 @@ export default function AboutSection() {
     // Mouse position for parallax effects - matching hero section
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
-    const smoothMouseX = useSpring(mouseX, { stiffness: 50, damping: 20 });
-    const smoothMouseY = useSpring(mouseY, { stiffness: 50, damping: 20 });
-
+    
     useEffect(() => {
         const handleMouseMove = (e: MouseEvent) => {
             const { clientX, clientY } = e;
