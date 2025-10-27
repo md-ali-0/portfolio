@@ -1,17 +1,10 @@
 "use client";
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import {
-    ArrowRight,
-    Calendar,
-    ChevronLeft,
-    ChevronRight,
-    Clock,
-    Sparkles,
-} from "lucide-react";
+import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 import { useState } from "react";
+import BlogCard from "../features/blog/blog-card";
 
 const blogPosts = [
     {
@@ -51,97 +44,6 @@ const blogPosts = [
         tags: ["AI", "Productivity", "Tools"],
     },
 ];
-
-const BlogCard = ({ post, index }: { post: any; index: number }) => {
-    return (
-        <motion.div
-            className="group bg-gradient-to-br from-zinc-900/60 to-zinc-900/20 backdrop-blur-xl rounded-2xl border border-zinc-800 overflow-hidden h-full transition-all duration-300 hover:border-emerald-500/30"
-            transition={{ duration: 0.3 }}
-        >
-            <div className="relative h-48 overflow-hidden">
-                <img
-                    src={
-                        post.image ||
-                        `/placeholder.svg?height=224&width=400&query=${post.category} development coding`
-                    }
-                    alt={post.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/80 to-transparent" />
-
-                <div className="absolute top-3 left-3">
-                    <Badge className="bg-emerald-500/90 text-white border-0 text-xs font-medium px-2.5 py-1">
-                        {post.category}
-                    </Badge>
-                </div>
-
-                <div className="absolute top-3 right-3 flex items-center gap-1 bg-black/30 rounded-full px-2 py-1 border border-zinc-700/50">
-                    <Clock className="w-3 h-3 text-emerald-400" />
-                    <span className="text-xs text-zinc-200">
-                        {post.readTime}
-                    </span>
-                </div>
-            </div>
-
-            <div className="p-5">
-                <div className="flex flex-wrap gap-1.5 mb-3">
-                    {post.tags
-                        .slice(0, 3)
-                        .map((tag: string, tagIndex: number) => (
-                            <span
-                                key={tag}
-                                className="text-xs px-2 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full"
-                            >
-                                {tag}
-                            </span>
-                        ))}
-                    {post.tags.length > 3 && (
-                        <span className="text-xs px-2 py-1 bg-zinc-800/50 text-zinc-400 border border-zinc-700/50 rounded-full">
-                            +{post.tags.length - 3}
-                        </span>
-                    )}
-                </div>
-
-                <h3 className="text-lg font-bold text-white mb-2 leading-tight group-hover:text-emerald-400 transition-colors duration-300">
-                    {post.title}
-                </h3>
-
-                <p className="text-zinc-400 mb-4 text-sm leading-relaxed">
-                    {post.excerpt}
-                </p>
-
-                <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center text-white text-xs font-bold">
-                            MA
-                        </div>
-                        <div>
-                            <h6 className="text-white font-medium text-sm">
-                                {post.author}
-                            </h6>
-                            <div className="flex items-center gap-1 text-zinc-500 text-xs">
-                                <Calendar className="w-3 h-3" />
-                                <span>
-                                    {new Date(
-                                        post.publishedAt
-                                    ).toLocaleDateString("en-GB")}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <Button
-                        variant="ghost"
-                        size="sm"
-                        className="w-9 h-9 rounded-full bg-zinc-800/50 border border-zinc-700/50 text-emerald-400 hover:bg-emerald-500/20 hover:border-emerald-500/30"
-                    >
-                        <ArrowRight className="w-4 h-4" />
-                    </Button>
-                </div>
-            </div>
-        </motion.div>
-    );
-};
 
 export default function BlogSection() {
     const [currentIndex, setCurrentIndex] = useState(0);

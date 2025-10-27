@@ -1,9 +1,15 @@
 "use client";
 
-import { AnimatePresence, motion, useMotionValue, useSpring } from "framer-motion";
+import {
+    AnimatePresence,
+    motion,
+    useMotionValue,
+    useSpring,
+} from "framer-motion";
 import { ArrowRight, ExternalLink, Github } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import SectionHeader from "../section-header";
 
 type Project = {
     title: string;
@@ -46,7 +52,13 @@ export default function ProjectsSection() {
             description:
                 "A full-stack e-commerce solution with real-time inventory management, payment processing, and advanced analytics dashboard.",
             image: "https://images.pexels.com/photos/34170816/pexels-photo-34170816.jpeg",
-            technologies: ["Next.js", "React", "Node.js", "PostgreSQL", "Stripe"],
+            technologies: [
+                "Next.js",
+                "React",
+                "Node.js",
+                "PostgreSQL",
+                "Stripe",
+            ],
             link: "https://example.com",
             github: "https://github.com",
             featured: true,
@@ -176,45 +188,20 @@ export default function ProjectsSection() {
                             linear-gradient(rgba(16, 185, 129, 0.1) 1px, transparent 1px),
                             linear-gradient(90deg, rgba(16, 185, 129, 0.1) 1px, transparent 1px)
                         `,
-                        backgroundSize: "30px 30px sm:40px sm:40px md:50px md:50px",
+                        backgroundSize:
+                            "30px 30px sm:40px sm:40px md:50px md:50px",
                     }}
                 />
             </div>
 
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                {/* Header */}
-                <motion.div
-                    className="text-center mb-12 sm:mb-16 md:mb-20"
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
-                    viewport={{ once: true }}
-                >
-                    <motion.h2
-                        className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6"
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.1 }}
-                        viewport={{ once: true }}
-                    >
-                        Featured{" "}
-                        <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-500 bg-clip-text text-transparent">
-                            Projects
-                        </span>
-                    </motion.h2>
-                    <motion.p
-                        className="text-base sm:text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto"
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        transition={{ duration: 0.6, delay: 0.2 }}
-                        viewport={{ once: true }}
-                    >
-                        Explore my latest work showcasing full-stack
+                <SectionHeader
+                    title="Featured"
+                    highlight="Projects"
+                    description="Explore my latest work showcasing full-stack
                         development, innovative solutions, and cutting-edge
-                        technologies.
-                    </motion.p>
-                </motion.div>
-
+                        technologies."
+                />
                 {/* Projects Carousel */}
                 <motion.div
                     className="relative grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 mb-12"
@@ -239,7 +226,10 @@ export default function ProjectsSection() {
                                         opacity: index === active ? 1 : 0.7,
                                         scale: index === active ? 1 : 0.95,
                                         z: index === active ? 0 : -100,
-                                        rotate: index === active ? 0 : randomRotateY(),
+                                        rotate:
+                                            index === active
+                                                ? 0
+                                                : randomRotateY(),
                                         zIndex:
                                             index === active
                                                 ? 999
@@ -259,7 +249,9 @@ export default function ProjectsSection() {
                                     className="absolute inset-0 origin-bottom"
                                 >
                                     <Image
-                                        src={project.image || "/placeholder.svg"}
+                                        src={
+                                            project.image || "/placeholder.svg"
+                                        }
                                         alt={project.title}
                                         width={500}
                                         height={500}

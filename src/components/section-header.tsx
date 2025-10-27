@@ -11,6 +11,7 @@ interface SectionHeaderProps {
     description?: string;
     icon?: ReactNode;
     className?: string;
+    descriptionClassName?: string;
 }
 
 export default function SectionHeader({
@@ -19,6 +20,7 @@ export default function SectionHeader({
     description,
     icon,
     className,
+    descriptionClassName,
 }: SectionHeaderProps) {
     return (
         <motion.div
@@ -104,7 +106,8 @@ export default function SectionHeader({
                 <div className="flex-1">
                     {description && (
                         <motion.p
-                            className="text-zinc-400 text-sm md:text-base max-w-xl leading-relaxed mt-2"
+                            className={cn("text-zinc-400 text-sm md:text-base max-w-xl leading-relaxed mt-2 text-center", descriptionClassName)}
+
                             initial={{ opacity: 0, y: 15 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 0.7 }}
