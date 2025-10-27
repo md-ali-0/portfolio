@@ -51,7 +51,7 @@ export default function ProjectsSection() {
             title: "E-Commerce Platform",
             description:
                 "A full-stack e-commerce solution with real-time inventory management, payment processing, and advanced analytics dashboard.",
-            image: "https://images.pexels.com/photos/34170816/pexels-photo-34170816.jpeg",
+            image: "/Screenshot_48.png",
             technologies: [
                 "Next.js",
                 "React",
@@ -72,7 +72,7 @@ export default function ProjectsSection() {
             title: "AI Content Generator",
             description:
                 "Intelligent content generation tool powered by AI, featuring real-time collaboration and version control.",
-            image: "https://images.pexels.com/photos/33373140/pexels-photo-33373140.jpeg",
+            image: "/Screenshot_49.png",
             technologies: ["React", "TypeScript", "OpenAI API", "Tailwind CSS"],
             link: "https://example.com",
             github: "https://github.com",
@@ -86,7 +86,7 @@ export default function ProjectsSection() {
             title: "Project Management App",
             description:
                 "Collaborative project management platform with real-time updates, task tracking, and team communication.",
-            image: "https://images.pexels.com/photos/34284811/pexels-photo-34284811.jpeg",
+            image: "/Screenshot_50.png",
             technologies: ["Next.js", "WebSocket", "MongoDB", "Redux"],
             link: "https://example.com",
             github: "https://github.com",
@@ -100,7 +100,7 @@ export default function ProjectsSection() {
             title: "Analytics Dashboard",
             description:
                 "Comprehensive analytics platform with interactive charts, real-time data visualization, and custom reporting.",
-            image: "https://images.pexels.com/photos/34316104/pexels-photo-34316104.jpeg",
+            image: "/Screenshot_51.png",
             technologies: ["React", "D3.js", "Node.js", "PostgreSQL"],
             link: "https://example.com",
             github: "https://github.com",
@@ -114,7 +114,7 @@ export default function ProjectsSection() {
             title: "Mobile Learning App",
             description:
                 "Cross-platform learning application with interactive lessons, progress tracking, and gamification features.",
-            image: "https://images.pexels.com/photos/33488221/pexels-photo-33488221.jpeg",
+            image: "/Screenshot_52.png",
             technologies: ["React Native", "Firebase", "TypeScript"],
             link: "https://example.com",
             github: "https://github.com",
