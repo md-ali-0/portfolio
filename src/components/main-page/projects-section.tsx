@@ -1,12 +1,6 @@
 "use client";
 
-import {
-    AnimatePresence,
-    motion,
-    useMotionValue,
-    useSpring,
-} from "framer-motion";
-import { ArrowRight, ExternalLink, Github } from "lucide-react";
+import { ExternalLink, Github } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import SectionHeader from "../section-header";
@@ -19,32 +13,12 @@ type Project = {
     link?: string;
     github?: string;
     featured?: boolean;
-    solution?: string;
-    stats?: { label: string; value: string }[];
+    category: "Frontend" | "Backend" | "Full Stack" | "E-commerce" | "Dashboard" | "API";
+    year: string;
 };
 
 export default function ProjectsSection() {
-    const [active, setActive] = useState(0);
-
-    // Mouse position for parallax effects
-    const mouseX = useMotionValue(0);
-    const mouseY = useMotionValue(0);
-    const smoothMouseX = useSpring(mouseX, { stiffness: 50, damping: 20 });
-    const smoothMouseY = useSpring(mouseY, { stiffness: 50, damping: 20 });
-
-    useEffect(() => {
-        const handleMouseMove = (e: MouseEvent) => {
-            const { clientX, clientY } = e;
-            const { innerWidth, innerHeight } = window;
-            const x = (clientX / innerWidth - 0.5) * 20;
-            const y = (clientY / innerHeight - 0.5) * 20;
-            mouseX.set(x);
-            mouseY.set(y);
-        };
-
-        window.addEventListener("mousemove", handleMouseMove);
-        return () => window.removeEventListener("mousemove", handleMouseMove);
-    }, [mouseX, mouseY]);
+    const [visibleCards, setVisibleCards] = useState<number[]>([]);
 
     const projects: Project[] = [
         {
@@ -62,81 +36,69 @@ export default function ProjectsSection() {
             link: "https://example.com",
             github: "https://github.com",
             featured: true,
-            stats: [
-                { label: "Performance", value: "98/100" },
-                { label: "Conversion Rate", value: "+35%" },
-                { label: "Load Time", value: "1.2s" },
-            ],
-        },
-        {
-            title: "AI Content Generator",
-            description:
-                "Intelligent content generation tool powered by AI, featuring real-time collaboration and version control.",
-            image: "/Screenshot_49.png",
-            technologies: ["React", "TypeScript", "OpenAI API", "Tailwind CSS"],
-            link: "https://example.com",
-            github: "https://github.com",
-            stats: [
-                { label: "User Satisfaction", value: "4.8★" },
-                { label: "Content Quality", value: "94%" },
-                { label: "Generation Speed", value: "2.5s" },
-            ],
-        },
-        {
-            title: "Project Management App",
-            description:
-                "Collaborative project management platform with real-time updates, task tracking, and team communication.",
-            image: "/Screenshot_50.png",
-            technologies: ["Next.js", "WebSocket", "MongoDB", "Redux"],
-            link: "https://example.com",
-            github: "https://github.com",
-            stats: [
-                { label: "Team Productivity", value: "+45%" },
-                { label: "Active Teams", value: "500+" },
-                { label: "Uptime", value: "99.8%" },
-            ],
+            category: "E-commerce",
+            year: "2024"
         },
         {
             title: "Analytics Dashboard",
             description:
-                "Comprehensive analytics platform with interactive charts, real-time data visualization, and custom reporting.",
-            image: "/Screenshot_51.png",
+                "Comprehensive analytics platform with interactive charts, real-time data visualization, and custom reporting features for business intelligence.",
+            image: "/Screenshot_49.png",
             technologies: ["React", "D3.js", "Node.js", "PostgreSQL"],
             link: "https://example.com",
             github: "https://github.com",
-            stats: [
-                { label: "Data Processing", value: "1M+/sec" },
-                { label: "Visualization Speed", value: "<500ms" },
-                { label: "Accuracy", value: "99.99%" },
-            ],
+            category: "Dashboard",
+            year: "2024"
         },
         {
-            title: "Mobile Learning App",
+            title: "Task Management API",
             description:
-                "Cross-platform learning application with interactive lessons, progress tracking, and gamification features.",
-            image: "/Screenshot_52.png",
-            technologies: ["React Native", "Firebase", "TypeScript"],
+                "RESTful API for task management application with authentication, real-time updates, and comprehensive documentation.",
+            image: "/Screenshot_50.png",
+            technologies: ["Node.js", "Express", "MongoDB", "JWT"],
             link: "https://example.com",
             github: "https://github.com",
-            stats: [
-                { label: "Completion Rate", value: "85%" },
-                { label: "Daily Active Users", value: "25K+" },
-                { label: "Avg Session", value: "18 min" },
-            ],
+            category: "API",
+            year: "2023"
+        },
+        {
+            title: "Social Media Dashboard",
+            description:
+                "Full-stack dashboard application with user management, content analytics, and real-time notification system.",
+            image: "/Screenshot_51.png",
+            technologies: ["React", "Node.js", "PostgreSQL", "Redis"],
+            link: "https://example.com",
+            github: "https://github.com",
+            category: "Full Stack",
+            year: "2023"
         },
     ];
 
-    const handleNext = () => {
-        setActive((prev) => (prev + 1) % projects.length);
-    };
+    // Handle card visibility animation
+    useEffect(() => {
+        const handleScroll = () => {
+            const newVisibleCards: number[] = [];
+            projects.forEach((_, index) => {
+                const element = document.getElementById(`project-card-${index}`);
+                if (element) {
+                    const rect = element.getBoundingClientRect();
+                    const windowHeight = window.innerHeight;
+                    // When card is 20% visible from bottom
+                    if (rect.top < windowHeight * 0.8) {
+                        newVisibleCards.push(index);
+                    }
+                }
+            });
+            setVisibleCards(newVisibleCards);
+        };
 
-    const handlePrev = () => {
-        setActive((prev) => (prev - 1 + projects.length) % projects.length);
-    };
-
-    const randomRotateY = () => {
-        return Math.floor(Math.random() * 21) - 10;
-    };
+        // Initial check
+        handleScroll();
+        
+        // Add scroll listener
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     return (
         <section
@@ -145,306 +107,120 @@ export default function ProjectsSection() {
         >
             {/* Background */}
             <div className="absolute inset-0">
-                <motion.div
-                    className="absolute inset-0 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950"
-                    animate={{
-                        backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"],
-                    }}
-                    transition={{
-                        duration: 20,
-                        repeat: Number.POSITIVE_INFINITY,
-                        ease: "linear",
-                    }}
-                />
-                <motion.div
-                    className="absolute inset-0 opacity-20"
-                    style={{
-                        background: `radial-gradient(circle at ${
-                            50 + smoothMouseX.get()
-                        }% ${50 + smoothMouseY.get()}%, 
-                            rgba(16, 185, 129, 0.15) 0%, 
-                            rgba(20, 184, 166, 0.1) 25%, 
-                            transparent 50%),
-                        radial-gradient(circle at ${
-                            30 + smoothMouseX.get() * -1
-                        }% ${70 + smoothMouseY.get() * -1}%, 
-                            rgba(6, 182, 212, 0.1) 0%, 
-                            rgba(16, 185, 129, 0.05) 30%, 
-                            transparent 60%)`,
-                    }}
-                    animate={{
-                        opacity: [0.15, 0.3, 0.15],
-                    }}
-                    transition={{
-                        duration: 8,
-                        repeat: Number.POSITIVE_INFINITY,
-                        ease: "easeInOut",
-                    }}
-                />
-                <div
-                    className="absolute inset-0 opacity-5"
-                    style={{
-                        backgroundImage: `
-                            linear-gradient(rgba(16, 185, 129, 0.1) 1px, transparent 1px),
-                            linear-gradient(90deg, rgba(16, 185, 129, 0.1) 1px, transparent 1px)
-                        `,
-                        backgroundSize:
-                            "30px 30px sm:40px sm:40px md:50px md:50px",
-                    }}
-                />
+                <div className="absolute inset-0 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950" />
+                <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-emerald-500/5 rounded-full blur-3xl" />
+                <div className="absolute bottom-0 left-0 w-1/4 h-1/4 bg-teal-500/5 rounded-full blur-3xl" />
             </div>
 
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <SectionHeader
-                    title="Featured"
-                    highlight="Projects"
-                    description="Explore my latest work showcasing full-stack
-                        development, innovative solutions, and cutting-edge
-                        technologies."
+                    title="Creative"
+                    highlight="Showcase"
+                    description="Explore my portfolio of web development projects with modern design and clean aesthetics."
                 />
-                {/* Projects Carousel */}
-                <motion.div
-                    className="relative grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 mb-12"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    transition={{ duration: 0.8, delay: 0.2 }}
-                    viewport={{ once: true }}
-                >
-                    {/* Image Section */}
-                    <div className="relative h-[500px] w-full">
-                        <AnimatePresence>
-                            {projects.map((project, index) => (
-                                <motion.div
-                                    key={project.title}
-                                    initial={{
-                                        opacity: 0,
-                                        scale: 0.9,
-                                        z: -100,
-                                        rotate: randomRotateY(),
-                                    }}
-                                    animate={{
-                                        opacity: index === active ? 1 : 0.7,
-                                        scale: index === active ? 1 : 0.95,
-                                        z: index === active ? 0 : -100,
-                                        rotate:
-                                            index === active
-                                                ? 0
-                                                : randomRotateY(),
-                                        zIndex:
-                                            index === active
-                                                ? 999
-                                                : projects.length + 2 - index,
-                                        y: index === active ? [0, -80, 0] : 0,
-                                    }}
-                                    exit={{
-                                        opacity: 0,
-                                        scale: 0.9,
-                                        z: 100,
-                                        rotate: randomRotateY(),
-                                    }}
-                                    transition={{
-                                        duration: 0.4,
-                                        ease: "easeInOut",
-                                    }}
-                                    className="absolute inset-0 origin-bottom"
-                                >
-                                    <Image
-                                        src={
-                                            project.image || "/placeholder.svg"
-                                        }
-                                        alt={project.title}
-                                        width={500}
-                                        height={500}
-                                        draggable={false}
-                                        className="h-full w-full rounded-3xl object-cover object-center"
-                                    />
-                                </motion.div>
-                            ))}
-                        </AnimatePresence>
-                    </div>
 
-                    {/* Content Section */}
-                    <div className="flex flex-col justify-between py-4">
-                        {projects.map((project, index) => (
-                            <motion.div
-                                key={project.title}
-                                initial={{
-                                    y: 30,
-                                    opacity: 0,
-                                }}
-                                animate={{
-                                    y: index === active ? 0 : 30,
-                                    opacity: index === active ? 1 : 0,
-                                }}
-                                transition={{
-                                    duration: 0.5,
-                                    ease: "easeOut",
-                                }}
-                                className={`space-y-6 ${
-                                    index === active
-                                        ? "pointer-events-auto"
-                                        : "pointer-events-none absolute"
-                                }`}
-                            >
-                                {/* Title */}
-                                <motion.div
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: 0.1, ease: "easeOut" }}
-                                >
-                                    <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3">
-                                        {project.title}
-                                    </h3>
-                                    <p className="text-base sm:text-lg text-zinc-400 leading-relaxed">
-                                        {project.description}
-                                    </p>
-                                </motion.div>
-                                {project.stats && project.stats.length > 0 && (
-                                    <motion.div
-                                        className="grid grid-cols-3 gap-3 pt-2"
-                                        initial={{ opacity: 0, y: 10 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{
-                                            delay: 0.25,
-                                            ease: "easeOut",
-                                        }}
-                                    >
-                                        {project.stats.map((stat, idx) => (
-                                            <div
-                                                key={stat.label}
-                                                className="p-3 bg-emerald-500/5 border border-emerald-500/10 rounded-lg hover:border-emerald-500/30 transition-all duration-300"
-                                            >
-                                                <p className="text-xs text-zinc-400 mb-1">
-                                                    {stat.label}
-                                                </p>
-                                                <p className="text-lg font-bold text-emerald-400">
-                                                    {stat.value}
-                                                </p>
+                {/* Projects List with Subtle Animations */}
+                <div className="space-y-8 mt-12">
+                    {projects.map((project, index) => (
+                        <div
+                            key={project.title}
+                            id={`project-card-${index}`}
+                            className={`
+                                bg-zinc-800/50 backdrop-blur-sm rounded-2xl border border-zinc-700/50 overflow-hidden transition-all duration-500
+                                ${visibleCards.includes(index) 
+                                    ? 'opacity-100 translate-y-0' 
+                                    : 'opacity-0 translate-y-8'}
+                            `}
+                            style={{ transitionDelay: `${index * 100}ms` }}
+                        >
+                            <div className="p-6">
+                                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                                    {/* Image with subtle hover effect */}
+                                    <div className="relative h-64 lg:h-full rounded-xl overflow-hidden">
+                                        <Image
+                                            src={project.image || "/placeholder.svg"}
+                                            alt={project.title}
+                                            fill
+                                            className="object-cover transition-transform duration-500 hover:scale-105"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-zinc-900/40 to-transparent" />
+                                        {/* Featured badge */}
+                                        {project.featured && (
+                                            <div className="absolute top-4 left-4">
+                                                <span className="px-3 py-1.5 bg-gradient-to-r from-emerald-500 to-teal-500 text-white text-xs font-semibold rounded-full flex items-center gap-1">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                                                    </svg>
+                                                    FEATURED
+                                                </span>
                                             </div>
-                                        ))}
-                                    </motion.div>
-                                )}
+                                        )}
+                                        {/* Year badge */}
+                                        <div className="absolute top-4 right-4">
+                                            <span className="px-3 py-1.5 bg-black/40 backdrop-blur-md text-zinc-200 text-xs font-medium rounded-full border border-zinc-600/30">
+                                                {project.year}
+                                            </span>
+                                        </div>
+                                    </div>
 
-                                {/* Technologies */}
-                                <motion.div
-                                    className="space-y-3"
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: 0.3, ease: "easeOut" }}
-                                >
-                                    <p className="text-sm font-semibold text-zinc-300">
-                                        Technologies Used
-                                    </p>
-                                    <div className="flex flex-wrap gap-2">
-                                        {project.technologies.map(
-                                            (tech, idx) => (
-                                                <motion.span
+                                    {/* Content */}
+                                    <div className="lg:col-span-2">
+                                        <div className="flex flex-wrap items-center gap-3 mb-4">
+                                            <h3 className="text-2xl font-bold text-white">
+                                                {project.title}
+                                            </h3>
+                                            <span className="px-3 py-1.5 bg-emerald-500/20 text-emerald-400 text-sm font-medium rounded-full border border-emerald-500/30">
+                                                {project.category}
+                                            </span>
+                                        </div>
+
+                                        <p className="text-zinc-300 mb-6 text-lg leading-relaxed">
+                                            {project.description}
+                                        </p>
+
+                                        {/* Tech Stack */}
+                                        <div className="flex flex-wrap gap-2.5 mb-8">
+                                            {project.technologies.map((tech) => (
+                                                <span
                                                     key={tech}
-                                                    className="px-3 py-1 bg-emerald-500/10 text-emerald-400 text-sm rounded-full border border-emerald-500/20 hover:bg-emerald-500/20 transition-all duration-300"
-                                                    initial={{
-                                                        opacity: 0,
-                                                        scale: 0.8,
-                                                    }}
-                                                    animate={{
-                                                        opacity: 1,
-                                                        scale: 1,
-                                                    }}
-                                                    transition={{
-                                                        delay:
-                                                            0.35 + idx * 0.04,
-                                                        ease: "easeOut",
-                                                    }}
-                                                    whileHover={{
-                                                        scale: 1.05,
-                                                        y: -2,
-                                                    }}
+                                                    className="px-3 py-1.5 bg-zinc-700/50 text-zinc-200 text-sm rounded-lg border border-zinc-600/50 hover:border-emerald-500/50 transition-colors duration-300"
                                                 >
                                                     {tech}
-                                                </motion.span>
-                                            )
-                                        )}
+                                                </span>
+                                            ))}
+                                        </div>
+
+                                        {/* Links */}
+                                        <div className="flex flex-wrap gap-3">
+                                            {project.link && (
+                                                <a
+                                                    href={project.link}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-emerald-400 rounded-lg font-medium border border-emerald-500/30 hover:bg-emerald-500/30 hover:border-emerald-400/50 transition-all duration-300"
+                                                >
+                                                    <ExternalLink className="h-4 w-4" />
+                                                    <span className="text-sm">View Project</span>
+                                                </a>
+                                            )}
+                                            {project.github && (
+                                                <a
+                                                    href={project.github}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="inline-flex items-center gap-2 px-4 py-2 bg-zinc-700/50 text-zinc-200 rounded-lg font-medium border border-zinc-600/50 hover:bg-zinc-600/50 transition-all duration-300"
+                                                >
+                                                    <Github className="h-4 w-4" />
+                                                    <span className="text-sm">Source Code</span>
+                                                </a>
+                                            )}
+                                        </div>
                                     </div>
-                                </motion.div>
-
-                                {/* Links */}
-                                <motion.div
-                                    className="flex gap-4 pt-4"
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: 0.4, ease: "easeOut" }}
-                                >
-                                    {project.link && (
-                                        <motion.a
-                                            href={project.link}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white rounded-lg font-semibold transition-all duration-300 shadow-lg shadow-emerald-500/25"
-                                            whileHover={{ scale: 1.05, y: -2 }}
-                                            whileTap={{ scale: 0.95 }}
-                                        >
-                                            View Project
-                                            <ExternalLink className="h-4 w-4" />
-                                        </motion.a>
-                                    )}
-                                    {project.github && (
-                                        <motion.a
-                                            href={project.github}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="inline-flex items-center gap-2 px-6 py-3 border-2 border-emerald-400/50 text-emerald-400 hover:bg-emerald-400/10 rounded-lg font-semibold transition-all duration-300 backdrop-blur-sm"
-                                            whileHover={{ scale: 1.05, y: -2 }}
-                                            whileTap={{ scale: 0.95 }}
-                                        >
-                                            GitHub
-                                            <Github className="h-4 w-4" />
-                                        </motion.a>
-                                    )}
-                                </motion.div>
-                            </motion.div>
-                        ))}
-
-                        <div className="flex gap-4 pt-8">
-                            <motion.button
-                                onClick={handlePrev}
-                                className="h-16 w-16 rounded-full bg-secondary flex items-center justify-center group/button hover:bg-emerald-500/20 border border-emerald-500/20 hover:border-emerald-400/50 transition-all duration-300 relative overflow-hidden"
-                                whileHover={{ scale: 1.15 }}
-                                whileTap={{ scale: 0.9 }}
-                            >
-                                <motion.div
-                                    className="absolute inset-0 bg-gradient-to-r from-emerald-500/0 via-emerald-500/10 to-emerald-500/0"
-                                    animate={{
-                                        x: ["-100%", "100%"],
-                                    }}
-                                    transition={{
-                                        duration: 2,
-                                        repeat: Number.POSITIVE_INFINITY,
-                                        ease: "linear",
-                                    }}
-                                />
-                                <ArrowRight className="h-5 w-5 text-foreground group-hover/button:rotate-180 transition-transform duration-500 rotate-180 relative z-10" />
-                            </motion.button>
-                            <motion.button
-                                onClick={handleNext}
-                                className="h-16 w-16 rounded-full bg-secondary flex items-center justify-center group/button hover:bg-emerald-500/20 border border-emerald-500/20 hover:border-emerald-400/50 transition-all duration-300 relative overflow-hidden"
-                                whileHover={{ scale: 1.15 }}
-                                whileTap={{ scale: 0.9 }}
-                            >
-                                <motion.div
-                                    className="absolute inset-0 bg-gradient-to-r from-emerald-500/0 via-emerald-500/10 to-emerald-500/0"
-                                    animate={{
-                                        x: ["-100%", "100%"],
-                                    }}
-                                    transition={{
-                                        duration: 2,
-                                        repeat: Number.POSITIVE_INFINITY,
-                                        ease: "linear",
-                                    }}
-                                />
-                                <ArrowRight className="h-5 w-5 text-foreground group-hover/button:rotate-12 transition-transform duration-500 relative z-10" />
-                            </motion.button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </motion.div>
+                    ))}
+                </div>
             </div>
         </section>
     );

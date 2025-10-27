@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
@@ -71,7 +71,7 @@ export default function BlogSection() {
             <div className="container mx-auto relative z-10 px-4 sm:px-6">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-10 sm:mb-12">
                     <div 
-                        className="transition-all duration-500 ease-in-out"
+                        className="transition-all duration-500 ease-in-out transform hover:translate-y-[-5px]"
                     >
                         <h2 className="flex items-center gap-3 text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2">
                             <span className="text-emerald-400">Latest</span>
@@ -113,6 +113,7 @@ export default function BlogSection() {
                         {getCurrentPosts().map((post, index) => (
                             <div 
                                 key={post.slug}
+                                className="transition-all duration-300 ease-in-out hover:-translate-y-1"
                             >
                                 <BlogCard
                                     post={post}

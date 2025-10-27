@@ -17,17 +17,42 @@ import {
     Share2,
     Tag,
     TrendingUp,
+    User,
 } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { useEffect, useState } from "react";
+
+// Define types
+interface Author {
+    name: string;
+    title: string;
+    avatar?: string;
+    bio: string;
+}
+
+interface BlogPost {
+    slug: string;
+    title: string;
+    excerpt: string;
+    category: string;
+    date: string;
+    readTime: number;
+    coverImage?: string;
+    author: Author;
+    tags: string[];
+    content: string;
+    likes: number;
+    comments: number;
+    featured: boolean;
+}
 
 // Mock authentication hook (replace with real auth in production)
 const useAuth = () => {
     // Simulating a logged-in user; replace with actual auth logic
     return {
         isAuthenticated: false,
-        user: null, // { name: "John Doe", avatar: "/user-avatar.jpg" } when logged in
+        user: null as { name: string; avatar: string } | null,
     };
 };
 
@@ -54,7 +79,7 @@ export default function BlogPostClient({
 
     const [isLoading, setIsLoading] = useState(true);
     const isMobile = useMobile();
-    const [relatedPosts, setRelatedPosts] = useState<any[]>([]);
+    const [relatedPosts, setRelatedPosts] = useState<BlogPost[]>([]);
     const [isLiked, setIsLiked] = useState(false);
     const [isSaved, setIsSaved] = useState(false);
     const [comments, setComments] = useState<Comment[]>([]);
@@ -79,11 +104,11 @@ export default function BlogPostClient({
 
         const newComment: Comment = {
             id: Date.now().toString(),
-            author: isAuthenticated
-                ? user?.name || "Anonymous"
+            author: isAuthenticated && user
+                ? user.name
                 : anonymousName || "Anonymous",
-            avatar: isAuthenticated
-                ? user?.avatar
+            avatar: isAuthenticated && user
+                ? user.avatar
                 : post.author.avatar || "/placeholder.svg",
             text: commentText.trim(),
             timestamp: new Date().toLocaleString(),
@@ -141,7 +166,12 @@ export default function BlogPostClient({
         <div className="min-h-screen bg-zinc-950 text-white font-sans">
             {/* Hero Section */}
             <section className="relative py-16 lg:py-24">
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="absolute inset-0">
+                    <div className="absolute inset-0 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950" />
+                    <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-emerald-500/5 rounded-full blur-3xl" />
+                    <div className="absolute bottom-0 left-0 w-1/4 h-1/4 bg-teal-500/5 rounded-full blur-3xl" />
+                </div>
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <motion.div
                         className="max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-lg shadow-emerald-500/20 relative group"
                         initial={{ opacity: 0, y: 20 }}
@@ -257,7 +287,7 @@ export default function BlogPostClient({
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 0.4 }}
                         >
-                            <div className="bg-zinc-900/70 rounded-2xl p-6 sm:p-8 border border-zinc-800/50 shadow-lg">
+                            <div className="bg-zinc-900/70 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-zinc-800/50 shadow-lg">
                                 <div className="prose prose-invert max-w-none prose-headings:text-white prose-headings:font-bold prose-p:text-zinc-300 prose-p:leading-relaxed prose-a:text-emerald-400 prose-a:no-underline hover:prose-a:text-emerald-300 prose-strong:text-white prose-code:text-emerald-400 prose-code:bg-zinc-800/50 prose-code:px-2 prose-code:py-1 prose-code:rounded">
                                     <div
                                         dangerouslySetInnerHTML={{
@@ -379,7 +409,7 @@ export default function BlogPostClient({
                                 </div>
 
                                 {/* Author Bio */}
-                                <div className="mt-12 bg-zinc-900/50 rounded-2xl p-6 border border-zinc-800/50">
+                                <div className="mt-12 bg-zinc-900/50 backdrop-blur-sm rounded-2xl p-6 border border-zinc-800/50">
                                     <div className="flex items-start gap-4">
                                         <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-emerald-400 flex-shrink-0">
                                             <img
@@ -426,7 +456,7 @@ export default function BlogPostClient({
                             </div>
                             {/* Comment Section */}
                             <motion.div
-                                className="mt-8 lg:col-span-8 bg-zinc-900/70 rounded-2xl p-6 sm:p-8 border border-zinc-800/50 shadow-lg"
+                                className="mt-8 lg:col-span-8 bg-zinc-900/70 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-zinc-800/50 shadow-lg"
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.8, delay: 0.6 }}
@@ -481,7 +511,7 @@ export default function BlogPostClient({
                                         comments.map((comment, index) => (
                                             <motion.div
                                                 key={comment.id}
-                                                className="bg-zinc-800/50 rounded-lg p-4 border border-zinc-700/50"
+                                                className="bg-zinc-800/50 backdrop-blur-sm rounded-lg p-4 border border-zinc-700/50"
                                                 initial={{ opacity: 0, y: 10 }}
                                                 animate={{ opacity: 1, y: 0 }}
                                                 transition={{
@@ -552,7 +582,7 @@ export default function BlogPostClient({
                             transition={{ duration: 0.8, delay: 0.6 }}
                         >
                             {/* Related Posts */}
-                            <div className="bg-zinc-900/70 rounded-2xl p-6 border border-zinc-800/50">
+                            <div className="bg-zinc-900/70 backdrop-blur-sm rounded-2xl p-6 border border-zinc-800/50">
                                 <h3 className="text-xl font-bold mb-6 text-white">
                                     Related Posts
                                 </h3>
@@ -599,7 +629,7 @@ export default function BlogPostClient({
                             </div>
 
                             {/* Categories */}
-                            <div className="bg-zinc-900/70 rounded-2xl p-6 border border-zinc-800/50">
+                            <div className="bg-zinc-900/70 backdrop-blur-sm rounded-2xl p-6 border border-zinc-800/50">
                                 <h3 className="text-xl font-bold mb-6 text-white">
                                     Categories
                                 </h3>
@@ -630,10 +660,13 @@ export default function BlogPostClient({
                             </div>
 
                             {/* Newsletter */}
-                            <div className="bg-emerald-500/20 rounded-2xl p-6 border border-emerald-500/30">
-                                <h3 className="text-xl font-bold mb-3 text-white">
-                                    Subscribe to Newsletter
-                                </h3>
+                            <div className="bg-gradient-to-br from-emerald-500/20 to-teal-500/20 backdrop-blur-sm rounded-2xl p-6 border border-emerald-500/30">
+                                <div className="flex items-center gap-2 mb-3">
+                                    <User className="h-5 w-5 text-emerald-400" />
+                                    <h3 className="text-xl font-bold text-white">
+                                        Subscribe to Newsletter
+                                    </h3>
+                                </div>
                                 <p className="text-zinc-300 text-sm mb-4 leading-relaxed">
                                     Get the latest posts and updates delivered
                                     to your inbox.
@@ -645,7 +678,7 @@ export default function BlogPostClient({
                                         className="w-full bg-zinc-800/70 border border-zinc-700/50 rounded-lg px-4 py-3 focus:outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/20 transition-all duration-300 text-white placeholder-zinc-400"
                                     />
                                     <MagneticElement strength={30}>
-                                        <AnimatedButton className="w-full bg-emerald-500 hover:bg-emerald-600 py-3">
+                                        <AnimatedButton className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 py-3">
                                             Subscribe
                                         </AnimatedButton>
                                     </MagneticElement>
@@ -663,7 +696,12 @@ export default function BlogPostClient({
 
             {/* More Posts */}
             <section className="relative py-16 bg-zinc-900/30">
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="absolute inset-0">
+                    <div className="absolute inset-0 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950" />
+                    <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-emerald-500/5 rounded-full blur-3xl" />
+                    <div className="absolute bottom-0 left-0 w-1/4 h-1/4 bg-teal-500/5 rounded-full blur-3xl" />
+                </div>
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <div className="text-center mb-12">
                         <motion.h2
                             className="text-3xl sm:text-4xl font-bold text-white mb-3"
@@ -692,7 +730,7 @@ export default function BlogPostClient({
                             >
                                 <Link
                                     href={`/blog/${post.slug}`}
-                                    className="block h-full bg-zinc-800/70 rounded-xl overflow-hidden border border-zinc-700/50 hover:border-emerald-500/50 transition-all duration-300 group"
+                                    className="block h-full bg-zinc-800/70 backdrop-blur-sm rounded-xl overflow-hidden border border-zinc-700/50 hover:border-emerald-500/50 transition-all duration-300 group"
                                 >
                                     <div className="h-48 overflow-hidden relative">
                                         <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/60 to-transparent z-10"></div>
