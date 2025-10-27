@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 import { useState } from "react";
 import BlogCard from "../features/blog/blog-card";
@@ -16,7 +15,7 @@ const blogPosts = [
         author: "Mohammad Ali",
         publishedAt: "2024-01-15",
         readTime: "8 min read",
-        image: "/modern-web-development.png",
+        image: "/Screenshot_45.png",
         tags: ["React", "Next.js", "AI"],
     },
     {
@@ -28,7 +27,7 @@ const blogPosts = [
         author: "Mohammad Ali",
         publishedAt: "2024-01-10",
         readTime: "12 min read",
-        image: "/microservices-architecture.png",
+        image: "/Screenshot_46.png",
         tags: ["Microservices", "Docker", "Kubernetes"],
     },
     {
@@ -40,7 +39,7 @@ const blogPosts = [
         author: "Mohammad Ali",
         publishedAt: "2024-01-05",
         readTime: "6 min read",
-        image: "/ai-development-tools.png",
+        image: "/Screenshot_47.png",
         tags: ["AI", "Productivity", "Tools"],
     },
 ];
@@ -71,29 +70,26 @@ export default function BlogSection() {
 
             <div className="container mx-auto relative z-10 px-4 sm:px-6">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-10 sm:mb-12">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
-                        viewport={{ once: true }}
+                    <div 
+                        className="transition-all duration-500 ease-in-out"
                     >
                         <h2 className="flex items-center gap-3 text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2">
                             <span className="text-emerald-400">Latest</span>
                             <span>Articles</span>
-                            <Sparkles className="h-5 w-5 text-emerald-400/80" />
+                            <Sparkles className="h-5 w-5 text-emerald-400/80 animate-pulse" />
                         </h2>
                         <p className="text-zinc-400 max-w-xl">
                             Insights, tutorials, and best practices from the
                             development trenches.
                         </p>
-                    </motion.div>
+                    </div>
 
                     <div className="flex items-center gap-2">
                         <Button
                             variant="outline"
                             size="icon"
                             onClick={prevSlide}
-                            className="w-10 h-10 rounded-full border-zinc-700 bg-zinc-800/50 text-zinc-400 hover:bg-zinc-700 hover:text-white"
+                            className="w-10 h-10 rounded-full border-zinc-700 bg-zinc-800/50 text-zinc-400 hover:bg-zinc-700 hover:text-white transition-all duration-300 hover:scale-105"
                             disabled={currentIndex === 0}
                         >
                             <ChevronLeft className="h-4 w-4" />
@@ -102,7 +98,7 @@ export default function BlogSection() {
                             variant="outline"
                             size="icon"
                             onClick={nextSlide}
-                            className="w-10 h-10 rounded-full border-emerald-500/50 bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 hover:text-emerald-300"
+                            className="w-10 h-10 rounded-full border-emerald-500/50 bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 hover:text-emerald-300 transition-all duration-300 hover:scale-105"
                             disabled={currentIndex === totalSlides - 1}
                         >
                             <ChevronRight className="h-4 w-4" />
@@ -110,23 +106,22 @@ export default function BlogSection() {
                     </div>
                 </div>
 
-                <motion.div
-                    key={currentIndex}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.4 }}
-                    className="mb-10"
+                <div 
+                    className="mb-10 transition-opacity duration-500 ease-in-out"
                 >
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                         {getCurrentPosts().map((post, index) => (
-                            <BlogCard
+                            <div 
                                 key={post.slug}
-                                post={post}
-                                index={index}
-                            />
+                            >
+                                <BlogCard
+                                    post={post}
+                                    index={index}
+                                />
+                            </div>
                         ))}
                     </div>
-                </motion.div>
+                </div>
 
                 <div className="flex justify-center">
                     <div className="flex gap-2">
@@ -136,7 +131,7 @@ export default function BlogSection() {
                                 onClick={() => setCurrentIndex(index)}
                                 className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
                                     index === currentIndex
-                                        ? "bg-emerald-500"
+                                        ? "bg-emerald-500 scale-125"
                                         : "bg-zinc-700 hover:bg-zinc-600"
                                 }`}
                             />
