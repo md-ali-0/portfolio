@@ -169,84 +169,6 @@ export default function SkillsSectionV4() {
             className="min-h-screen relative overflow-hidden py-16 sm:py-20 md:py-24 lg:py-28"
         >
             {/* Background with floating icons */}
-            <div className="absolute inset-0">
-                <div className="absolute inset-0 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950"></div>
-                
-                {/* Enhanced mesh gradient overlay */}
-                <motion.div
-                    className="absolute inset-0 opacity-30"
-                    animate={{
-                        backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"],
-                    }}
-                    transition={{
-                        duration: 20,
-                        repeat: Number.POSITIVE_INFINITY,
-                        ease: "linear",
-                    }}
-                    style={{
-                        background: `radial-gradient(circle at 30% 30%, 
-                            rgba(16, 185, 129, 0.2) 0%, 
-                            rgba(20, 184, 166, 0.15) 25%, 
-                            transparent 50%),
-                        radial-gradient(circle at 70% 70%, 
-                            rgba(6, 182, 212, 0.15) 0%, 
-                            rgba(16, 185, 129, 0.1) 30%, 
-                            transparent 60%)`,
-                    }}
-                />
-                
-                {/* Enhanced grid pattern */}
-                <div
-                    className="absolute inset-0 opacity-10"
-                    style={{
-                        backgroundImage: `
-                        linear-gradient(rgba(16, 185, 129, 0.15) 1px, transparent 1px),
-                        linear-gradient(90deg, rgba(16, 185, 129, 0.15) 1px, transparent 1px)
-                        `,
-                        backgroundSize: "40px 40px",
-                    }}
-                />
-                
-                {/* Floating skill icons */}
-                <div className="absolute top-1/4 right-1/4 transform translate-x-1/2 -translate-y-1/2">
-                    {[...Array(6)].map((_, i) => (
-                        <motion.div
-                            key={i}
-                            className="absolute w-6 h-6 text-emerald-400/20"
-                            style={{
-                                top: `${Math.sin(i * 60 * Math.PI / 180) * 60}px`,
-                                left: `${Math.cos(i * 60 * Math.PI / 180) * 60}px`,
-                                rotate: `${i * 60}deg`,
-                            }}
-                            animate={{
-                                y: [0, -15, 0],
-                                rotate: [0, 180, 360],
-                                opacity: [0.2, 0.5, 0.2],
-                            }}
-                            transition={{
-                                duration: 6 + i,
-                                repeat: Number.POSITIVE_INFINITY,
-                                ease: "easeInOut",
-                                delay: i * 0.2,
-                            }}
-                        >
-                            {Object.values(skillIcons)[i % Object.values(skillIcons).length]}
-                        </motion.div>
-                    ))}
-                </div>
-                
-                {/* Additional floating elements */}
-                <motion.div 
-                    className="absolute top-1/3 left-1/4 w-24 h-24 rounded-full border border-emerald-500/10"
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 25, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-                />
-                <motion.div 
-                    className="absolute bottom-1/3 right-1/3 w-16 h-16 rounded-full bg-teal-500/5"
-                    animate={{ scale: [1, 1.2, 1] }}
-                    transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY }}
-                />
-            </div>
 
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <SectionHeader
@@ -373,7 +295,7 @@ export default function SkillsSectionV4() {
                     viewport={{ once: true }}
                 >
                     <Link href="/skills">
-                        <Button className="group bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white px-6 py-3 rounded-xl font-medium relative overflow-hidden transition-all duration-300 flex items-center gap-2">
+                        <Button className="group bg-gradient-to-r from-emerald-500/20 to-teal-500/10 text-white px-6 py-3 rounded-xl font-medium relative overflow-hidden transition-all duration-300 flex items-center gap-2">
                             <span>View All Skills</span>
                             <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                         </Button>

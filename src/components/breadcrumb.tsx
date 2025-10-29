@@ -1,9 +1,80 @@
 "use client";
 
-import FloatingIcons from "@/components/floating-icons";
 import { ChevronRight, Home } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+
+// Import react-icons
+import {
+    SiGithub,
+    SiMongodb,
+    SiNextdotjs,
+    SiNodedotjs,
+    SiPostgresql,
+    SiRedis,
+    SiTailwindcss,
+    SiTypescript
+} from "react-icons/si";
+
+const iconSet = [
+    {
+        icon: <SiNextdotjs />,
+        label: "Next.js",
+        left: "80%",
+        bottom: "20%",
+        rotate: "10deg",
+    },
+    {
+        icon: <SiTypescript />,
+        label: "TypeScript",
+        left: "55%",
+        bottom: "0%",
+        rotate: "-20deg",
+    },
+    {
+        icon: <SiTailwindcss />,
+        label: "Tailwind",
+        left: "70%",
+        top: "45%",
+        rotate: "15deg",
+    },
+    {
+        icon: <SiNodedotjs />,
+        label: "Node.js",
+        left: "62%",
+        bottom: "10%",
+        rotate: "-10deg",
+    },
+    {
+        icon: <SiPostgresql />,
+        label: "PostgreSQL",
+        left: "82%",
+        top: "25%",
+        rotate: "-25deg",
+    },
+    {
+        icon: <SiMongodb />,
+        label: "MongoDB",
+        left: "88%",
+        bottom: "0%",
+        rotate: "12deg",
+    },
+    {
+        icon: <SiRedis />,
+        label: "Redis",
+        left: "72%",
+        bottom: "7%",
+        rotate: "-18deg",
+    },
+    {
+        icon: <SiGithub />,
+        label: "GitHub",
+        left: "90%",
+        top: "35%",
+        rotate: "-12deg",
+    },
+];
 
 type BreadcrumbItem = {
     name: string;
@@ -12,58 +83,49 @@ type BreadcrumbItem = {
 
 export default function Breadcrumb() {
     const pathname = usePathname();
+    const [mounted, setMounted] = useState(false);
 
-    // Generate breadcrumb items based on the current path
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
     const breadcrumbs: BreadcrumbItem[] = [];
-
-    // Add home breadcrumb
     breadcrumbs.push({ name: "Home", href: "/" });
 
-    // Split the pathname and generate breadcrumbs
     const pathSegments = pathname.split("/").filter((segment) => segment);
-
     pathSegments.forEach((segment, index) => {
         const href = "/" + pathSegments.slice(0, index + 1).join("/");
         let name = segment.charAt(0).toUpperCase() + segment.slice(1);
-
-        // Special handling for dynamic routes
-        if (segment === "[slug]") {
-            name = "Details";
-        }
-
+        if (segment === "[slug]") name = "Details";
         breadcrumbs.push({ name, href });
     });
 
     return (
-        <section className="relative min-h-[285px] flex items-center overflow-hidden bg-gradient-to-l from-gray-800/10 via-emerald-500/10 to-gray-900/10">
-            {/* Background pattern */}
+        <section className="flex items-center overflow-hidden bg-gradient-to-l from-gray-800/10 via-emerald-500/10 to-gray-900/10">
+            {/* Background Grid Pattern */}
             <div className="absolute inset-0 opacity-5">
                 <div
                     className="absolute inset-0"
                     style={{
                         backgroundImage: `
-                            linear-gradient(rgba(16, 185, 129, 0.1) 1px, transparent 1px),
-                            linear-gradient(90deg, rgba(16, 185, 129, 0.1) 1px, transparent 1px)
-                        `,
+              linear-gradient(rgba(16, 185, 129, 0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(16, 185, 129, 0.1) 1px, transparent 1px)
+            `,
                         backgroundSize: "40px 40px",
                     }}
                 />
             </div>
 
-            {/* Floating icons - contained within the container */}
-
-            <div className="container mx-auto px-4 sm:px-6 relative z-10">
-                <div className="flex items-center justify-between h-full">
-                    {/* Content on the left side */}
-                    <div className="w-2/3 pr-8">
-                        {/* Title */}
-                        <h1 className="mb-3 text-4xl md:text-5xl font-bold tracking-tight text-white">
+            {/* Main Content */}
+            <div className="flex items-center container mx-auto px-4 sm:px-6 relative z-10 min-h-[285px]">
+                <div className="flex flex-col w-full">
+                    <div className="pr-8 max-w-2xl">
+                        <h1 className="mb-3 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white text-balance">
                             {breadcrumbs[breadcrumbs.length - 1]?.name ||
                                 "Page"}
                         </h1>
 
-                        {/* Subtitle */}
-                        <p className="mb-6 text-base md:text-lg text-zinc-400 max-w-xl">
+                        <p className="mb-6 text-base md:text-lg text-zinc-400 max-w-xl text-pretty">
                             {pathname.includes("/skills") &&
                                 "Explore my technical skills and expertise"}
                             {pathname.includes("/projects") &&
@@ -76,27 +138,26 @@ export default function Breadcrumb() {
                                 "Navigate through the website"}
                         </p>
 
-                        {/* Breadcrumb Navigation */}
                         <nav
                             aria-label="breadcrumb"
-                            className="flex items-center space-x-2"
+                            className="flex items-center space-x-2 flex-wrap"
                         >
                             {breadcrumbs.map((breadcrumb, index) => (
                                 <div
                                     key={breadcrumb.href}
-                                    className="flex items-center"
+                                    className="flex items-center mb-2"
                                 >
                                     {index > 0 && (
                                         <ChevronRight className="w-4 h-4 text-zinc-600 mx-2" />
                                     )}
                                     {index === breadcrumbs.length - 1 ? (
-                                        <span className="px-3 py-1.5 rounded-lg bg-emerald-500/10 text-emerald-400 font-medium">
+                                        <span className="px-3 py-0.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-medium transition-all duration-300 whitespace-nowrap">
                                             {breadcrumb.name}
                                         </span>
                                     ) : (
                                         <Link
                                             href={breadcrumb.href}
-                                            className="px-3 py-1.5 rounded-lg text-zinc-400 hover:text-emerald-400 transition-colors font-medium flex items-center gap-1"
+                                            className="px-3 py-0.5 rounded-lg text-zinc-400 hover:text-emerald-400 hover:bg-emerald-500/5 transition-all duration-300 font-medium flex items-center gap-1 whitespace-nowrap"
                                         >
                                             {index === 0 && (
                                                 <Home className="w-4 h-4" />
@@ -108,9 +169,37 @@ export default function Breadcrumb() {
                             ))}
                         </nav>
                     </div>
-
-                    {/* Empty space on the right */}
-                    <FloatingIcons />
+                </div>
+                <div className="absolute inset-0 overflow-hidden pointer-events-none hidden md:block">
+                    {iconSet.map((item, i) => (
+                        <div
+                            key={i}
+                            className={`absolute opacity-0 transition-opacity duration-1000 ${
+                                mounted ? "opacity-70" : ""
+                            }`}
+                            style={{
+                                left: item.left,
+                                top: item.top,
+                                bottom: item.bottom,
+                                transform: `translate(-50%, -50%) rotate(${item.rotate})`,
+                            }}
+                        >
+                            <div
+                                className={`p-1.5 md:p-3 rounded-2xl 
+                                            bg-gradient-to-br from-emerald-600/10 to-emerald-500/15 
+                                            backdrop-blur-sm 
+                                            border border-emerald-600/20 
+                                            shadow-2xl 
+                                            flex items-center justify-center
+                                            group
+                                            `}
+                            >
+                                <div className="text-white text-xl md:text-2xl group-hover:scale-110 transition-transform duration-300">
+                                    {item.icon}
+                                </div>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </div>
         </section>
