@@ -126,14 +126,18 @@ export default function ProjectsSection() {
                             key={project.title}
                             id={`project-card-${index}`}
                             className={`
-                                bg-zinc-800/50 backdrop-blur-sm rounded-2xl border border-zinc-700/50 overflow-hidden transition-all duration-500
+                                group relative
+                                bg-zinc-800/50 backdrop-blur-sm rounded-2xl border border-zinc-800/50 overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-emerald-500/20
                                 ${visibleCards.includes(index) 
                                     ? 'opacity-100 translate-y-0' 
                                     : 'opacity-0 translate-y-8'}
                             `}
                             style={{ transitionDelay: `${index * 100}ms` }}
                         >
-                            <div className="p-6">
+                            {/* Shine sweep effect on hover */}
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 pointer-events-none z-10" />
+                            
+                            <div className="p-6 relative z-20">
                                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                                     {/* Image with subtle hover effect */}
                                     <div className="relative h-64 lg:h-full rounded-xl overflow-hidden">
