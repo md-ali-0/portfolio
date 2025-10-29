@@ -1,4 +1,5 @@
 "use client"
+import Breadcrumb from "@/components/breadcrumb"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -61,6 +62,9 @@ export default function BlogPage() {
 
   return (
     <div className="min-h-screen bg-zinc-950 text-white relative overflow-hidden">
+      {/* Breadcrumb */}
+      <Breadcrumb />
+      
       <div className="fixed inset-0 pointer-events-none">
         {[...Array(20)].map((_, i) => (
           <div

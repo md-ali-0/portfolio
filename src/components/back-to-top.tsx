@@ -1,8 +1,8 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 import { ArrowUp } from "lucide-react"
+import { useEffect, useState } from "react"
 
 export default function BackToTop() {
   const [isVisible, setIsVisible] = useState(false)
@@ -43,7 +43,7 @@ export default function BackToTop() {
         >
           <motion.button
             onClick={scrollToTop}
-            className="relative flex items-center justify-center w-12 h-12 bg-gradient-to-r from-emerald-600 to-teal-600 dark:from-emerald-500 dark:to-teal-500 rounded-full shadow-lg shadow-emerald-600/20 dark:shadow-emerald-500/20 text-white dark:text-black transition-colors duration-300"
+            className="relative flex items-center justify-center w-12 h-12 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-full shadow-lg shadow-emerald-600/20 dark:shadow-emerald-500/20 text-white transition-colors duration-300"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >
