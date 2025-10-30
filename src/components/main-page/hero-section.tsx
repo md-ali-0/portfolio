@@ -14,16 +14,26 @@ import {
     Zap,
 } from "lucide-react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import AnimatedButton from "../animated-button";
 
 export default function HomeSection() {
     const isMobile = useMobile();
 
-    // Mouse position for parallax effects
+    // Simplified mouse tracking for better performance
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
-    const smoothMouseX = useSpring(mouseX, { stiffness: 50, damping: 20 });
-    const smoothMouseY = useSpring(mouseY, { stiffness: 50, damping: 20 });
+    const smoothMouseX = useSpring(mouseX, { stiffness: 100, damping: 30 });
+    const smoothMouseY = useSpring(mouseY, { stiffness: 100, damping: 30 });
+
+    // Limit the number of floating particles
+    const [floatingParticles, setFloatingParticles] = useState<number[]>([]);
+
+    useEffect(() => {
+        // Create a limited number of floating particles
+        const particles = Array.from({ length: 3 }, (_, i) => i);
+        setFloatingParticles(particles);
+    }, []);
 
     const socialLinks = [
         {

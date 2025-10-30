@@ -74,29 +74,37 @@ export default function ProjectsSection() {
         },
     ];
 
-    // Handle card visibility animation
+    // Handle card visibility animation with throttling
     useEffect(() => {
+        let ticking = false;
+        
         const handleScroll = () => {
-            const newVisibleCards: number[] = [];
-            projects.forEach((_, index) => {
-                const element = document.getElementById(`project-card-${index}`);
-                if (element) {
-                    const rect = element.getBoundingClientRect();
-                    const windowHeight = window.innerHeight;
-                    // When card is 20% visible from bottom
-                    if (rect.top < windowHeight * 0.8) {
-                        newVisibleCards.push(index);
-                    }
-                }
-            });
-            setVisibleCards(newVisibleCards);
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    const newVisibleCards: number[] = [];
+                    projects.forEach((_, index) => {
+                        const element = document.getElementById(`project-card-${index}`);
+                        if (element) {
+                            const rect = element.getBoundingClientRect();
+                            const windowHeight = window.innerHeight;
+                            // When card is 20% visible from bottom
+                            if (rect.top < windowHeight * 0.8) {
+                                newVisibleCards.push(index);
+                            }
+                        }
+                    });
+                    setVisibleCards(newVisibleCards);
+                    ticking = false;
+                });
+                ticking = true;
+            }
         };
 
         // Initial check
         handleScroll();
         
         // Add scroll listener
-        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
