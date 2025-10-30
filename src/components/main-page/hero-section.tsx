@@ -1,7 +1,7 @@
 "use client";
 
 import { useMobile } from "@/hooks/use-mobile";
-import { useMotionValue, useSpring } from "framer-motion";
+import { motion } from "framer-motion";
 import {
     ArrowRight,
     Code,
@@ -14,26 +14,10 @@ import {
     Zap,
 } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import AnimatedButton from "../animated-button";
+import Button from "../custom-button";
 
 export default function HomeSection() {
     const isMobile = useMobile();
-
-    // Simplified mouse tracking for better performance
-    const mouseX = useMotionValue(0);
-    const mouseY = useMotionValue(0);
-    const smoothMouseX = useSpring(mouseX, { stiffness: 100, damping: 30 });
-    const smoothMouseY = useSpring(mouseY, { stiffness: 100, damping: 30 });
-
-    // Limit the number of floating particles
-    const [floatingParticles, setFloatingParticles] = useState<number[]>([]);
-
-    useEffect(() => {
-        // Create a limited number of floating particles
-        const particles = Array.from({ length: 3 }, (_, i) => i);
-        setFloatingParticles(particles);
-    }, []);
 
     const socialLinks = [
         {
@@ -105,16 +89,12 @@ export default function HomeSection() {
                             <div>
                                 <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-emerald-400" />
                             </div>
-                            <h2
-                                className="text-emerald-400 text-base sm:text-lg md:text-xl lg:text-xl xl:text-2xl font-medium"
-                            >
+                            <h2 className="text-emerald-400 text-base sm:text-lg md:text-xl lg:text-xl xl:text-2xl font-medium">
                                 Hello, I'm
                             </h2>
                         </div>
 
-                        <h1
-                            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold relative leading-tight"
-                        >
+                        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold relative leading-tight">
                             {/* Glowing background text */}
                             <span className="absolute inset-0 bg-clip-text text-transparent bg-gradient-to-r from-emerald-400/20 via-teal-300/20 to-emerald-500/20 blur-sm scale-110">
                                 Mohammad Ali
@@ -133,22 +113,42 @@ export default function HomeSection() {
                             {/* Static floating particles */}
                             {!isMobile &&
                                 [...Array(6)].map((_, i) => (
-                                    <div
+                                    <motion.div
                                         key={i}
                                         className="absolute w-1 h-1 bg-emerald-400 rounded-full"
                                         style={{
                                             top: `${20 + i * 10}%`,
                                             left: `${100 + i * 5}%`,
                                         }}
+                                        animate={{
+                                            y: [0, -15, 0],
+                                            opacity: [0.4, 1, 0.4],
+                                            scale: [1, 1.5, 1],
+                                        }}
+                                        transition={{
+                                            duration: 2 + i * 0.3,
+                                            repeat: Number.POSITIVE_INFINITY,
+                                            delay: i * 0.2,
+                                        }}
                                     />
                                 ))}
                         </h1>
 
                         <div className="flex items-center justify-center lg:justify-start space-x-2 md:space-x-3">
-                            <Code className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 lg:h-8 lg:w-8 text-teal-400" />
-                            <h3
-                                className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl text-zinc-300 font-semibold"
+                            <motion.div
+                                animate={{
+                                    scale: [1, 1.2, 1],
+                                    rotate: [0, 180, 360],
+                                }}
+                                transition={{
+                                    duration: 3,
+                                    repeat: Number.POSITIVE_INFINITY,
+                                    ease: "easeInOut",
+                                }}
                             >
+                                <Code className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 lg:h-8 lg:w-8 text-teal-400" />
+                            </motion.div>
+                            <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl text-zinc-300 font-semibold">
                                 Full-Stack Developer
                             </h3>
                         </div>
@@ -156,9 +156,7 @@ export default function HomeSection() {
 
                     {/* Enhanced Description - Reduced animations */}
                     <div className="space-y-3 sm:space-y-4">
-                        <p
-                            className="text-zinc-400 text-sm sm:text-base md:text-lg lg:text-lg xl:text-xl leading-relaxed max-w-xl mx-auto lg:mx-0"
-                        >
+                        <p className="text-zinc-400 text-sm sm:text-base md:text-lg lg:text-lg xl:text-xl leading-relaxed max-w-xl mx-auto lg:mx-0">
                             A dedicated developer on a journey of continuous
                             learning and growth, creating{" "}
                             <span className="text-emerald-400 font-semibold">
@@ -173,10 +171,7 @@ export default function HomeSection() {
                                 { number: "3+", label: "Years" },
                                 { number: "20+", label: "Technologies" },
                             ].map((stat, index) => (
-                                <div
-                                    key={index}
-                                    className="text-center"
-                                >
+                                <div key={index} className="text-center">
                                     <div className="text-lg sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl font-bold text-emerald-400">
                                         {stat.number}
                                     </div>
@@ -190,45 +185,43 @@ export default function HomeSection() {
 
                     <div className="flex flex-col sm:flex-row flex-wrap justify-center lg:justify-start gap-3 sm:gap-4 md:gap-4 lg:gap-5 pt-4 sm:pt-6">
                         <div>
-                            <AnimatedButton
+                            <Button
                                 className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white shadow-lg shadow-emerald-500/25 w-full sm:w-auto text-sm sm:text-base px-4 sm:px-6 py-2 sm:py-3"
                                 dataCursorText="Let's Talk"
                             >
                                 Contact Me
                                 <Send className="ml-2 h-4 w-4" />
-                            </AnimatedButton>
+                            </Button>
                         </div>
 
                         <div>
                             <Link href={"/projects"}>
-                                <AnimatedButton
+                                <Button
                                     variant="outline"
                                     className="border-2 border-emerald-400/50 text-emerald-400 hover:bg-emerald-400/10 backdrop-blur-sm w-full sm:w-auto text-sm sm:text-base px-4 sm:px-6 py-2 sm:py-3"
                                     dataCursorText="See Projects"
                                 >
                                     View Projects
                                     <ArrowRight className="ml-2 h-4 w-4" />
-                                </AnimatedButton>
+                                </Button>
                             </Link>
                         </div>
 
                         <div>
-                            <AnimatedButton
+                            <Button
                                 variant="outline"
                                 className="border-2 border-zinc-600 text-zinc-300 hover:border-zinc-500 hover:text-white backdrop-blur-sm w-full sm:w-auto text-sm sm:text-base px-4 sm:px-6 py-2 sm:py-3"
                                 dataCursorText="Download CV"
                             >
                                 <Download className="mr-2 h-4 w-4" />
                                 Resume
-                            </AnimatedButton>
+                            </Button>
                         </div>
                     </div>
 
                     <div className="flex justify-center lg:justify-start gap-3 sm:gap-4 md:gap-5 lg:gap-6 pt-4 sm:pt-6 md:pt-8">
                         {socialLinks.map((social, index) => (
-                            <div
-                                key={index}
-                            >
+                            <div key={index}>
                                 <Link
                                     href={social.href}
                                     className={`text-zinc-400 ${social.color} transition-all duration-300 p-2 sm:p-3 md:p-3 lg:p-4 rounded-full border border-zinc-700 hover:border-emerald-400/50 backdrop-blur-sm bg-zinc-900/30 hover:bg-zinc-800/50 block`}
@@ -242,9 +235,7 @@ export default function HomeSection() {
                     </div>
                 </div>
 
-                <div
-                    className="lg:w-1/2 mb-8 sm:mb-10 md:mb-12 lg:mb-0 flex justify-center"
-                >
+                <div className="lg:w-1/2 mb-8 sm:mb-10 md:mb-12 lg:mb-0 flex justify-center">
                     <div className="relative">
                         {/* Large decorative background */}
                         <div
@@ -259,16 +250,19 @@ export default function HomeSection() {
                         />
 
                         {/* Outer rotating ring - static */}
-                        <div
+                        <motion.div
                             className="absolute -top-3 -left-3 sm:-top-4 sm:-left-4 md:-top-6 md:-left-6 lg:-top-8 lg:-left-8 w-[calc(100%+24px)] sm:w-[calc(100%+32px)] md:w-[calc(100%+48px)] lg:w-[calc(100%+64px)] h-[calc(100%+24px)] sm:h-[calc(100%+32px)] md:h-[calc(100%+48px)] lg:h-[calc(100%+64px)] rounded-full"
+                            animate={{ rotate: [0, 360] }}
+                            transition={{
+                                duration: 50,
+                                repeat: Number.POSITIVE_INFINITY,
+                                ease: "linear",
+                            }}
                         >
                             <div className="w-full h-full rounded-full border-2 sm:border-2 md:border-3 lg:border-4 border-dashed border-emerald-400/40" />
-                        </div>
+                        </motion.div>
 
-                        <div
-                            className="w-48 h-48 sm:w-56 sm:h-56 md:w-72 md:h-72 lg:w-80 lg:h-80 xl:w-96 xl:h-96 relative z-10"
-                            data-cursor="image"
-                        >
+                        <div className="w-48 h-48 sm:w-56 sm:h-56 md:w-72 md:h-72 lg:w-80 lg:h-80 xl:w-96 xl:h-96 relative z-10">
                             <div className="w-full h-full relative overflow-hidden">
                                 {/* Static border */}
                                 <div className="absolute inset-0 rounded-full bg-gradient-to-r from-emerald-500/40 via-teal-400/40 to-emerald-500/40" />
@@ -325,16 +319,10 @@ export default function HomeSection() {
                     <div className="text-emerald-400 mb-2 group-hover:text-emerald-300 transition-colors">
                         <Zap className="h-5 w-5 lg:h-6 lg:w-6" />
                     </div>
-                    <div
-                        className="w-5 h-8 lg:w-6 lg:h-10 border-2 border-emerald-400/60 rounded-full flex justify-center relative group-hover:border-emerald-400 transition-colors"
-                    >
-                        <div
-                            className="w-1 h-2 lg:h-3 bg-emerald-400 rounded-full mt-1 lg:mt-2"
-                        />
+                    <div className="w-5 h-8 lg:w-6 lg:h-10 border-2 border-emerald-400/60 rounded-full flex justify-center relative group-hover:border-emerald-400 transition-colors">
+                        <div className="w-1 h-2 lg:h-3 bg-emerald-400 rounded-full mt-1 lg:mt-2" />
                     </div>
-                    <span
-                        className="text-xs text-zinc-500 mt-2 lg:mt-3 group-hover:text-zinc-400 transition-colors"
-                    >
+                    <span className="text-xs text-zinc-500 mt-2 lg:mt-3 group-hover:text-zinc-400 transition-colors">
                         Explore More
                     </span>
                 </div>
