@@ -3,7 +3,6 @@
 import { useMobile } from "@/hooks/use-mobile";
 import {
     AnimatePresence,
-    motion,
     useMotionValue,
     useScroll,
     useSpring,
@@ -108,44 +107,27 @@ export default function Navbar() {
     ];
 
     return (
-        <motion.header
-            className="sticky top-0 left-0 right-0 z-50 transition-all duration-500"
-            style={{
-                opacity: headerOpacity,
-                y: headerY,
-            }}
-        >
+        <header className="sticky top-0 left-0 right-0 z-50 transition-all duration-500">
             {/* Enhanced Background with Multiple Layers */}
-            <motion.div
-                className="absolute inset-0 overflow-hidden"
-                style={{
-                    backdropFilter: headerBlur,
-                }}
-            >
+            <div className="absolute inset-0 overflow-hidden">
                 {/* Base background */}
-                <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-zinc-950/60 via-zinc-900/70 to-zinc-950/60"
-                    style={{
-                        opacity: backgroundOpacity,
-                    }}
-                />
+                <div className="absolute inset-0 bg-gradient-to-r from-zinc-950/60 via-zinc-900/70 to-zinc-950/60" />
 
-                {/* Animated gradient overlay */}
-                <motion.div
+                {/* Static gradient overlay */}
+                <div
                     className="absolute inset-0"
                     style={{
-                        background: `linear-gradient(${gradientPosition}deg, 
+                        background: `linear-gradient(45deg, 
                                 rgba(16, 185, 129, 0.1) 0%, 
                                 rgba(20, 184, 166, 0.05) 25%, 
                                 rgba(6, 182, 212, 0.1) 50%, 
                                 rgba(16, 185, 129, 0.05) 75%, 
                                 rgba(20, 184, 166, 0.1) 100%)`,
                     }}
-                    transition={{ duration: 0.3 }}
                 />
 
-                {/* Shimmer effect */}
-                <motion.div
+                {/* Static shimmer effect */}
+                <div
                     className="absolute inset-0"
                     style={{
                         background: `linear-gradient(90deg, 
@@ -154,203 +136,83 @@ export default function Navbar() {
                                 rgba(16, 185, 129, 0.2) 50%, 
                                 rgba(16, 185, 129, 0.1) 60%, 
                                 transparent 100%)`,
-                        x: useTransform(scrollY, [0, 1000], [-100, 100]),
-                    }}
-                    transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        repeatDelay: 3,
                     }}
                 />
 
                 {/* Border gradients */}
                 <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" />
-                <motion.div
-                    className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-400/30 to-transparent"
-                    animate={{
-                        opacity: [0.3, 0.8, 0.3],
-                    }}
-                    transition={{
-                        duration: 3,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                    }}
-                />
-            </motion.div>
+                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-400/30 to-transparent" />
+            </div>
 
             <div className="container mx-auto py-5 relative z-10 sm:px-6 lg:px-8">
                 <nav className="flex justify-between items-center">
                     {/* Enhanced Logo */}
-                    <motion.div
-                        style={{
-                            x: !isMobile ? smoothMouseX.get() * -2 : 0,
-                            y: !isMobile ? smoothMouseY.get() * -2 : 0,
-                        }}
+                    <Link
+                        href="/"
+                        className="relative group"
+                        data-cursor="link"
+                        data-cursor-text="Home"
                     >
-                        <Link
-                            href="/"
-                            className="relative group"
-                            data-cursor="link"
-                            data-cursor-text="Home"
-                        >
-                            {/* Glowing background */}
-                            <motion.div
-                                className="absolute -inset-2 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                                animate={{
-                                    scale: [1, 1.05, 1],
-                                }}
-                                transition={{
-                                    duration: 2,
-                                    repeat: Infinity,
-                                    ease: "easeInOut",
-                                }}
+                        {/* Glowing background */}
+                        <div className="absolute -inset-2 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                        <div className="relative text-2xl font-bold">
+                            <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-500">
+                                Ali
+                            </span>
+                            <span className="text-white ml-1">.</span>
+
+                            {/* Static underline */}
+                            <span
+                                className="absolute -bottom-2 left-0 h-1 bg-gradient-to-r from-emerald-400 to-teal-500 rounded-full"
+                                style={{ width: "0%" }}
                             />
 
-                            <motion.div className="relative text-2xl font-bold">
-                                <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-500">
-                                    Ali
-                                </span>
-                                <motion.span
-                                    className="text-white ml-1"
-                                    animate={{
-                                        color: [
-                                            "#ffffff",
-                                            "#10b981",
-                                            "#ffffff",
-                                        ],
+                            {/* Static particles around logo */}
+                            {[...Array(3)].map((_, i) => (
+                                <div
+                                    key={`particle-${i}`}
+                                    className="absolute w-1 h-1 bg-emerald-400 rounded-full opacity-60"
+                                    style={{
+                                        top: `${-10 + i * 5}px`,
+                                        left: `${60 + i * 10}px`,
                                     }}
-                                    transition={{
-                                        duration: 2,
-                                        repeat: Infinity,
-                                        ease: "easeInOut",
-                                    }}
-                                >
-                                    .
-                                </motion.span>
-
-                                {/* Animated underline */}
-                                <motion.span
-                                    className="absolute -bottom-2 left-0 h-1 bg-gradient-to-r from-emerald-400 to-teal-500 rounded-full"
-                                    initial={{ width: 0 }}
-                                    whileHover={{ width: "100%" }}
-                                    transition={{ duration: 0.3 }}
                                 />
-
-                                {/* Floating particles around logo */}
-                                {[...Array(3)].map((_, i) => (
-                                    <motion.div
-                                        key={`particle-${i}`}
-                                        className="absolute w-1 h-1 bg-emerald-400 rounded-full opacity-60"
-                                        style={{
-                                            top: `${-10 + i * 5}px`,
-                                            left: `${60 + i * 10}px`,
-                                        }}
-                                        animate={{
-                                            y: [0, -8, 0],
-                                            opacity: [0.6, 1, 0.6],
-                                            scale: [1, 1.2, 1],
-                                        }}
-                                        transition={{
-                                            duration: 2 + i * 0.5,
-                                            repeat: Infinity,
-                                            delay: i * 0.3,
-                                        }}
-                                    />
-                                ))}
-                            </motion.div>
-                        </Link>
-                    </motion.div>
+                            ))}
+                        </div>
+                    </Link>
 
                     {/* Desktop Navigation */}
                     <div className="hidden md:flex gap-8 items-center">
                         {navItems.map((item, index) => (
-                            <motion.div
-                                style={{
-                                    x: !isMobile
-                                        ? smoothMouseX.get() *
-                                          (index % 2 === 0 ? -1 : 1)
-                                        : 0,
-                                    y: !isMobile
-                                        ? smoothMouseY.get() *
-                                          (index % 2 === 0 ? -1 : 1)
-                                        : 0,
-                                }}
-                                initial={{ opacity: 0, y: -20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{
-                                    duration: 0.5,
-                                    delay: index * 0.1,
-                                }}
+                            <Link
+                                href={item.href}
+                                className="relative group py-2 px-1"
+                                data-cursor="link"
+                                data-cursor-text={item.name}
                                 key={index}
                             >
-                                <Link
-                                    href={item.href}
-                                    className="relative group py-2 px-1"
-                                    data-cursor="link"
-                                    data-cursor-text={item.name}
+                                <span
+                                    className={`relative font-medium transition-all duration-300 ${
+                                        activeSection === item.id
+                                            ? "text-emerald-400"
+                                            : "text-zinc-200 group-hover:text-emerald-400"
+                                    }`}
                                 >
-                                    {/* Glowing background for active/hover */}
-                                    {/* <motion.div
-                                                className="absolute -inset-3 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 rounded-lg opacity-0"
-                                                animate={{
-                                                    opacity: activeSection === item.id ? 0.7 : 0,
-                                                }}
-                                                whileHover={{ opacity: 0.5 }}
-                                                transition={{ duration: 0.3 }}
-                                            /> */}
+                                    {item.name}
+                                </span>
 
-                                    <motion.span
-                                        className={`relative font-medium transition-all duration-300 ${
+                                {/* Enhanced underline */}
+                                <span
+                                    className="absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-emerald-400 to-teal-500 rounded-full"
+                                    style={{
+                                        width:
                                             activeSection === item.id
-                                                ? "text-emerald-400"
-                                                : "text-zinc-200 group-hover:text-emerald-400"
-                                        }`}
-                                        whileHover={{
-                                            scale: 1.05,
-                                            textShadow:
-                                                "0 0 8px rgba(16, 185, 129, 0.5)",
-                                        }}
-                                    >
-                                        {item.name}
-                                    </motion.span>
-
-                                    {/* Enhanced underline */}
-                                    <motion.span
-                                        className="absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-emerald-400 to-teal-500 rounded-full"
-                                        initial={{ width: 0 }}
-                                        animate={{
-                                            width:
-                                                activeSection === item.id
-                                                    ? "100%"
-                                                    : "0%",
-                                        }}
-                                        whileHover={{ width: "100%" }}
-                                        transition={{ duration: 0.3 }}
-                                    />
-
-                                    {/* Glowing dots */}
-                                    {/* {activeSection === item.id && (
-                                                <motion.div
-                                                    className="absolute -top-2 left-1/2 w-1 h-1 bg-emerald-400 rounded-full"
-                                                    initial={{ scale: 0, x: "-50%" }}
-                                                    animate={{ scale: 1 }}
-                                                    transition={{ duration: 0.3 }}
-                                                >
-                                                    <motion.div
-                                                        className="absolute inset-0 bg-emerald-400 rounded-full"
-                                                        animate={{
-                                                            scale: [1, 2, 1],
-                                                            opacity: [1, 0, 1],
-                                                        }}
-                                                        transition={{
-                                                            duration: 2,
-                                                            repeat: Infinity,
-                                                        }}
-                                                    />
-                                                </motion.div>
-                                            )} */}
-                                </Link>
-                            </motion.div>
+                                                ? "100%"
+                                                : "0%",
+                                    }}
+                                />
+                            </Link>
                         ))}
                     </div>
 
@@ -363,98 +225,37 @@ export default function Navbar() {
                         >
                             {/* Button content with responsive sizing */}
                             <span className="relative flex items-center">
-                                <motion.div
-                                    animate={{
-                                        rotate: [0, 10, -10, 0],
-                                    }}
-                                    transition={{
-                                        duration: 3,
-                                        repeat: Number.POSITIVE_INFINITY,
-                                        repeatDelay: 2,
-                                    }}
-                                >
-                                    <Download className="mr-1.5 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4" />
-                                </motion.div>
+                                <Download className="mr-1.5 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4" />
                                 <span className="hidden sm:inline">Resume</span>
                                 <span className="sm:hidden">CV</span>
                             </span>
 
-                            {/* Glowing border */}
-                            <motion.div
-                                className="absolute inset-0 border-2 border-emerald-400/0 rounded-md"
-                                whileHover={{
-                                    borderColor: "rgba(16, 185, 129, 0.5)",
-                                    boxShadow:
-                                        "0 0 20px rgba(16, 185, 129, 0.3)",
-                                }}
-                                transition={{ duration: 0.3 }}
-                            />
+                            {/* Static border */}
+                            <div className="absolute inset-0 border-2 border-emerald-400/0 rounded-md" />
                         </AnimatedButton>
 
                         {/* Mobile Menu Toggle */}
                         {isMobile && (
-                            <motion.button
+                            <button
                                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                                 className="md:hidden p-3 text-emerald-400 relative min-w-[44px] min-h-[44px] flex items-center justify-center"
-                                whileHover={{ scale: 1.1 }}
-                                whileTap={{ scale: 0.9 }}
                                 data-cursor="button"
                             >
                                 <AnimatePresence mode="wait">
                                     {isMenuOpen ? (
-                                        <motion.div
-                                            key="close"
-                                            initial={{
-                                                rotate: -90,
-                                                opacity: 0,
-                                            }}
-                                            animate={{
-                                                rotate: 0,
-                                                opacity: 1,
-                                            }}
-                                            exit={{
-                                                rotate: 90,
-                                                opacity: 0,
-                                            }}
-                                            transition={{ duration: 0.2 }}
-                                        >
+                                        <div>
                                             <X className="h-6 w-6" />
-                                        </motion.div>
+                                        </div>
                                     ) : (
-                                        <motion.div
-                                            key="menu"
-                                            initial={{
-                                                rotate: 90,
-                                                opacity: 0,
-                                            }}
-                                            animate={{
-                                                rotate: 0,
-                                                opacity: 1,
-                                            }}
-                                            exit={{
-                                                rotate: -90,
-                                                opacity: 0,
-                                            }}
-                                            transition={{ duration: 0.2 }}
-                                        >
+                                        <div>
                                             <Menu className="h-6 w-6" />
-                                        </motion.div>
+                                        </div>
                                     )}
                                 </AnimatePresence>
 
-                                {/* Ripple effect */}
-                                <motion.div
-                                    className="absolute inset-0 rounded-full border border-emerald-400/30"
-                                    animate={{
-                                        scale: [1, 1.2, 1],
-                                        opacity: [0.5, 0, 0.5],
-                                    }}
-                                    transition={{
-                                        duration: 2,
-                                        repeat: Number.POSITIVE_INFINITY,
-                                    }}
-                                />
-                            </motion.button>
+                                {/* Static ripple effect */}
+                                <div className="absolute inset-0 rounded-full border border-emerald-400/30" />
+                            </button>
                         )}
                     </div>
                 </nav>
@@ -463,35 +264,15 @@ export default function Navbar() {
             {/* Mobile Menu */}
             <AnimatePresence>
                 {isMenuOpen && isMobile && (
-                    <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="md:hidden border-t border-zinc-700/50 backdrop-blur-xl"
-                    >
+                    <div className="md:hidden border-t border-zinc-700/50 backdrop-blur-xl">
                         {/* Base background */}
-                        <motion.div
-                            className="absolute inset-0 bg-gradient-to-b from-zinc-900/95 to-zinc-950/95"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                        />
+                        <div className="absolute inset-0 bg-gradient-to-b from-zinc-900/95 to-zinc-950/95" />
 
                         {/* Container with responsive max-widths */}
                         <div className="container mx-auto py-4 sm:py-6 px-4 sm:px-6 relative z-10 max-w-7xl">
                             <div className="flex flex-col space-y-2 sm:space-y-3">
                                 {navItems.map((item, index) => (
-                                    <motion.div
-                                        key={index}
-                                        initial={{ opacity: 0, x: -20 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        exit={{ opacity: 0, x: -20 }}
-                                        transition={{
-                                            duration: 0.3,
-                                            delay: index * 0.1,
-                                        }}
-                                    >
+                                    <div key={index}>
                                         <Link
                                             href={item.href}
                                             onClick={() => setIsMenuOpen(false)}
@@ -506,54 +287,23 @@ export default function Navbar() {
                                                 {item.name}
                                             </span>
                                         </Link>
-                                    </motion.div>
+                                    </div>
                                 ))}
                             </div>
                         </div>
-                    </motion.div>
+                    </div>
                 )}
             </AnimatePresence>
 
             {/* Decorative Elements */}
             {!isMobile && (
                 <>
-                    {/* Floating orbs */}
-                    <motion.div
-                        className="absolute top-2 left-20 w-2 h-2 bg-emerald-400/60 rounded-full"
-                        animate={{
-                            y: [0, -5, 0],
-                            opacity: [0.6, 1, 0.6],
-                        }}
-                        transition={{
-                            duration: 3,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                        }}
-                        style={{
-                            x: smoothMouseX.get() * 3,
-                            y: smoothMouseY.get() * 3,
-                        }}
-                    />
+                    {/* Static orbs */}
+                    <div className="absolute top-2 left-20 w-2 h-2 bg-emerald-400/60 rounded-full" />
 
-                    <motion.div
-                        className="absolute top-4 right-32 w-1.5 h-1.5 bg-teal-400/60 rounded-full"
-                        animate={{
-                            y: [0, -8, 0],
-                            opacity: [0.4, 0.9, 0.4],
-                        }}
-                        transition={{
-                            duration: 4,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                            delay: 1,
-                        }}
-                        style={{
-                            x: smoothMouseX.get() * -2,
-                            y: smoothMouseY.get() * -2,
-                        }}
-                    />
+                    <div className="absolute top-4 right-32 w-1.5 h-1.5 bg-teal-400/60 rounded-full" />
                 </>
             )}
-        </motion.header>
+        </header>
     );
 }

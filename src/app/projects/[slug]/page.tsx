@@ -1,4 +1,3 @@
-import type { Metadata } from "next"
 import { projects } from "@/data/projects-data"
 import { baseMetadata, generateProjectMetadata } from "@/lib/metadata"
 import ProjectPageClient from "./ProjectPageClient"
@@ -11,8 +10,9 @@ export async function generateStaticParams() {
 }
 
 // Generate metadata for each project
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const project = projects.find((p) => p.slug === params.slug)
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const resolvedParams = await params;
+  const project = projects.find((p) => p.slug === resolvedParams.slug)
 
   if (!project) {
     return {
@@ -24,6 +24,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   return generateProjectMetadata(project)
 }
 
-export default function ProjectPage({ params }: { params: { slug: string } }) {
-  return <ProjectPageClient params={params} />
+export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
+  const resolvedParams = await params;
+  return <ProjectPageClient params={resolvedParams} />
 }

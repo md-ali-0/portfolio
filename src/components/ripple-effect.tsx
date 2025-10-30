@@ -1,7 +1,7 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
+import { useEffect, useRef, useState } from "react"
 
 interface Ripple {
   id: number
@@ -11,9 +11,14 @@ interface Ripple {
 
 export default function RippleEffect() {
   const [ripples, setRipples] = useState<Ripple[]>([])
+  const rippleCount = useRef(0)
+  const MAX_RIPPLES = 5 // Limit the number of simultaneous ripples
 
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
+      // Limit ripple creation to prevent performance issues
+      if (rippleCount.current >= MAX_RIPPLES) return
+      
       const { clientX, clientY } = e
 
       // Add new ripple
@@ -23,11 +28,20 @@ export default function RippleEffect() {
         y: clientY,
       }
 
-      setRipples((prev) => [...prev, newRipple])
+      setRipples((prev) => {
+        // Keep only the most recent ripples
+        const updated = [...prev, newRipple].slice(-MAX_RIPPLES)
+        rippleCount.current = updated.length
+        return updated
+      })
 
       // Remove ripple after animation
       setTimeout(() => {
-        setRipples((prev) => prev.filter((ripple) => ripple.id !== newRipple.id))
+        setRipples((prev) => {
+          const filtered = prev.filter((ripple) => ripple.id !== newRipple.id)
+          rippleCount.current = filtered.length
+          return filtered
+        })
       }, 1000)
     }
 
@@ -53,9 +67,9 @@ export default function RippleEffect() {
               background: "radial-gradient(circle, rgba(16,185,129,0.3) 0%, rgba(16,185,129,0) 70%)",
             }}
             initial={{ width: 0, height: 0, opacity: 1 }}
-            animate={{ width: 200, height: 200, opacity: 0 }}
+            animate={{ width: 150, height: 150, opacity: 0 }} // Reduced size
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            transition={{ duration: 0.6, ease: "easeOut" }} // Shorter duration
           />
         ))}
       </AnimatePresence>

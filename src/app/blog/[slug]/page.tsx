@@ -11,13 +11,9 @@ export async function generateStaticParams() {
 }
 
 // Generate metadata for each blog post
-export async function generateMetadata({
-    params,
-}: {
-    params: { slug: string };
-}): Promise<Metadata> {
-  console.log(params.slug);
-  
+export async function generateMetadata({ params }: { params: { slug: string } & Promise<any> }): Promise<Metadata> {
+    console.log(params.slug);
+    
     const post = blogPosts.find((p) => p.slug == params?.slug);
 
     if (!post) {
@@ -30,11 +26,6 @@ export async function generateMetadata({
     return generateBlogMetadata(post);
 }
 
-export default async function BlogPost({
-    params,
-}: {
-    params: { slug: string };
-}) {
-
+export default function BlogPost({ params }: { params: { slug: string } & Promise<any> }) {
     return <BlogPostClient params={params} />;
 }

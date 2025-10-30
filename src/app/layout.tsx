@@ -1,7 +1,6 @@
 import BackToTop from "@/components/back-to-top";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
-import RippleEffect from "@/components/ripple-effect";
 import ScrollProgress from "@/components/scroll-progress";
 import { ThemeProvider } from "@/components/theme-provider";
 import { baseMetadata } from "@/lib/metadata";
@@ -34,8 +33,12 @@ export default function RootLayout({
                         <main className="relative z-10">
                            {children}
                         </main>
-                        <RippleEffect />
-                        <BackToTop />
+                        {/* Conditionally render heavy components only on client */}
+                        {typeof window !== 'undefined' && (
+                            <>
+                                <BackToTop />
+                            </>
+                        )}
                         <Footer />
                     </div>
                 </ThemeProvider>

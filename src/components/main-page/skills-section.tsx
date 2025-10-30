@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
 import { ArrowRight, Database, Layers, Server, Wrench, Zap } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -177,16 +176,10 @@ export default function SkillsSectionV4() {
                     description="Explore my skills and experience in various areas of software development."
                 />
 
-                {/* Category Tabs */}
-                <motion.div
-                    className="flex flex-wrap justify-center gap-3 mb-12 sm:mb-16"
-                    initial={{ opacity: 0, y: 15 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.1 }}
-                    viewport={{ once: true }}
-                >
+                {/* Category Tabs - Reduced animations */}
+                <div className="flex flex-wrap justify-center gap-3 mb-12 sm:mb-16">
                     {categories.map((cat) => (
-                        <motion.button
+                        <button
                             key={cat.id}
                             onClick={() => setSelectedCategory(cat.id)}
                             className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 flex items-center gap-2 ${
@@ -194,8 +187,6 @@ export default function SkillsSectionV4() {
                                     ? "bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-emerald-400 border border-emerald-500/40 shadow-lg shadow-emerald-500/20"
                                     : "bg-zinc-800/50 text-zinc-400 hover:bg-zinc-700/50 hover:text-zinc-200 border border-zinc-700/50 hover:border-zinc-600"
                             }`}
-                            whileHover={{ y: -2 }}
-                            whileTap={{ scale: 0.98 }}
                         >
                             {cat.id === "all" && <Zap className="w-4 h-4" />}
                             {cat.id === "frontend" && (
@@ -211,96 +202,54 @@ export default function SkillsSectionV4() {
                                 <Wrench className="w-4 h-4" />
                             )}
                             {cat.label}
-                        </motion.button>
+                        </button>
                     ))}
-                </motion.div>
+                </div>
 
-                {/* Skills Grid - Enhanced Design */}
-                <motion.div
-                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mx-auto"
-                    layout
-                >
+                {/* Skills Grid - Reduced animations */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5 md:gap-6">
                     {skills.map((skill, index) => (
-                        <motion.div
+                        <div
                             key={skill.name}
-                            className="group relative"
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: 20 }}
-                            transition={{
-                                duration: 0.5,
-                                delay: index * 0.1,
-                            }}
-                            layout
+                            className="group relative h-full rounded-2xl border border-zinc-800 bg-gradient-to-br from-zinc-900/60 to-zinc-900/30 backdrop-blur-xl p-5 sm:p-6 transition-all duration-300 hover:border-emerald-500/30 hover:shadow-2xl hover:shadow-emerald-500/10 overflow-hidden"
                         >
-                            <div className="h-full p-6 rounded-2xl bg-gradient-to-br from-zinc-900/60 to-zinc-900/30 backdrop-blur-xl border border-zinc-800 hover:border-emerald-500/30 transition-all duration-500 flex flex-col group-hover:shadow-2xl group-hover:shadow-emerald-500/10 relative overflow-hidden">
-                                {/* Animated background on hover */}
-                                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-teal-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-
-                                {/* Shine effect on hover */}
-                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 pointer-events-none" />
-
-                                {/* Header with icon and title */}
-                                <div className="flex items-start gap-4 mb-4 relative z-10">
-                                    <motion.div
-                                        className={`flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br ${skill.color} p-2 flex-shrink-0`}
-                                        whileHover={{ scale: 1.1 }}
-                                        transition={{
-                                            type: "spring",
-                                            stiffness: 300,
-                                        }}
-                                    >
-                                        <div className="text-white">
-                                            {skillIcons[skill.name] || (
-                                                <Wrench className="w-6 h-6" />
-                                            )}
-                                        </div>
-                                    </motion.div>
+                            {/* Static shine effect */}
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 pointer-events-none" />
+                            
+                            <div className="relative z-10">
+                                <div className="flex items-start gap-4 mb-4">
+                                    <div className="p-3 rounded-xl bg-zinc-800/50 border border-zinc-700/50">
+                                        {skillIcons[skill.name]}
+                                    </div>
                                     <div>
-                                        <motion.h3
-                                            className="text-xl font-bold text-white mb-1 group-hover:text-emerald-400 transition-colors duration-300"
-                                            whileHover={{ x: 5 }}
-                                        >
+                                        <h3 className="text-lg font-bold text-white mb-1">
                                             {skill.name}
-                                        </motion.h3>
-                                        <motion.span
-                                            className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-                                            whileHover={{ scale: 1.05 }}
-                                        >
+                                        </h3>
+                                        <p className="text-xs text-emerald-400 font-medium px-2 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 inline-block">
                                             {skill.category}
-                                        </motion.span>
+                                        </p>
                                     </div>
                                 </div>
-
-                                {/* Description */}
-                                <motion.p
-                                    className="text-zinc-400 text-sm mb-5 flex-grow relative z-10"
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    transition={{ delay: 0.2 }}
-                                >
+                                
+                                <p className="text-zinc-400 text-sm leading-relaxed">
                                     {skill.description}
-                                </motion.p>
+                                </p>
                             </div>
-                        </motion.div>
+                        </div>
                     ))}
-                </motion.div>
+                </div>
 
-                {/* View All Skills Button */}
-                <motion.div
-                    className="flex justify-center mt-12"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.3 }}
-                    viewport={{ once: true }}
-                >
+                <div className="flex justify-center mt-12 sm:mt-16">
                     <Link href="/skills">
-                        <Button className="group bg-gradient-to-r from-emerald-500/20 to-teal-500/10 text-white px-6 py-3 rounded-xl font-medium relative overflow-hidden transition-all duration-300 flex items-center gap-2">
-                            <span>View All Skills</span>
-                            <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                        <Button
+                            variant="outline"
+                            className="border-2 border-emerald-400/50 text-emerald-400 hover:bg-emerald-400/10 backdrop-blur-sm px-6 py-3 rounded-lg font-medium group"
+                        >
+                            View All Skills
+                            <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                         </Button>
                     </Link>
-                </motion.div>
+                </div>
             </div>
         </section>
     );

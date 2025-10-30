@@ -2,7 +2,6 @@
 
 import type React from "react";
 
-import { motion } from "framer-motion";
 import {
     Clock,
     Github,
@@ -91,19 +90,11 @@ export default function ContactSection() {
     return (
         <section id="contact" className="py-20 relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-zinc-950 via-emerald-950/20 to-zinc-950">
-                <motion.div
+                {/* Static background gradient */}
+                <div
                     className="absolute inset-0 opacity-30"
-                    animate={{
-                        background: [
-                            "radial-gradient(circle at 20% 50%, rgba(16, 185, 129, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(20, 184, 166, 0.1) 0%, transparent 50%)",
-                            "radial-gradient(circle at 80% 50%, rgba(20, 184, 166, 0.15) 0%, transparent 50%), radial-gradient(circle at 20% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%)",
-                            "radial-gradient(circle at 20% 50%, rgba(16, 185, 129, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(20, 184, 166, 0.1) 0%, transparent 50%)",
-                        ],
-                    }}
-                    transition={{
-                        duration: 8,
-                        repeat: Number.POSITIVE_INFINITY,
-                        ease: "linear",
+                    style={{
+                        background: "radial-gradient(circle at 20% 50%, rgba(16, 185, 129, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(20, 184, 166, 0.1) 0%, transparent 50%)"
                     }}
                 />
             </div>
@@ -115,13 +106,9 @@ export default function ContactSection() {
                     description="Ready to collaborate? Let's get in touch!"
                 />
                 <div className="grid lg:grid-cols-5 gap-12 mx-auto">
-                    {/* Contact Info */}
-                    <motion.div
+                    {/* Contact Info - Reduced animations */}
+                    <div
                         className="lg:col-span-2 space-y-6"
-                        initial={{ opacity: 0, x: -30 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.6 }}
-                        viewport={{ once: true }}
                     >
                         <div className="bg-zinc-800/50 backdrop-blur-sm p-6 rounded-2xl border border-zinc-700/50">
                             <h3 className="text-2xl font-bold mb-4 text-emerald-400">
@@ -134,17 +121,10 @@ export default function ContactSection() {
 
                             <div className="space-y-4">
                                 {contactInfo.map((contact, index) => (
-                                    <motion.a
+                                    <a
                                         key={index}
                                         href={contact.link}
                                         className="flex items-center gap-4 p-3 rounded-lg hover:bg-zinc-700/50 transition-colors duration-200"
-                                        initial={{ opacity: 0, x: -20 }}
-                                        whileInView={{ opacity: 1, x: 0 }}
-                                        transition={{
-                                            duration: 0.4,
-                                            delay: 0.1 * index,
-                                        }}
-                                        viewport={{ once: true }}
                                     >
                                         <div className="p-2 rounded-full bg-zinc-700/50">
                                             {contact.icon}
@@ -157,7 +137,7 @@ export default function ContactSection() {
                                                 {contact.value}
                                             </p>
                                         </div>
-                                    </motion.a>
+                                    </a>
                                 ))}
                             </div>
 
@@ -168,33 +148,22 @@ export default function ContactSection() {
                                 </h4>
                                 <div className="flex gap-3">
                                     {socialLinks.map((social, index) => (
-                                        <motion.a
+                                        <a
                                             key={index}
                                             href={social.href}
                                             className={`p-3 rounded-full bg-zinc-700/50 text-white transition-colors duration-200 ${social.color}`}
-                                            whileHover={{ y: -2 }}
-                                            initial={{ opacity: 0, y: 20 }}
-                                            whileInView={{ opacity: 1, y: 0 }}
-                                            transition={{
-                                                duration: 0.4,
-                                                delay: 0.1 * index,
-                                            }}
                                         >
                                             {social.icon}
-                                        </motion.a>
+                                        </a>
                                     ))}
                                 </div>
                             </div>
                         </div>
-                    </motion.div>
+                    </div>
 
-                    {/* Contact Form */}
-                    <motion.div
+                    {/* Contact Form - Reduced animations */}
+                    <div
                         className="lg:col-span-3"
-                        initial={{ opacity: 0, x: 30 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.6 }}
-                        viewport={{ once: true }}
                     >
                         <div className="bg-zinc-800/50 backdrop-blur-sm p-6 rounded-2xl border border-zinc-700/50">
                             <h3 className="text-2xl font-bold mb-6 text-emerald-400">
@@ -279,15 +248,13 @@ export default function ContactSection() {
                                     />
                                 </div>
 
-                                <motion.button
+                                <button
                                     type="submit"
                                     className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold py-4 px-6 rounded-lg transition-all duration-200 flex items-center justify-center gap-2"
-                                    whileHover={{ scale: 1.02 }}
-                                    whileTap={{ scale: 0.98 }}
                                 >
                                     Send Message
                                     <Send className="h-5 w-5" />
-                                </motion.button>
+                                </button>
                             </form>
 
                             <div className="mt-6 text-center text-zinc-400">
@@ -297,7 +264,7 @@ export default function ContactSection() {
                                 </p>
                             </div>
                         </div>
-                    </motion.div>
+                    </div>
                 </div>
             </div>
         </section>
