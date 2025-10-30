@@ -127,7 +127,7 @@ export default function ProjectsSection() {
                     description="Explore my portfolio of web development projects with modern design and clean aesthetics."
                 />
 
-                {/* Projects List with Subtle Animations */}
+                {/* Projects List with Reduced Animations */}
                 <div className="space-y-8 mt-12">
                     {projects.map((project, index) => (
                         <div
@@ -135,14 +135,14 @@ export default function ProjectsSection() {
                             id={`project-card-${index}`}
                             className={`
                                 group relative
-                                bg-zinc-800/50 backdrop-blur-sm rounded-2xl border border-zinc-800/50 overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-emerald-500/20
+                                bg-zinc-800/50 backdrop-blur-sm rounded-2xl border border-zinc-800/50 overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-emerald-500/20
                                 ${visibleCards.includes(index) 
                                     ? 'opacity-100 translate-y-0' 
                                     : 'opacity-0 translate-y-8'}
                             `}
-                            style={{ transitionDelay: `${index * 100}ms` }}
+                            style={{ transitionDelay: `${index * 50}ms` }}
                         >
-                            {/* Shine sweep effect on hover */}
+                            {/* Static shine sweep effect on hover */}
                             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 pointer-events-none z-10" />
                             
                             <div className="p-6 relative z-20">
@@ -153,7 +153,7 @@ export default function ProjectsSection() {
                                             src={project.image || "/placeholder.svg"}
                                             alt={project.title}
                                             fill
-                                            className="object-cover transition-transform duration-500 hover:scale-105"
+                                            className="object-cover transition-transform duration-300 hover:scale-105"
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-zinc-900/40 to-transparent" />
                                         {/* Featured badge */}
@@ -203,16 +203,18 @@ export default function ProjectsSection() {
                                         </div>
 
                                         {/* Links */}
-                                        <div className="flex flex-wrap gap-3">
+                                        <div className="flex flex-wrap gap-4">
                                             {project.link && (
                                                 <a
                                                     href={project.link}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-emerald-400 rounded-lg font-medium border border-emerald-500/30 hover:bg-emerald-500/30 hover:border-emerald-400/50 transition-all duration-300"
+                                                    className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-emerald-400 rounded-lg border border-emerald-500/30 hover:border-emerald-400/50 transition-all duration-300 group/link"
+                                                    data-cursor="link"
                                                 >
                                                     <ExternalLink className="h-4 w-4" />
-                                                    <span className="text-sm">View Project</span>
+                                                    <span>Live Demo</span>
+                                                    <ExternalLink className="h-3 w-3 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
                                                 </a>
                                             )}
                                             {project.github && (
@@ -220,10 +222,12 @@ export default function ProjectsSection() {
                                                     href={project.github}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="inline-flex items-center gap-2 px-4 py-2 bg-zinc-700/50 text-zinc-200 rounded-lg font-medium border border-zinc-600/50 hover:bg-zinc-600/50 transition-all duration-300"
+                                                    className="flex items-center gap-2 px-5 py-2.5 bg-zinc-800/50 text-zinc-300 rounded-lg border border-zinc-700/50 hover:border-zinc-600 transition-all duration-300 group/link"
+                                                    data-cursor="link"
                                                 >
                                                     <Github className="h-4 w-4" />
-                                                    <span className="text-sm">Source Code</span>
+                                                    <span>Source Code</span>
+                                                    <Github className="h-3 w-3 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
                                                 </a>
                                             )}
                                         </div>
