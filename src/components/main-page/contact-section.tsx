@@ -105,7 +105,7 @@ export default function ContactSection() {
                     highlight="Touch"
                     description="Ready to collaborate? Let's get in touch!"
                 />
-                <div className="grid lg:grid-cols-5 gap-12 mx-auto">
+                <div className="grid lg:grid-cols-5 gap-12">
                     {/* Contact Info - Reduced animations */}
                     <div
                         className="lg:col-span-2 space-y-6"

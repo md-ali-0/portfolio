@@ -2,7 +2,7 @@
 
 import { ExternalLink, Github } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import SectionHeader from "../section-header";
 
 type Project = {
@@ -18,7 +18,7 @@ type Project = {
 };
 
 export default function ProjectsSection() {
-    const [visibleCards, setVisibleCards] = useState<number[]>([]);
+    const [visibleCards] = useState<number[]>(Array.from({length: 4}, (_, i) => i));
 
     const projects: Project[] = [
         {
@@ -74,40 +74,6 @@ export default function ProjectsSection() {
         },
     ];
 
-    // Handle card visibility animation with throttling
-    useEffect(() => {
-        let ticking = false;
-        
-        const handleScroll = () => {
-            if (!ticking) {
-                requestAnimationFrame(() => {
-                    const newVisibleCards: number[] = [];
-                    projects.forEach((_, index) => {
-                        const element = document.getElementById(`project-card-${index}`);
-                        if (element) {
-                            const rect = element.getBoundingClientRect();
-                            const windowHeight = window.innerHeight;
-                            // When card is 20% visible from bottom
-                            if (rect.top < windowHeight * 0.8) {
-                                newVisibleCards.push(index);
-                            }
-                        }
-                    });
-                    setVisibleCards(newVisibleCards);
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        };
-
-        // Initial check
-        handleScroll();
-        
-        // Add scroll listener
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
-
     return (
         <section
             id="projects"
@@ -133,19 +99,15 @@ export default function ProjectsSection() {
                         <div
                             key={project.title}
                             id={`project-card-${index}`}
-                            className={`
+                            className="
                                 group relative
-                                bg-zinc-800/50 backdrop-blur-sm rounded-2xl border border-zinc-800/50 overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-emerald-500/20
-                                ${visibleCards.includes(index) 
-                                    ? 'opacity-100 translate-y-0' 
-                                    : 'opacity-0 translate-y-8'}
-                            `}
-                            style={{ transitionDelay: `${index * 50}ms` }}
+                                bg-zinc-900/60 backdrop-blur-xl rounded-2xl border border-zinc-800 overflow-hidden transition-all duration-300 hover:border-emerald-500/30 hover:shadow-2xl hover:shadow-emerald-500/10
+                            "
                         >
-                            {/* Static shine sweep effect on hover */}
-                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 pointer-events-none z-10" />
+                            {/* Static shine effect */}
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 pointer-events-none" />
                             
-                            <div className="p-6 relative z-20">
+                            <div className="p-6 relative z-10">
                                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                                     {/* Image with subtle hover effect */}
                                     <div className="relative h-64 lg:h-full rounded-xl overflow-hidden">
@@ -153,7 +115,7 @@ export default function ProjectsSection() {
                                             src={project.image || "/placeholder.svg"}
                                             alt={project.title}
                                             fill
-                                            className="object-cover transition-transform duration-300 hover:scale-105"
+                                            className="object-cover transition-transform duration-300 group-hover:scale-105"
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-zinc-900/40 to-transparent" />
                                         {/* Featured badge */}
@@ -186,7 +148,7 @@ export default function ProjectsSection() {
                                             </span>
                                         </div>
 
-                                        <p className="text-zinc-300 mb-6 text-lg leading-relaxed">
+                                        <p className="text-zinc-400 mb-6 text-lg leading-relaxed">
                                             {project.description}
                                         </p>
 
@@ -195,7 +157,7 @@ export default function ProjectsSection() {
                                             {project.technologies.map((tech) => (
                                                 <span
                                                     key={tech}
-                                                    className="px-3 py-1.5 bg-zinc-700/50 text-zinc-200 text-sm rounded-lg border border-zinc-600/50 hover:border-emerald-500/50 transition-colors duration-300"
+                                                    className="px-3 py-1.5 bg-zinc-800/50 text-zinc-200 text-sm rounded-lg border border-zinc-700/50 hover:border-emerald-500/50 transition-colors duration-300"
                                                 >
                                                     {tech}
                                                 </span>

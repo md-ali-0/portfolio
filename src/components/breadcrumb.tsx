@@ -81,7 +81,12 @@ type BreadcrumbItem = {
     href: string;
 };
 
-export default function Breadcrumb() {
+interface BreadcrumbProps {
+    title?: string;
+    description?: string;
+}
+
+export default function Breadcrumb({ title, description }: BreadcrumbProps) {
     const pathname = usePathname();
     const [mounted, setMounted] = useState(false);
 
@@ -99,6 +104,16 @@ export default function Breadcrumb() {
         if (segment === "[slug]") name = "Details";
         breadcrumbs.push({ name, href });
     });
+
+    // Determine title and description based on pathname if not provided
+    const pageTitle = title || breadcrumbs[breadcrumbs.length - 1]?.name || "Page";
+    const pageDescription = description || 
+        (pathname.includes("/skills") && "Explore my technical skills and expertise") ||
+        (pathname.includes("/projects") && "Browse my portfolio of projects") ||
+        (pathname.includes("/blog") && "Read my latest articles and tutorials") ||
+        (pathname.includes("/about") && "Learn more about my background and experience") ||
+        (pathname.includes("/contact") && "Get in touch with me for collaborations") ||
+        "Navigate through the website";
 
     return (
         <section className="flex items-center overflow-hidden bg-gradient-to-l from-gray-800/10 via-emerald-500/10 to-gray-900/10">
@@ -121,21 +136,11 @@ export default function Breadcrumb() {
                 <div className="flex flex-col w-full">
                     <div className="pr-8 max-w-2xl">
                         <h1 className="mb-3 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white text-balance">
-                            {breadcrumbs[breadcrumbs.length - 1]?.name ||
-                                "Page"}
+                            {pageTitle}
                         </h1>
 
                         <p className="mb-6 text-base md:text-lg text-zinc-400 max-w-xl text-pretty">
-                            {pathname.includes("/skills") &&
-                                "Explore my technical skills and expertise"}
-                            {pathname.includes("/projects") &&
-                                "Browse my portfolio of projects"}
-                            {pathname.includes("/blog") &&
-                                "Read my latest articles and tutorials"}
-                            {!pathname.includes("/skills") &&
-                                !pathname.includes("/projects") &&
-                                !pathname.includes("/blog") &&
-                                "Navigate through the website"}
+                            {pageDescription}
                         </p>
 
                         <nav

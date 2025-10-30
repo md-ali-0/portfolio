@@ -1,8 +1,7 @@
 "use client";
 
-import AnimatedButton from "@/components/animated-button";
+import Button from "@/components/custom-button";
 import MagneticElement from "@/components/magnetic-element";
-import { Button } from "@/components/ui/button";
 import { blogPosts } from "@/data/blog-data";
 import { useMobile } from "@/hooks/use-mobile";
 import { motion } from "framer-motion";
@@ -433,21 +432,21 @@ export default function BlogPostClient({
                                             </p>
                                             <div className="flex gap-3 mt-4">
                                                 <MagneticElement strength={30}>
-                                                    <AnimatedButton
+                                                    <Button
                                                         variant="outline"
                                                         size="sm"
                                                         className="text-emerald-400 border-emerald-400/30 hover:border-emerald-400/50"
                                                     >
                                                         View Profile
-                                                    </AnimatedButton>
+                                                    </Button>
                                                 </MagneticElement>
                                                 <MagneticElement strength={30}>
-                                                    <AnimatedButton
+                                                    <Button
                                                         size="sm"
                                                         className="bg-emerald-500 hover:bg-emerald-600"
                                                     >
                                                         Follow
-                                                    </AnimatedButton>
+                                                    </Button>
                                                 </MagneticElement>
                                             </div>
                                         </div>
@@ -490,14 +489,14 @@ export default function BlogPostClient({
                                         maxLength={500}
                                     />
                                     <MagneticElement strength={30}>
-                                        <AnimatedButton
+                                        <Button
                                             type="submit"
                                             className="bg-emerald-500 hover:bg-emerald-600 py-3 px-6"
                                             disabled={!commentText.trim()}
                                         >
                                             <Send className="h-4 w-4 mr-2" />{" "}
                                             Post Comment
-                                        </AnimatedButton>
+                                        </Button>
                                     </MagneticElement>
                                 </form>
 
@@ -678,9 +677,9 @@ export default function BlogPostClient({
                                         className="w-full bg-zinc-800/70 border border-zinc-700/50 rounded-lg px-4 py-3 focus:outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/20 transition-all duration-300 text-white placeholder-zinc-400"
                                     />
                                     <MagneticElement strength={30}>
-                                        <AnimatedButton className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 py-3">
+                                        <Button className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 py-3">
                                             Subscribe
-                                        </AnimatedButton>
+                                        </Button>
                                     </MagneticElement>
                                 </form>
                                 <p className="text-xs text-zinc-400 mt-4 leading-relaxed">
@@ -781,12 +780,12 @@ export default function BlogPostClient({
 
                     <div className="text-center mt-12">
                         <MagneticElement strength={30}>
-                            <AnimatedButton
+                            <Button
                                 variant="outline"
                                 className="text-emerald-400 border-emerald-400/30 hover:border-emerald-400/50 px-6 py-3"
                             >
                                 View All Posts
-                            </AnimatedButton>
+                            </Button>
                         </MagneticElement>
                     </div>
                 </div>
