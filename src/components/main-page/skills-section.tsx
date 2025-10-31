@@ -173,7 +173,20 @@ export default function SkillsSectionV4() {
             id="skills"
             className="min-h-screen relative overflow-hidden py-16 sm:py-20 md:py-24 lg:py-28"
         >
-            {/* Background with floating icons */}
+            {/* Background */}
+            <div className="absolute inset-0">
+                <div className="absolute inset-0 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950" />
+                <div
+                    className="absolute inset-0 opacity-5"
+                    style={{
+                        backgroundImage: `
+              linear-gradient(rgba(16, 185, 129, 0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(16, 185, 129, 0.1) 1px, transparent 1px)
+            `,
+                        backgroundSize: "30px 30px",
+                    }}
+                />
+            </div>
 
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <SectionHeader
@@ -231,7 +244,7 @@ export default function SkillsSectionV4() {
                     {skills.map((skill, index) => (
                         <div
                             key={skill.name}
-                            className="group relative h-full rounded-2xl border border-zinc-800 bg-gradient-to-br from-zinc-900/60 to-zinc-900/30 backdrop-blur-xl p-5 sm:p-6 transition-all duration-300 hover:border-emerald-500/30 hover:shadow-2xl hover:shadow-emerald-500/10 overflow-hidden"
+                            className="group relative h-full rounded-2xl border border-zinc-800 bg-gradient-to-br from-zinc-900/60 to-zinc-900/30 backdrop-blur-xl p-5 sm:p-6 transition-all duration-300 hover:border-emerald-500/30 overflow-hidden"
                         >
                             {/* Static shine effect */}
                             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 pointer-events-none" />

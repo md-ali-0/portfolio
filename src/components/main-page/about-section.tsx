@@ -128,14 +128,13 @@ export default function AboutSection() {
 
                 {/* Static mesh gradient overlay */}
                 <div
-                    className="absolute inset-0 opacity-5 sm:opacity-10"
+                    className="absolute inset-0 opacity-5"
                     style={{
                         backgroundImage: `
               linear-gradient(rgba(16, 185, 129, 0.1) 1px, transparent 1px),
               linear-gradient(90deg, rgba(16, 185, 129, 0.1) 1px, transparent 1px)
             `,
-                        backgroundSize:
-                            "20px 20px sm:30px sm:30px md:40px md:40px lg:50px lg:50px",
+                        backgroundSize: "30px 30px",
                     }}
                 />
             </div>
