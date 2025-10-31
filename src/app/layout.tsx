@@ -5,11 +5,11 @@ import ScrollProgress from "@/components/scroll-progress";
 import { ThemeProvider } from "@/components/theme-provider";
 import { baseMetadata } from "@/lib/metadata";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Outfit } from "next/font/google";
 import type React from "react";
 import "../styles/globals.css";
 
-const inter = Inter({ subsets: ["latin"], display: "swap" });
+const outfit = Outfit({ subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = baseMetadata;
 
@@ -20,7 +20,7 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en" suppressHydrationWarning>
-            <body className={inter.className}>
+            <body className={outfit.className}>
                 <ThemeProvider
                     attribute="class"
                     defaultTheme="system"
@@ -33,12 +33,7 @@ export default function RootLayout({
                         <main className="relative z-10">
                            {children}
                         </main>
-                        {/* Conditionally render heavy components only on client */}
-                        {typeof window !== 'undefined' && (
-                            <>
-                                <BackToTop />
-                            </>
-                        )}
+                        <BackToTop />
                         <Footer />
                     </div>
                 </ThemeProvider>
