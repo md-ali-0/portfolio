@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import BlogCard from "../features/blog/blog-card";
 
@@ -64,98 +64,46 @@ export default function BlogSection() {
 
     return (
         <section className="py-16 sm:py-20 md:py-24 relative overflow-hidden bg-zinc-950">
-            {/* Enhanced Background Effects */}
+            {/* Background */}
             <div className="absolute inset-0">
-                {/* Main gradient background - static version */}
-                <div
-                    className="absolute inset-0 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950"
-                />
-
-                {/* Static mesh gradient overlay */}
-                <div
-                    className="absolute inset-0 opacity-20"
-                    style={{
-                        background: `radial-gradient(circle at 50% 50%, 
-                            rgba(16, 185, 129, 0.15) 0%, 
-                            rgba(20, 184, 166, 0.1) 25%, 
-                            transparent 50%),
-                        radial-gradient(circle at 80% 20%, 
-                            rgba(6, 182, 212, 0.1) 0%, 
-                            rgba(16, 185, 129, 0.05) 30%, 
-                            transparent 60%)`,
-                    }}
-                />
-
-                {/* Grid pattern - remains static */}
+                <div className="absolute inset-0 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950" />
                 <div
                     className="absolute inset-0 opacity-5"
                     style={{
                         backgroundImage: `
-                            linear-gradient(rgba(16, 185, 129, 0.1) 1px, transparent 1px),
-                            linear-gradient(90deg, rgba(16, 185, 129, 0.1) 1px, transparent 1px)
-                        `,
-                        backgroundSize: "50px 50px",
+              linear-gradient(rgba(16, 185, 129, 0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(16, 185, 129, 0.1) 1px, transparent 1px)
+            `,
+                        backgroundSize: "30px 30px",
                     }}
                 />
-
-                {/* Floating particles - static version */}
-                {[...Array(6)].map((_, i) => (
-                    <div
-                        key={i}
-                        className="absolute w-1 h-1 bg-emerald-400 rounded-full"
-                        style={{
-                            top: `${20 + i * 15}%`,
-                            left: `${10 + i * 15}%`,
-                        }}
-                    />
-                ))}
             </div>
 
             <div className="container mx-auto relative z-10 px-4 sm:px-6">
-                {/* Static header section */}
-                <div 
-                    className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-10 sm:mb-12"
-                >
+                {/* Header section */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-10 sm:mb-12">
                     <div>
-                        <h2 
-                            className="flex items-center gap-3 text-2xl sm:text-3xl md:text-4xl font-bold mb-2"
-                        >
-                            {/* Glowing background text */}
-                            <span className="relative">
-                                <span className="absolute inset-0 bg-clip-text text-transparent bg-gradient-to-r from-emerald-400/20 via-teal-300/20 to-emerald-500/20 blur-sm scale-110">
-                                    Latest
-                                </span>
-                                <span
-                                    className="relative bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-500"
-                                    style={{
-                                        backgroundSize: "200% 200%",
-                                    }}
-                                >
-                                    Latest
-                                </span>
+                        <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-white mb-2">
+                            Latest
+                            <span className="ms-3 text-2xl sm:text-3xl md:text-5xl font-medium text-emerald-400 relative">
+                                Articles
+                                <div className="absolute -bottom-0.5 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-emerald-400 to-transparent" />
                             </span>
-                            <span className="text-white">Articles</span>
-                            <div>
-                                <Sparkles className="h-5 w-5 text-emerald-400" />
-                            </div>
                         </h2>
-                        <p 
-                            className="text-zinc-400 max-w-xl text-sm sm:text-base"
-                        >
-                            Insights, tutorials, and best practices from the development trenches.
+                        <p className="text-zinc-400 max-w-xl text-sm sm:text-base">
+                            Insights, tutorials, and best practices from the
+                            development trenches.
                         </p>
                     </div>
 
-                    {/* Static navigation buttons */}
-                    <div 
-                        className="flex items-center gap-2"
-                    >
+                    {/* Navigation buttons */}
+                    <div className="flex items-center gap-2">
                         <div>
                             <Button
                                 variant="outline"
                                 size="icon"
                                 onClick={prevSlide}
-                                className="w-10 h-10 rounded-full border-2 border-zinc-700 bg-zinc-800/50 text-zinc-400 hover:bg-zinc-700 hover:text-white hover:border-zinc-600 transition-all duration-300 backdrop-blur-sm hover:shadow-lg hover:shadow-zinc-700/50"
+                                className="w-10 h-10 rounded-full border border-zinc-700 bg-zinc-800/50 text-zinc-400 hover:bg-zinc-700 hover:text-white hover:border-zinc-600 transition-all duration-300"
                                 disabled={currentIndex === 0}
                             >
                                 <ChevronLeft className="h-4 w-4" />
@@ -166,7 +114,7 @@ export default function BlogSection() {
                                 variant="outline"
                                 size="icon"
                                 onClick={nextSlide}
-                                className="w-10 h-10 rounded-full border-2 border-emerald-500/50 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-emerald-400 hover:from-emerald-500/30 hover:to-teal-500/30 hover:border-emerald-400 transition-all duration-300 backdrop-blur-sm hover:shadow-lg hover:shadow-emerald-500/50"
+                                className="w-10 h-10 rounded-full border border-emerald-500/50 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-emerald-400 hover:from-emerald-500/30 hover:to-teal-500/30 hover:border-emerald-400 transition-all duration-300"
                                 disabled={currentIndex === totalSlides - 1}
                             >
                                 <ChevronRight className="h-4 w-4" />
@@ -175,37 +123,28 @@ export default function BlogSection() {
                     </div>
                 </div>
 
-                {/* Static blog posts grid */}
-                <div 
-                    className="mb-10"
-                >
+                {/* Blog posts grid */}
+                <div className="mb-10">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {getCurrentPosts().map((post, index) => (
-                            <div 
-                                key={post.slug}
-                            >
-                                <BlogCard
-                                    post={post}
-                                    index={index}
-                                />
+                            <div key={post.slug}>
+                                <BlogCard post={post} index={index} />
                             </div>
                         ))}
                     </div>
                 </div>
 
-                {/* Static pagination */}
-                <div 
-                    className="flex justify-center"
-                >
+                {/* Pagination */}
+                <div className="flex justify-center">
                     <div className="flex gap-2">
                         {Array.from({ length: totalSlides }).map((_, index) => (
                             <button
                                 key={index}
                                 onClick={() => setCurrentIndex(index)}
-                                className={`w-6 h-2.5 rounded-lg transition-all duration-300 backdrop-blur-sm ${
+                                className={`w-6 h-2.5 rounded-lg transition-all duration-300 ${
                                     index === currentIndex
-                                        ? "bg-gradient-to-r from-emerald-400 to-teal-400 border border-emerald-300/50 shadow-lg shadow-emerald-500/30 scale-125" 
-                                        : "bg-zinc-700/50 border border-zinc-600 hover:bg-zinc-600 hover:border-zinc-500 hover:shadow-sm hover:shadow-zinc-500/20"
+                                        ? "bg-gradient-to-r from-emerald-400 to-teal-400 border border-emerald-300/50"
+                                        : "bg-zinc-700/50 border border-zinc-600 hover:bg-zinc-600 hover:border-zinc-500"
                                 }`}
                             />
                         ))}
