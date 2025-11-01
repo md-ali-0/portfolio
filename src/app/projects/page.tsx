@@ -1,5 +1,5 @@
-import type { Metadata } from "next"
 import { baseMetadata } from "@/lib/metadata"
+import type { Metadata } from "next"
 import ProjectsPageClient from "./ProjectsPageClient"
 
 // Generate metadata for SEO
