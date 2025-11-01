@@ -1,103 +1,171 @@
 "use client";
 
-import SectionHeader from "@/components/section-header";
-import { Camera, Heart, MapPin, User } from "lucide-react";
+import {
+    Camera,
+    Github,
+    Heart,
+    Linkedin,
+    Mail,
+    MapPin,
+    Twitter,
+    User,
+} from "lucide-react";
+import Image from "next/image";
 
 export default function PersonalImageSection() {
-  // Personal interests and hobbies data
-  const personalInterests = [
-    {
-      icon: <Heart className="h-5 w-5" />,
-      title: "Photography",
-      description: "Capturing moments and exploring creative perspectives through my lens"
-    },
-    {
-      icon: <MapPin className="h-5 w-5" />,
-      title: "Travel",
-      description: "Exploring new cultures and places to broaden my horizons"
-    },
-    {
-      icon: <User className="h-5 w-5" />,
-      title: "Mentoring",
-      description: "Helping aspiring developers navigate their career paths"
-    },
-    {
-      icon: <Camera className="h-5 w-5" />,
-      title: "Tech Blogging",
-      description: "Sharing knowledge and insights about emerging technologies"
-    }
-  ];
+    const personalInterests = [
+        {
+            icon: <Heart className="h-5 w-5" />,
+            title: "Photography",
+            description:
+                "Capturing authentic stories through my lens and exploring creative compositions.",
+        },
+        {
+            icon: <MapPin className="h-5 w-5" />,
+            title: "Travel",
+            description:
+                "Immersing myself in new cultures and discovering diverse perspectives.",
+        },
+        {
+            icon: <User className="h-5 w-5" />,
+            title: "Mentoring",
+            description:
+                "Guiding aspiring developers and sharing real-world technical insights.",
+        },
+        {
+            icon: <Camera className="h-5 w-5" />,
+            title: "Tech Blogging",
+            description:
+                "Writing about modern web technologies and my learning experiences.",
+        },
+    ];
 
-  return (
-    <section className="relative py-12 sm:py-16 md:py-20 lg:py-24">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionHeader
-          title="Personal"
-          highlight="Snapshot"
-          description="A glimpse into my life beyond code and technology."
-          icon={<User className="h-6 w-6 text-emerald-400" />}
-        />
+    const socialLinks = [
+        {
+            icon: <Github className="h-5 w-5" />,
+            label: "GitHub",
+            url: "https://github.com/yourusername",
+            color: "hover:text-emerald-400",
+        },
+        {
+            icon: <Linkedin className="h-5 w-5" />,
+            label: "LinkedIn",
+            url: "https://linkedin.com/in/yourusername",
+            color: "hover:text-blue-400",
+        },
+        {
+            icon: <Twitter className="h-5 w-5" />,
+            label: "Twitter",
+            url: "https://twitter.com/yourusername",
+            color: "hover:text-sky-400",
+        },
+        {
+            icon: <Mail className="h-5 w-5" />,
+            label: "Email",
+            url: "mailto:youremail@example.com",
+            color: "hover:text-emerald-400",
+        },
+    ];
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-12">
-          {/* Personal Image */}
-          <div className="lg:col-span-1">
-            <div className="relative group">
-              <div className="relative aspect-square rounded-2xl overflow-hidden bg-zinc-800 border border-zinc-700/50">
-                {/* Placeholder for personal image - replace with actual image */}
-                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-zinc-900 to-zinc-800">
-                  <User className="h-24 w-24 text-zinc-600" />
-                </div>
-                {/* Image overlay effect */}
-                <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </div>
-              
-              <div className="mt-4 text-center">
-                <h3 className="text-xl font-bold text-white">Your Name</h3>
-                <p className="text-zinc-400">Full Stack Developer</p>
-              </div>
+    return (
+        <section className="relative py-16 sm:py-20 lg:py-24 bg-gradient-to-br from-zinc-900 via-zinc-950 to-zinc-900">
+            {/* Geometric background elements */}
+            <div className="absolute inset-0 overflow-hidden">
+                <div className="absolute -top-40 -right-40 w-80 h-80 bg-emerald-500/5 rounded-full"></div>
+                <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-teal-500/5 rounded-full"></div>
+                <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-cyan-500/5 transform rotate-45"></div>
             </div>
-          </div>
 
-          {/* Personal Information and Interests */}
-          <div className="lg:col-span-2">
-            <div className="bg-zinc-900/60 backdrop-blur-xl rounded-2xl border border-zinc-800 p-6 sm:p-8">
-              <div className="prose prose-invert max-w-none">
-                <p className="text-zinc-300 text-lg leading-relaxed mb-6">
-                  When I'm not coding, you'll find me exploring the intersection of technology and creativity. 
-                  I believe in continuous learning and personal growth, both professionally and personally.
-                </p>
-                
-                <p className="text-zinc-300 text-lg leading-relaxed mb-8">
-                  My journey in technology has taught me the importance of empathy, collaboration, and 
-                  clear communication. These values extend beyond the code I write to how I interact 
-                  with teams and approach problem-solving.
-                </p>
-                
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  {personalInterests.map((interest, index) => (
-                    <div 
-                      key={index}
-                      className="flex items-start gap-4 p-4 rounded-xl bg-zinc-800/30 border border-zinc-700/30 hover:border-emerald-500/30 transition-colors duration-300"
-                    >
-                      <div className="p-2 rounded-lg bg-emerald-500/10 text-emerald-400">
-                        {interest.icon}
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-white mb-1">
-                          {interest.title}
-                        </h4>
-                        <p className="text-zinc-400 text-sm">
-                          {interest.description}
-                        </p>
-                      </div>
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div className="flex flex-col lg:flex-row gap-12 mt-8 items-center">
+                    {/* Personal Image with new styling */}
+                    <div className="lg:w-2/5 flex justify-center">
+                        <div className="relative">
+                            {/* Floating image container with shadow effect */}
+                            <div className="relative transform rotate-3 transition-transform duration-500 hover:rotate-0">
+                                <div className="absolute -inset-4 bg-gradient-to-r from-emerald-400 to-teal-500 rounded-2xl blur-lg opacity-30"></div>
+                                <div className="relative bg-zinc-800 border-2 border-zinc-700 rounded-2xl overflow-hidden">
+                                    <Image
+                                        src="/about-me-picture.png"
+                                        alt="Mohammad Ali - Full Stack Developer"
+                                        width={400}
+                                        height={500}
+                                        className="object-cover w-full h-auto"
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Decorative corner elements */}
+                            <div className="absolute -top-3 -left-3 w-6 h-6 border-t-2 border-l-2 border-emerald-400 rounded-tl-lg"></div>
+                            <div className="absolute -top-3 -right-3 w-6 h-6 border-t-2 border-r-2 border-emerald-400 rounded-tr-lg"></div>
+                            <div className="absolute -bottom-3 -left-3 w-6 h-6 border-b-2 border-l-2 border-emerald-400 rounded-bl-lg"></div>
+                            <div className="absolute -bottom-3 -right-3 w-6 h-6 border-b-2 border-r-2 border-emerald-400 rounded-br-lg"></div>
+                        </div>
                     </div>
-                  ))}
+
+                    {/* Content with new layout */}
+                    <div className="lg:w-3/5">
+                        <div className="space-y-8">
+                            <div className="space-y-6">
+                                <div>
+                                    <h3 className="text-3xl md:text-5xl font-bold text-white mb-2">
+                                        Mohammad Ali
+                                    </h3>
+                                    <p className="text-emerald-400 text-xl md:text-3xl font-medium mb-4">
+                                        Full-Stack Developer
+                                    </p>
+
+                                    {/* Contact Information */}
+                                    <div className="flex items-center gap-2 text-zinc-300 mb-6">
+                                        <Mail className="h-5 w-5 text-emerald-400" />
+                                        <span>md.ali.office@gmail.com</span>
+                                    </div>
+                                </div>
+
+                                <div className="space-y-4">
+                                    <p className="text-zinc-300 text-lg leading-relaxed">
+                                        Outside of coding, I love blending
+                                        creativity with technology to craft
+                                        meaningful experiences. I constantly
+                                        seek inspiration from art, people, and
+                                        nature.
+                                    </p>
+
+                                    <p className="text-zinc-300 text-lg leading-relaxed">
+                                        Over the years, I've learned that great
+                                        software isn't just about code — it's
+                                        about empathy, communication, and
+                                        collaboration. These principles shape
+                                        the way I work, mentor, and grow as a
+                                        developer.
+                                    </p>
+                                </div>
+                            </div>
+
+                            {/* Social Media Links */}
+                            <div className="pt-4">
+                                <h4 className="text-xl font-semibold text-white mb-4">
+                                    Connect with me
+                                </h4>
+                                <div className="flex flex-wrap gap-4">
+                                    {socialLinks.map((social, index) => (
+                                        <a
+                                            key={index}
+                                            href={social.url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className={`flex items-center gap-2 px-4 py-2 bg-zinc-800/50 border border-zinc-700 rounded-lg text-zinc-300 hover:bg-zinc-800 transition-all duration-300 ${social.color}`}
+                                        >
+                                            {social.icon}
+                                            <span>{social.label}</span>
+                                        </a>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
+        </section>
+    );
 }

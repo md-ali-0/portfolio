@@ -1,7 +1,7 @@
 "use client";
 
 import SectionHeader from "@/components/section-header";
-import { BookOpenCheck, Clock, UserCheck } from "lucide-react";
+import { Clock, UserCheck } from "lucide-react";
 
 type Course = {
   title: string;
@@ -60,14 +60,13 @@ export default function CoursesSection() {
           title="Online"
           highlight="Courses"
           description="Professional development through online learning platforms to stay current with industry trends."
-          icon={<BookOpenCheck className="h-6 w-6 text-emerald-400" />}
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
           {coursesData.map((course, index) => (
             <div
               key={index}
-              className="group relative h-full bg-zinc-900/60 backdrop-blur-xl rounded-2xl border border-zinc-800 p-6 transition-all duration-300 hover:border-emerald-500/30 hover:shadow-2xl hover:shadow-emerald-500/10"
+              className="group relative h-full bg-zinc-900/60 backdrop-blur-xl rounded-2xl border border-zinc-800 p-6 transition-all duration-300 hover:border-emerald-500/30 hover:shadow-2xl hover:shadow-emerald-500/10 overflow-hidden"
             >
               {/* Static shine effect */}
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 pointer-events-none" />

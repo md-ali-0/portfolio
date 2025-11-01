@@ -117,19 +117,7 @@ export default function Breadcrumb({ title, description }: BreadcrumbProps) {
 
     return (
         <section className="flex items-center overflow-hidden bg-gradient-to-l from-gray-800/10 via-emerald-500/10 to-gray-900/10">
-            {/* Background Grid Pattern */}
-            <div className="absolute inset-0 opacity-5">
-                <div
-                    className="absolute inset-0"
-                    style={{
-                        backgroundImage: `
-              linear-gradient(rgba(16, 185, 129, 0.1) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(16, 185, 129, 0.1) 1px, transparent 1px)
-            `,
-                        backgroundSize: "40px 40px",
-                    }}
-                />
-            </div>
+
 
             {/* Main Content */}
             <div className="flex items-center container mx-auto px-4 sm:px-6 relative z-10 min-h-[285px]">

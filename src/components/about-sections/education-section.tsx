@@ -1,7 +1,7 @@
 "use client";
 
 import SectionHeader from "@/components/section-header";
-import { BookOpen, GraduationCap } from "lucide-react";
+import { BookOpen } from "lucide-react";
 
 type EducationItem = {
   institution: string;
@@ -47,14 +47,13 @@ export default function EducationSection() {
           title="My"
           highlight="Education"
           description="Academic journey and qualifications that shaped my foundation in technology."
-          icon={<GraduationCap className="h-6 w-6 text-emerald-400" />}
         />
 
         <div className="grid grid-cols-1 gap-8 mt-12">
           {educationData.map((edu, index) => (
             <div
               key={index}
-              className="group relative bg-zinc-900/60 backdrop-blur-xl rounded-2xl border border-zinc-800 p-6 sm:p-8 transition-all duration-300 hover:border-emerald-500/30 hover:shadow-2xl hover:shadow-emerald-500/10"
+              className="group relative bg-zinc-900/60 backdrop-blur-xl rounded-2xl border border-zinc-800 p-6 sm:p-8 transition-all duration-300 hover:border-emerald-500/30 hover:shadow-2xl hover:shadow-emerald-500/10 overflow-hidden"
             >
               {/* Static shine effect */}
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 pointer-events-none" />
