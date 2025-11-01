@@ -1,7 +1,14 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Database, Layers, Server, Wrench, Zap } from "lucide-react";
+import {
+    ArrowRight,
+    Database,
+    Layers,
+    Server,
+    Wrench,
+    Zap,
+} from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import {
@@ -101,8 +108,7 @@ export default function SkillsSectionV4() {
             name: "Next.js",
             category: "frontend",
             color: "from-gray-900 to-black",
-            description:
-                "Server-side rendering and full-stack applications",
+            description: "Server-side rendering and full-stack applications",
         },
         {
             name: "TypeScript",
@@ -144,10 +150,10 @@ export default function SkillsSectionV4() {
 
     const skillsData: SkillsData = {
         all: allSkills,
-        frontend: allSkills.filter(skill => skill.category === "frontend"),
-        backend: allSkills.filter(skill => skill.category === "backend"),
-        database: allSkills.filter(skill => skill.category === "database"),
-        others: allSkills.filter(skill => skill.category === "others"),
+        frontend: allSkills.filter((skill) => skill.category === "frontend"),
+        backend: allSkills.filter((skill) => skill.category === "backend"),
+        database: allSkills.filter((skill) => skill.category === "database"),
+        others: allSkills.filter((skill) => skill.category === "others"),
     };
 
     const categories = [
@@ -157,7 +163,7 @@ export default function SkillsSectionV4() {
         { id: "database", label: "Database" },
         { id: "others", label: "Others" },
     ];
-    
+
     const skills = skillsData[selectedCategory as keyof SkillsData];
 
     if (!mounted) return null;
@@ -167,7 +173,20 @@ export default function SkillsSectionV4() {
             id="skills"
             className="min-h-screen relative overflow-hidden py-16 sm:py-20 md:py-24 lg:py-28"
         >
-            {/* Background with floating icons */}
+            {/* Background */}
+            <div className="absolute inset-0">
+                <div className="absolute inset-0 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950" />
+                <div
+                    className="absolute inset-0 opacity-5"
+                    style={{
+                        backgroundImage: `
+              linear-gradient(rgba(16, 185, 129, 0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(16, 185, 129, 0.1) 1px, transparent 1px)
+            `,
+                        backgroundSize: "30px 30px",
+                    }}
+                />
+            </div>
 
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <SectionHeader
@@ -177,33 +196,47 @@ export default function SkillsSectionV4() {
                 />
 
                 {/* Category Tabs - Reduced animations */}
-                <div className="flex flex-wrap justify-center gap-3 mb-12 sm:mb-16">
-                    {categories.map((cat) => (
-                        <button
-                            key={cat.id}
-                            onClick={() => setSelectedCategory(cat.id)}
-                            className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 flex items-center gap-2 ${
-                                selectedCategory === cat.id
-                                    ? "bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-emerald-400 border border-emerald-500/40 shadow-lg shadow-emerald-500/20"
-                                    : "bg-zinc-800/50 text-zinc-400 hover:bg-zinc-700/50 hover:text-zinc-200 border border-zinc-700/50 hover:border-zinc-600"
-                            }`}
+
+                <div className="flex justify-between mt-12 sm:mt-16">
+                    <div className="flex flex-wrap justify-center gap-3 mb-12 sm:mb-16">
+                        {categories.map((cat) => (
+                            <button
+                                key={cat.id}
+                                onClick={() => setSelectedCategory(cat.id)}
+                                className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 flex items-center gap-2 ${
+                                    selectedCategory === cat.id
+                                        ? "bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-emerald-400 border border-emerald-500/40 shadow-lg shadow-emerald-500/20"
+                                        : "bg-zinc-800/50 text-zinc-400 hover:bg-zinc-700/50 hover:text-zinc-200 border border-zinc-700/50 hover:border-zinc-600"
+                                }`}
+                            >
+                                {cat.id === "all" && (
+                                    <Zap className="w-4 h-4" />
+                                )}
+                                {cat.id === "frontend" && (
+                                    <Layers className="w-4 h-4" />
+                                )}
+                                {cat.id === "backend" && (
+                                    <Server className="w-4 h-4" />
+                                )}
+                                {cat.id === "database" && (
+                                    <Database className="w-4 h-4" />
+                                )}
+                                {cat.id === "others" && (
+                                    <Wrench className="w-4 h-4" />
+                                )}
+                                {cat.label}
+                            </button>
+                        ))}
+                    </div>
+                    <Link href="/skills">
+                        <Button
+                            variant="outline"
+                            className="border-2 border-emerald-400/50 text-emerald-400 hover:bg-emerald-400/10 backdrop-blur-sm px-6 py-3 rounded-lg font-medium group"
                         >
-                            {cat.id === "all" && <Zap className="w-4 h-4" />}
-                            {cat.id === "frontend" && (
-                                <Layers className="w-4 h-4" />
-                            )}
-                            {cat.id === "backend" && (
-                                <Server className="w-4 h-4" />
-                            )}
-                            {cat.id === "database" && (
-                                <Database className="w-4 h-4" />
-                            )}
-                            {cat.id === "others" && (
-                                <Wrench className="w-4 h-4" />
-                            )}
-                            {cat.label}
-                        </button>
-                    ))}
+                            View All Skills
+                            <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                        </Button>
+                    </Link>
                 </div>
 
                 {/* Skills Grid - Reduced animations */}
@@ -211,11 +244,11 @@ export default function SkillsSectionV4() {
                     {skills.map((skill, index) => (
                         <div
                             key={skill.name}
-                            className="group relative h-full rounded-2xl border border-zinc-800 bg-gradient-to-br from-zinc-900/60 to-zinc-900/30 backdrop-blur-xl p-5 sm:p-6 transition-all duration-300 hover:border-emerald-500/30 hover:shadow-2xl hover:shadow-emerald-500/10 overflow-hidden"
+                            className="group relative h-full rounded-2xl border border-zinc-800 bg-gradient-to-br from-zinc-900/60 to-zinc-900/30 backdrop-blur-xl p-5 sm:p-6 transition-all duration-300 hover:border-emerald-500/30 overflow-hidden"
                         >
                             {/* Static shine effect */}
                             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 pointer-events-none" />
-                            
+
                             <div className="relative z-10">
                                 <div className="flex items-start gap-4 mb-4">
                                     <div className="p-3 rounded-xl bg-zinc-800/50 border border-zinc-700/50">
@@ -230,25 +263,13 @@ export default function SkillsSectionV4() {
                                         </p>
                                     </div>
                                 </div>
-                                
+
                                 <p className="text-zinc-400 text-sm leading-relaxed">
                                     {skill.description}
                                 </p>
                             </div>
                         </div>
                     ))}
-                </div>
-
-                <div className="flex justify-center mt-12 sm:mt-16">
-                    <Link href="/skills">
-                        <Button
-                            variant="outline"
-                            className="border-2 border-emerald-400/50 text-emerald-400 hover:bg-emerald-400/10 backdrop-blur-sm px-6 py-3 rounded-lg font-medium group"
-                        >
-                            View All Skills
-                            <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                        </Button>
-                    </Link>
                 </div>
             </div>
         </section>
