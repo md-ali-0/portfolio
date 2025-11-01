@@ -2,7 +2,15 @@
 
 import Breadcrumb from "@/components/breadcrumb";
 import { motion } from "framer-motion";
-import { Columns, Database, Grid, Layers, Server, Wrench, Zap } from "lucide-react";
+import {
+    Columns,
+    Database,
+    Grid,
+    Layers,
+    Server,
+    Wrench,
+    Zap,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 import {
     SiAntdesign,
@@ -199,7 +207,8 @@ export default function SkillsPage() {
             name: "GitHub",
             category: "others",
             color: "from-gray-900 to-black",
-            description: "Code hosting platform for version control and collaboration",
+            description:
+                "Code hosting platform for version control and collaboration",
         },
         {
             name: "Docker",
@@ -211,7 +220,8 @@ export default function SkillsPage() {
             name: "Linux",
             category: "others",
             color: "from-gray-700 to-gray-600",
-            description: "Server administration and shell scripting environment",
+            description:
+                "Server administration and shell scripting environment",
         },
         {
             name: "Nginx",
@@ -223,7 +233,8 @@ export default function SkillsPage() {
             name: "Vercel",
             category: "others",
             color: "from-black to-gray-800",
-            description: "Cloud platform for static sites and Serverless Functions",
+            description:
+                "Cloud platform for static sites and Serverless Functions",
         },
         {
             name: "Cloudflare",
@@ -318,7 +329,9 @@ export default function SkillsPage() {
                                     whileHover={{ y: -2 }}
                                     whileTap={{ scale: 0.98 }}
                                 >
-                                    {cat.id === "all" && <Zap className="w-4 h-4" />}
+                                    {cat.id === "all" && (
+                                        <Zap className="w-4 h-4" />
+                                    )}
                                     {cat.id === "frontend" && (
                                         <Layers className="w-4 h-4" />
                                     )}
@@ -335,7 +348,7 @@ export default function SkillsPage() {
                                 </motion.button>
                             ))}
                         </motion.div>
-                        
+
                         {/* Layout Controls */}
                         <div className="flex gap-2 bg-zinc-800/50 p-1 rounded-xl border border-zinc-700/50">
                             <button
@@ -389,54 +402,34 @@ export default function SkillsPage() {
                             >
                                 {layout === "grid" ? (
                                     // Grid Card Layout
-                                    <div className="h-full p-6 rounded-2xl bg-gradient-to-br from-zinc-900/60 to-zinc-900/30 backdrop-blur-xl border border-zinc-800 hover:border-emerald-500/30 transition-all duration-500 flex flex-col group-hover:shadow-2xl group-hover:shadow-emerald-500/10 relative overflow-hidden">
+                                    <div
+                                        key={skill.name}
+                                        className="group relative h-full rounded-2xl border border-zinc-800 bg-gradient-to-br from-zinc-900/60 to-zinc-900/30 backdrop-blur-xl p-5 sm:p-6 transition-all duration-300 hover:border-emerald-500/30 overflow-hidden"
+                                    >
                                         {/* Animated background on hover */}
                                         <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-teal-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-
-                                        {/* Shine effect on hover */}
+                                        {/* Static shine effect */}
                                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 pointer-events-none" />
 
-                                        {/* Header with icon and title */}
-                                        <div className="flex items-start gap-4 mb-4 relative z-10">
-                                            <motion.div
-                                                className={`flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br ${skill.color} p-2 flex-shrink-0`}
-                                                whileHover={{ scale: 1.1 }}
-                                                transition={{
-                                                    type: "spring",
-                                                    stiffness: 300,
-                                                }}
-                                            >
-                                                <div className="text-white">
-                                                    {skillIcons[skill.name] || (
-                                                        <Wrench className="w-6 h-6" />
-                                                    )}
+                                        <div className="relative z-10">
+                                            <div className="flex items-start gap-4 mb-4">
+                                                <div className="p-3 rounded-xl bg-zinc-800/50 border border-zinc-700/50">
+                                                    {skillIcons[skill.name]}
                                                 </div>
-                                            </motion.div>
-                                            <div>
-                                                <motion.h3
-                                                    className="text-xl font-bold text-white mb-1 group-hover:text-emerald-400 transition-colors duration-300"
-                                                    whileHover={{ x: 5 }}
-                                                >
-                                                    {skill.name}
-                                                </motion.h3>
-                                                <motion.span
-                                                    className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-                                                    whileHover={{ scale: 1.05 }}
-                                                >
-                                                    {skill.category}
-                                                </motion.span>
+                                                <div>
+                                                    <h3 className="text-lg font-bold text-white mb-1">
+                                                        {skill.name}
+                                                    </h3>
+                                                    <p className="text-xs text-emerald-400 font-medium px-2 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 inline-block">
+                                                        {skill.category}
+                                                    </p>
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        {/* Description */}
-                                        <motion.p
-                                            className="text-zinc-400 text-sm mb-5 flex-grow relative z-10"
-                                            initial={{ opacity: 0 }}
-                                            animate={{ opacity: 1 }}
-                                            transition={{ delay: 0.2 }}
-                                        >
-                                            {skill.description}
-                                        </motion.p>
+                                            <p className="text-zinc-400 text-sm leading-relaxed">
+                                                {skill.description}
+                                            </p>
+                                        </div>
                                     </div>
                                 ) : (
                                     // Compact Card Layout
@@ -447,21 +440,10 @@ export default function SkillsPage() {
                                         {/* Shine effect on hover */}
                                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 pointer-events-none" />
 
-                                        <motion.div
-                                            className={`flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br ${skill.color} p-1.5 flex-shrink-0`}
-                                            whileHover={{ scale: 1.1 }}
-                                            transition={{
-                                                type: "spring",
-                                                stiffness: 300,
-                                            }}
-                                        >
-                                            <div className="text-white">
-                                                {skillIcons[skill.name] || (
-                                                    <Wrench className="w-5 h-5" />
-                                                )}
-                                            </div>
-                                        </motion.div>
-                                        
+                                        <div className="p-3 rounded-xl bg-zinc-800/50 border border-zinc-700/50">
+                                            {skillIcons[skill.name]}
+                                        </div>
+
                                         <div className="flex-grow relative z-10">
                                             <div className="flex flex-wrap items-center justify-between gap-2">
                                                 <motion.h3
@@ -477,7 +459,7 @@ export default function SkillsPage() {
                                                     {skill.category}
                                                 </motion.span>
                                             </div>
-                                            
+
                                             <motion.p
                                                 className="text-zinc-400 text-xs mt-1 line-clamp-2"
                                                 initial={{ opacity: 0 }}
@@ -488,7 +470,7 @@ export default function SkillsPage() {
                                             </motion.p>
                                         </div>
                                     </div>
-                                ) }
+                                )}
                             </motion.div>
                         ))}
                     </motion.div>

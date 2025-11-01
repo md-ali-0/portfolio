@@ -14,12 +14,20 @@ type Project = {
     link?: string;
     github?: string;
     featured?: boolean;
-    category: "Frontend" | "Backend" | "Full Stack" | "E-commerce" | "Dashboard" | "API";
+    category:
+        | "Frontend"
+        | "Backend"
+        | "Full Stack"
+        | "E-commerce"
+        | "Dashboard"
+        | "API";
     year: string;
 };
 
 export default function ProjectsSection() {
-    const [visibleCards] = useState<number[]>(Array.from({length: 4}, (_, i) => i));
+    const [visibleCards] = useState<number[]>(
+        Array.from({ length: 4 }, (_, i) => i)
+    );
 
     const projects: Project[] = [
         {
@@ -38,7 +46,7 @@ export default function ProjectsSection() {
             github: "https://github.com",
             featured: true,
             category: "E-commerce",
-            year: "2024"
+            year: "2024",
         },
         {
             title: "Analytics Dashboard",
@@ -49,7 +57,7 @@ export default function ProjectsSection() {
             link: "https://example.com",
             github: "https://github.com",
             category: "Dashboard",
-            year: "2024"
+            year: "2024",
         },
         {
             title: "Task Management API",
@@ -60,7 +68,7 @@ export default function ProjectsSection() {
             link: "https://example.com",
             github: "https://github.com",
             category: "API",
-            year: "2023"
+            year: "2023",
         },
         {
             title: "Social Media Dashboard",
@@ -71,7 +79,7 @@ export default function ProjectsSection() {
             link: "https://example.com",
             github: "https://github.com",
             category: "Full Stack",
-            year: "2023"
+            year: "2023",
         },
     ];
 
@@ -105,9 +113,11 @@ export default function ProjectsSection() {
                 {/* Projects List with Reduced Animations */}
                 <div className="space-y-8 mt-12">
                     {projects.map((project, index) => (
-                        <Link 
+                        <Link
                             key={project.title}
-                            href={`/projects/${project.title.toLowerCase().replace(/\s+/g, '-')}`}
+                            href={`/projects/${project.title
+                                .toLowerCase()
+                                .replace(/\s+/g, "-")}`}
                             className="block"
                         >
                             <div
@@ -117,15 +127,20 @@ export default function ProjectsSection() {
                                     bg-zinc-900/60 backdrop-blur-xl rounded-2xl border border-zinc-800 overflow-hidden transition-all duration-300 hover:border-emerald-500/30
                                 "
                             >
+                                {/* Animated background on hover */}
+                                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-teal-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                                 {/* Static shine effect */}
                                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 pointer-events-none" />
-                                
+
                                 <div className="p-6 relative z-10">
                                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                                         {/* Image with subtle hover effect */}
                                         <div className="relative h-48 lg:h-full rounded-lg overflow-hidden">
                                             <Image
-                                                src={project.image || "/placeholder.svg"}
+                                                src={
+                                                    project.image ||
+                                                    "/placeholder.svg"
+                                                }
                                                 alt={project.title}
                                                 fill
                                                 className="object-cover"
@@ -135,8 +150,18 @@ export default function ProjectsSection() {
                                             {project.featured && (
                                                 <div className="absolute top-3 left-3">
                                                     <span className="px-2 py-1 bg-gradient-to-r from-emerald-500 to-teal-500 text-white text-xs font-semibold rounded-full flex items-center gap-1">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                                                        <svg
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            width="10"
+                                                            height="10"
+                                                            viewBox="0 0 24 24"
+                                                            fill="none"
+                                                            stroke="currentColor"
+                                                            strokeWidth="2"
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                        >
+                                                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
                                                         </svg>
                                                         FEATURED
                                                     </span>
@@ -167,26 +192,42 @@ export default function ProjectsSection() {
 
                                             {/* Tech Stack */}
                                             <div className="flex flex-wrap gap-2 mb-6">
-                                                {project.technologies.map((tech) => (
-                                                    <span
-                                                        key={tech}
-                                                        className="px-2 py-1 bg-zinc-800/50 text-zinc-200 text-xs rounded-lg border border-zinc-700/50"
-                                                    >
-                                                        {tech}
-                                                    </span>
-                                                ))}
+                                                {project.technologies.map(
+                                                    (tech) => (
+                                                        <span
+                                                            key={tech}
+                                                            className="px-2 py-1 bg-zinc-800/50 text-zinc-200 text-xs rounded-lg border border-zinc-700/50"
+                                                        >
+                                                            {tech}
+                                                        </span>
+                                                    )
+                                                )}
                                             </div>
 
                                             {/* Links */}
                                             <div className="flex flex-wrap gap-3">
                                                 <span className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-emerald-400 rounded-lg border border-emerald-500/30 text-sm">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                                        <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
-                                                        <circle cx="12" cy="12" r="3"/>
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        width="14"
+                                                        height="14"
+                                                        viewBox="0 0 24 24"
+                                                        fill="none"
+                                                        stroke="currentColor"
+                                                        strokeWidth="2"
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                    >
+                                                        <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                                                        <circle
+                                                            cx="12"
+                                                            cy="12"
+                                                            r="3"
+                                                        />
                                                     </svg>
                                                     <span>View Details</span>
                                                 </span>
-                                                
+
                                                 {project.link && (
                                                     <a
                                                         href={project.link}

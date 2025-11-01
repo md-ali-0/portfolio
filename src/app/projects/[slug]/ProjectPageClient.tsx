@@ -76,13 +76,29 @@ export default function ProjectPageClient({ params }: { params: { slug: string }
                   </Button>
                 </Link>
               </MagneticElement>
-              <MagneticElement strength={50}>
-                <Link href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                  <Button variant="outline" className="border-emerald-400 text-emerald-400" data-cursor="button">
-                    View Code <Github className="ml-2 h-4 w-4" />
-                  </Button>
-                </Link>
-              </MagneticElement>
+              
+              {/* GitHub links - handle both single URL and array of URLs */}
+              {project.githubUrls ? (
+                Array.isArray(project.githubUrls) ? (
+                  project.githubUrls.map((repo: { name: string; url: string }, idx: number) => (
+                    <MagneticElement key={idx} strength={50}>
+                      <Link href={repo.url} target="_blank" rel="noopener noreferrer">
+                        <Button variant="outline" className="border-emerald-400 text-emerald-400 mb-2 last:mb-0" data-cursor="button">
+                          View {repo.name} Code <Github className="ml-2 h-4 w-4" />
+                        </Button>
+                      </Link>
+                    </MagneticElement>
+                  ))
+                ) : (
+                  <MagneticElement strength={50}>
+                    <Link href={project.githubUrls} target="_blank" rel="noopener noreferrer">
+                      <Button variant="outline" className="border-emerald-400 text-emerald-400" data-cursor="button">
+                        View Code <Github className="ml-2 h-4 w-4" />
+                      </Button>
+                    </Link>
+                  </MagneticElement>
+                )
+              ) : null}
             </div>
           </motion.div>
         </div>
@@ -214,17 +230,37 @@ export default function ProjectPageClient({ params }: { params: { slug: string }
                       </Button>
                     </Link>
                   </MagneticElement>
-                  <MagneticElement strength={40}>
-                    <Link href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="block">
-                      <Button
-                        variant="outline"
-                        className="w-full border-emerald-400 text-emerald-400"
-                        data-cursor="button"
-                      >
-                        View Code <Github className="ml-2 h-4 w-4" />
-                      </Button>
-                    </Link>
-                  </MagneticElement>
+                  
+                  {/* GitHub links - handle both single URL and array of URLs */}
+                  {project.githubUrls ? (
+                    Array.isArray(project.githubUrls) ? (
+                      project.githubUrls.map((repo: { name: string; url: string }, idx: number) => (
+                        <MagneticElement key={idx} strength={40}>
+                          <Link href={repo.url} target="_blank" rel="noopener noreferrer" className="block">
+                            <Button
+                              variant="outline"
+                              className="w-full border-emerald-400 text-emerald-400 mb-2 last:mb-0"
+                              data-cursor="button"
+                            >
+                              View {repo.name} Code <Github className="ml-2 h-4 w-4" />
+                            </Button>
+                          </Link>
+                        </MagneticElement>
+                      ))
+                    ) : (
+                      <MagneticElement strength={40}>
+                        <Link href={project.githubUrls} target="_blank" rel="noopener noreferrer" className="block">
+                          <Button
+                            variant="outline"
+                            className="w-full border-emerald-400 text-emerald-400"
+                            data-cursor="button"
+                          >
+                            View Code <Github className="ml-2 h-4 w-4" />
+                          </Button>
+                        </Link>
+                      </MagneticElement>
+                    )
+                  ) : null}
                 </div>
               </div>
 

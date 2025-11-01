@@ -13,7 +13,10 @@ export const projects = [
     client: "RetailNext",
     role: "Full-Stack Developer",
     liveUrl: "https://example.com/ecommerce",
-    githubUrl: "https://github.com/username/ecommerce",
+    githubUrls: [
+      { name: "Frontend", url: "https://github.com/username/ecommerce-frontend" },
+      { name: "Backend", url: "https://github.com/username/ecommerce-backend" }
+    ],
     content: `
       <h2>Project Overview</h2>
       <p>This modern e-commerce platform provides businesses with a complete solution for selling products online. The platform includes product management, user authentication, shopping cart functionality, payment processing, and order management.</p>
@@ -51,7 +54,10 @@ export const projects = [
     client: "ProductivityPro",
     role: "Frontend Developer",
     liveUrl: "https://example.com/taskapp",
-    githubUrl: "https://github.com/username/taskapp",
+    githubUrls: [
+      { name: "Frontend", url: "https://github.com/username/taskapp-frontend" },
+      { name: "Backend", url: "https://github.com/username/taskapp-backend" }
+    ],
     content: `
       <h2>Project Overview</h2>
       <p>This task management application helps teams organize their work, track progress, and collaborate effectively. It provides a visual interface for managing tasks across different stages of completion.</p>
@@ -93,7 +99,10 @@ export const projects = [
     client: "FitLife",
     role: "Mobile Developer",
     liveUrl: "https://example.com/fitnessapp",
-    githubUrl: "https://github.com/username/fitnessapp",
+    githubUrls: [
+      { name: "Mobile App", url: "https://github.com/username/fitnessapp-mobile" },
+      { name: "Backend", url: "https://github.com/username/fitnessapp-backend" }
+    ],
     content: `
       <h2>Project Overview</h2>
       <p>This fitness tracking mobile application helps users maintain a healthy lifestyle by tracking workouts, nutrition, and progress. It provides personalized recommendations and insights based on user data.</p>
@@ -134,7 +143,9 @@ export const projects = [
     client: "Personal Project",
     role: "Frontend Developer",
     liveUrl: "https://example.com/portfolio",
-    githubUrl: "https://github.com/username/portfolio",
+    githubUrls: [
+      { name: "Website", url: "https://github.com/username/portfolio" }
+    ],
     content: `
       <h2>Project Overview</h2>
       <p>This portfolio website showcases professional work, skills, and experience in a modern, responsive design. It features smooth animations, interactive elements, and a clean, minimalist aesthetic.</p>
@@ -176,7 +187,11 @@ export const projects = [
     client: "WeatherNow",
     role: "Frontend Developer",
     liveUrl: "https://example.com/weather",
-    githubUrl: "https://github.com/username/weather",
+    githubUrls: [
+      { name: "Frontend", url: "https://github.com/username/weather-frontend" },
+      { name: "Backend", url: "https://github.com/username/weather-backend" },
+      { name: "API", url: "https://github.com/username/weather-api" }
+    ],
     content: `
       <h2>Project Overview</h2>
       <p>This weather dashboard provides users with real-time weather data, forecasts, and historical information for locations worldwide. It features an intuitive interface with interactive charts and visualizations.</p>
@@ -217,7 +232,10 @@ export const projects = [
     client: "CookShare",
     role: "Full-Stack Developer",
     liveUrl: "https://example.com/recipes",
-    githubUrl: "https://github.com/username/recipes",
+    githubUrls: [
+      { name: "Frontend", url: "https://github.com/username/recipes-frontend" },
+      { name: "Backend", url: "https://github.com/username/recipes-backend" }
+    ],
     content: `
       <h2>Project Overview</h2>
       <p>This recipe sharing platform allows users to discover, share, and save recipes from around the world. It features a social component with user profiles, comments, ratings, and the ability to follow other users.</p>
@@ -239,5 +257,5 @@ export const projects = [
       <h3>Challenges and Solutions</h3>
       <p>Managing user-generated content and ensuring quality was a challenge. This was addressed by implementing a moderation system, content guidelines, and user reputation scores to promote high-quality contributions.</p>
     `,
-  },
+  }
 ]
