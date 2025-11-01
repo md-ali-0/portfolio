@@ -1,3 +1,4 @@
+import { CertificationsSection, CoursesSection, EducationSection, PersonalImageSection } from "@/components/about-sections";
 import Breadcrumb from "@/components/breadcrumb";
 import AboutSection from "@/components/main-page/about-section";
 import { baseMetadata } from "@/lib/metadata";
@@ -17,7 +18,11 @@ export default function AboutPage() {
                 title="About Me" 
                 description="Learn more about my background, experience, and the journey that shaped me as a developer" 
             />
+            <PersonalImageSection />
             <AboutSection />
+            <EducationSection />
+            <CoursesSection />
+            <CertificationsSection />
         </div>
     );
 }
