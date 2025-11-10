@@ -5,16 +5,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { blogPosts } from "@/data/blog-data";
 import {
-  ArrowRight,
-  Calendar,
-  ChevronLeft,
-  ChevronRight,
-  Clock,
-  ClockIcon,
-  Search,
-  Tag,
-  TrendingUp,
-  User
+    ArrowRight,
+    Calendar,
+    ChevronLeft,
+    ChevronRight,
+    Clock,
+    ClockIcon,
+    Search,
+    Tag,
+    TrendingUp,
+    User
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -96,17 +96,17 @@ export default function BlogPage() {
             {featuredPost && (
                 <section className="relative py-16 overflow-hidden">
                     <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                        <div className="bg-gradient-to-br from-zinc-900/80 to-zinc-800/40 backdrop-blur-md rounded-3xl overflow-hidden border border-zinc-800/50 shadow-2xl shadow-emerald-500/10">
+                        <div className="bg-gradient-to-br from-zinc-900/80 to-zinc-800/40 backdrop-blur-md rounded-3xl overflow-hidden border border-zinc-800/50 shadow-2xl shadow-emerald-500/10 transition-all duration-300 hover:shadow-emerald-500/20 hover:border-emerald-500/40">
                             <div className="flex flex-col lg:flex-row">
                                 <div className="lg:w-1/2 h-80 lg:h-auto overflow-hidden relative">
-                                    <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/80 via-zinc-900/20 to-transparent z-10" />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/90 via-zinc-900/40 to-transparent z-10" />
                                     <img
                                         src={
                                             featuredPost.coverImage ||
                                             "/placeholder.svg?height=400&width=600&query=featured blog post"
                                         }
                                         alt={featuredPost.title}
-                                        className="w-full h-full object-cover"
+                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                                     />
                                 </div>
 
@@ -115,7 +115,7 @@ export default function BlogPage() {
                                         <Link
                                             href={`/blog/category/${featuredPost.category.toLowerCase()}`}
                                         >
-                                            <Badge className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-semibold text-sm px-3 py-1 hover:bg-emerald-500/30 transition-colors">
+                                            <Badge className="bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-emerald-400 border border-emerald-500/30 font-semibold text-sm px-3 py-1 hover:from-emerald-500/30 hover:to-teal-500/30 transition-all duration-300">
                                                 {featuredPost.category}
                                             </Badge>
                                         </Link>
@@ -126,7 +126,7 @@ export default function BlogPage() {
                                         </span>
                                     </div>
 
-                                    <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 leading-tight">
+                                    <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 leading-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-300">
                                         {featuredPost.title}
                                     </h2>
 
@@ -171,9 +171,9 @@ export default function BlogPage() {
                                             <Link
                                                 href={`/blog/${featuredPost.slug}`}
                                             >
-                                                <Button className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white px-6 py-2.5 rounded-lg">
+                                                <Button className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white px-6 py-2.5 rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/20 transform hover:-translate-y-0.5">
                                                     Read Article
-                                                    <ArrowRight className="h-4 w-4 ml-2" />
+                                                    <ArrowRight className="h-4 w-4 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
                                                 </Button>
                                             </Link>
                                         </div>
@@ -205,7 +205,7 @@ export default function BlogPage() {
                             </div>
 
                             {currentPosts.length === 0 ? (
-                                <div className="text-center py-16 sm:py-20 bg-zinc-900/30 backdrop-blur-sm rounded-2xl border border-zinc-800/50">
+                                <div className="text-center py-16 sm:py-20 bg-zinc-900/30 backdrop-blur-sm rounded-2xl border border-zinc-800/50 transition-all duration-300 hover:border-emerald-500/30">
                                     <div className="text-4xl sm:text-5xl mb-4">
                                         🔍
                                     </div>
@@ -218,7 +218,7 @@ export default function BlogPage() {
                                     <Button
                                         variant="outline"
                                         onClick={() => setSearchTerm("")}
-                                        className="border-emerald-400 text-emerald-400 bg-transparent hover:bg-emerald-400/10 px-6 py-2.5"
+                                        className="border-emerald-400 text-emerald-400 bg-transparent hover:bg-emerald-400/10 px-6 py-2.5 transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/10"
                                     >
                                         Clear Search
                                     </Button>
@@ -232,7 +232,7 @@ export default function BlogPage() {
                                                 href={`/blog/${post.slug}`}
                                                 className="block group"
                                             >
-                                                <div className="relative bg-gradient-to-br from-zinc-900/80 via-zinc-800/40 to-zinc-900/20 backdrop-blur-md rounded-2xl overflow-hidden border border-zinc-800/50 hover:border-emerald-500/30 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-emerald-500/10">
+                                                <div className="relative bg-gradient-to-br from-zinc-900/80 via-zinc-800/40 to-zinc-900/20 backdrop-blur-md rounded-2xl overflow-hidden border border-zinc-800/50 transition-all duration-300 group-hover:border-emerald-500/30 group-hover:shadow-lg group-hover:shadow-emerald-500/10 transform group-hover:-translate-y-1">
                                                     <div className="flex flex-col md:flex-row">
                                                         <div className="md:w-64 h-48 md:h-auto overflow-hidden relative flex-shrink-0">
                                                             <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-zinc-900/80 via-zinc-900/20 to-transparent z-10" />
@@ -285,11 +285,11 @@ export default function BlogPage() {
                                                                 </span>
                                                             </div>
 
-                                                            <h3 className="text-xl font-bold mb-3 leading-tight group-hover:text-emerald-400 transition-colors">
+                                                            <h3 className="text-xl font-bold mb-3 leading-tight group-hover:text-emerald-400 transition-colors duration-300">
                                                                 {post.title}
                                                             </h3>
 
-                                                            <p className="text-zinc-300 mb-5 text-base leading-relaxed">
+                                                            <p className="text-zinc-300 mb-5 text-base leading-relaxed line-clamp-2">
                                                                 {post.excerpt}
                                                             </p>
 
@@ -324,13 +324,13 @@ export default function BlogPage() {
 
                                                                 <Button
                                                                     variant="ghost"
-                                                                    className="text-emerald-400 hover:text-emerald-300 hover:bg-emerald-500/10 px-4 py-2"
+                                                                    className="text-emerald-400 hover:text-emerald-300 hover:bg-emerald-500/10 px-4 py-2 transition-all duration-300"
                                                                 >
                                                                     <span className="mr-2">
                                                                         Read
                                                                         Article
                                                                     </span>
-                                                                    <ArrowRight className="h-4 w-4" />
+                                                                    <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                                                                 </Button>
                                                             </div>
                                                         </div>
@@ -350,7 +350,7 @@ export default function BlogPage() {
                                                     )
                                                 }
                                                 disabled={currentPage === 1}
-                                                className="border-zinc-700 hover:border-emerald-400 hover:text-emerald-400 bg-transparent rounded-lg px-4 py-2"
+                                                className="border-zinc-700 hover:border-emerald-400 hover:text-emerald-400 bg-transparent rounded-lg px-4 py-2 transition-all duration-300"
                                             >
                                                 <ChevronLeft className="h-4 w-4 mr-2" />
                                                 Previous
@@ -398,8 +398,8 @@ export default function BlogPage() {
                                                             className={
                                                                 currentPage ===
                                                                 page
-                                                                    ? "bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white rounded-lg px-4 py-2"
-                                                                    : "border-zinc-700 hover:border-emerald-400 hover:text-emerald-400 bg-transparent rounded-lg px-4 py-2"
+                                                                    ? "bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white rounded-lg px-4 py-2 transition-all duration-300 shadow-lg shadow-emerald-500/20"
+                                                                    : "border-zinc-700 hover:border-emerald-400 hover:text-emerald-400 bg-transparent rounded-lg px-4 py-2 transition-all duration-300"
                                                             }
                                                         >
                                                             {page}
@@ -418,7 +418,7 @@ export default function BlogPage() {
                                                 disabled={
                                                     currentPage === totalPages
                                                 }
-                                                className="border-zinc-700 hover:border-emerald-400 hover:text-emerald-400 bg-transparent rounded-lg px-4 py-2"
+                                                className="border-zinc-700 hover:border-emerald-400 hover:text-emerald-400 bg-transparent rounded-lg px-4 py-2 transition-all duration-300"
                                             >
                                                 Next
                                                 <ChevronRight className="h-4 w-4 ml-2" />
@@ -431,7 +431,7 @@ export default function BlogPage() {
 
                         <div className="lg:col-span-4 space-y-6">
                             {/* Search */}
-                            <div className="bg-gradient-to-br from-zinc-900/60 to-zinc-800/40 backdrop-blur-sm rounded-2xl p-6 border border-zinc-800/50 shadow-lg">
+                            <div className="bg-gradient-to-br from-zinc-900/60 to-zinc-800/40 backdrop-blur-sm rounded-2xl p-6 border border-zinc-800/50 shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-emerald-500/10 hover:border-emerald-500/30">
                                 <h3 className="text-lg font-bold mb-4 flex items-center">
                                     <Search className="h-5 w-5 mr-2 text-emerald-400" />
                                     Search Articles
@@ -445,13 +445,13 @@ export default function BlogPage() {
                                         onChange={(e) =>
                                             setSearchTerm(e.target.value)
                                         }
-                                        className="pl-10 bg-zinc-800/70 border-zinc-700 focus:border-emerald-400 text-base py-5"
+                                        className="pl-10 bg-zinc-800/70 border-zinc-700 focus:border-emerald-400 text-base py-5 transition-all duration-300 focus:ring-2 focus:ring-emerald-500/30 focus:ring-offset-0 focus:ring-offset-zinc-900"
                                     />
                                 </div>
                             </div>
 
                             {/* Popular Posts */}
-                            <div className="bg-gradient-to-br from-zinc-900/60 to-zinc-800/40 backdrop-blur-sm rounded-2xl p-6 border border-zinc-800/50 shadow-lg">
+                            <div className="bg-gradient-to-br from-zinc-900/60 to-zinc-800/40 backdrop-blur-sm rounded-2xl p-6 border border-zinc-800/50 shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-emerald-500/10 hover:border-emerald-500/30">
                                 <h3 className="text-lg font-bold mb-4 flex items-center">
                                     <TrendingUp className="h-5 w-5 mr-2 text-emerald-400" />
                                     Popular Articles
@@ -463,7 +463,7 @@ export default function BlogPage() {
                                             href={`/blog/${post.slug}`}
                                             className="block group"
                                         >
-                                            <div className="flex gap-3 p-3 rounded-xl hover:bg-zinc-800/30 transition-colors">
+                                            <div className="flex gap-3 p-3 rounded-xl hover:bg-zinc-800/30 transition-all duration-300">
                                                 <div className="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 border border-zinc-700/50">
                                                     <img
                                                         src={
@@ -475,7 +475,7 @@ export default function BlogPage() {
                                                     />
                                                 </div>
                                                 <div className="flex-1 min-w-0">
-                                                    <h4 className="font-semibold text-sm line-clamp-2 group-hover:text-emerald-400 transition-colors">
+                                                    <h4 className="font-semibold text-sm line-clamp-2 group-hover:text-emerald-400 transition-colors duration-300">
                                                         {post.title}
                                                     </h4>
                                                     <div className="flex items-center gap-2 mt-2">
@@ -498,7 +498,7 @@ export default function BlogPage() {
                             </div>
 
                             {/* Recent Posts */}
-                            <div className="bg-gradient-to-br from-zinc-900/60 to-zinc-800/40 backdrop-blur-sm rounded-2xl p-6 border border-zinc-800/50 shadow-lg">
+                            <div className="bg-gradient-to-br from-zinc-900/60 to-zinc-800/40 backdrop-blur-sm rounded-2xl p-6 border border-zinc-800/50 shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-emerald-500/10 hover:border-emerald-500/30">
                                 <h3 className="text-lg font-bold mb-4 flex items-center">
                                     <ClockIcon className="h-5 w-5 mr-2 text-emerald-400" />
                                     Recent Articles
@@ -510,7 +510,7 @@ export default function BlogPage() {
                                             href={`/blog/${post.slug}`}
                                             className="block group"
                                         >
-                                            <div className="flex gap-3 p-3 rounded-xl hover:bg-zinc-800/30 transition-colors">
+                                            <div className="flex gap-3 p-3 rounded-xl hover:bg-zinc-800/30 transition-all duration-300">
                                                 <div className="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 border border-zinc-700/50">
                                                     <img
                                                         src={
@@ -522,7 +522,7 @@ export default function BlogPage() {
                                                     />
                                                 </div>
                                                 <div className="flex-1 min-w-0">
-                                                    <h4 className="font-semibold text-sm line-clamp-2 group-hover:text-emerald-400 transition-colors">
+                                                    <h4 className="font-semibold text-sm line-clamp-2 group-hover:text-emerald-400 transition-colors duration-300">
                                                         {post.title}
                                                     </h4>
                                                     <div className="flex items-center gap-2 mt-2">
@@ -538,7 +538,7 @@ export default function BlogPage() {
                             </div>
 
                             {/* Categories */}
-                            <div className="bg-gradient-to-br from-zinc-900/60 to-zinc-800/40 backdrop-blur-sm rounded-2xl p-6 border border-zinc-800/50 shadow-lg">
+                            <div className="bg-gradient-to-br from-zinc-900/60 to-zinc-800/40 backdrop-blur-sm rounded-2xl p-6 border border-zinc-800/50 shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-emerald-500/10 hover:border-emerald-500/30">
                                 <h3 className="text-lg font-bold mb-4 flex items-center">
                                     <Tag className="h-5 w-5 mr-2 text-emerald-400" />
                                     Categories
@@ -552,7 +552,7 @@ export default function BlogPage() {
                                             <Link
                                                 key={category}
                                                 href={`/blog?category=${category.toLowerCase()}`}
-                                                className="flex items-center justify-between py-3 px-4 rounded-xl hover:bg-zinc-800/50 transition-colors"
+                                                className="flex items-center justify-between py-3 px-4 rounded-xl hover:bg-zinc-800/50 transition-all duration-300"
                                             >
                                                 <span className="font-medium">
                                                     {category}
@@ -570,7 +570,7 @@ export default function BlogPage() {
                             </div>
 
                             {/* Tag Cloud */}
-                            <div className="bg-gradient-to-br from-zinc-900/60 to-zinc-800/40 backdrop-blur-sm rounded-2xl p-6 border border-zinc-800/50 shadow-lg">
+                            <div className="bg-gradient-to-br from-zinc-900/60 to-zinc-800/40 backdrop-blur-sm rounded-2xl p-6 border border-zinc-800/50 shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-emerald-500/10 hover:border-emerald-500/30">
                                 <h3 className="text-lg font-bold mb-4 flex items-center">
                                     <Tag className="h-5 w-5 mr-2 text-emerald-400" />
                                     Popular Tags
@@ -586,7 +586,7 @@ export default function BlogPage() {
                                             <Link
                                                 key={tag}
                                                 href={`/blog?tag=${tag.toLowerCase()}`}
-                                                className="px-3 py-1.5 text-sm rounded-full bg-zinc-800/50 hover:bg-emerald-500/20 border border-zinc-700/50 hover:border-emerald-500/30 transition-all"
+                                                className="px-3 py-1.5 text-sm rounded-full bg-zinc-800/50 hover:bg-emerald-500/20 border border-zinc-700/50 hover:border-emerald-500/30 transition-all duration-300"
                                             >
                                                 {tag}{" "}
                                                 <span className="text-zinc-500">
@@ -599,7 +599,7 @@ export default function BlogPage() {
                             </div>
 
                             {/* Subscribe */}
-                            <div className="bg-gradient-to-br from-emerald-900/30 to-teal-900/30 backdrop-blur-sm rounded-2xl p-6 border border-emerald-800/40 shadow-lg">
+                            <div className="bg-gradient-to-br from-emerald-900/30 to-teal-900/30 backdrop-blur-sm rounded-2xl p-6 border border-emerald-800/40 shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-emerald-500/20">
                                 <div className="flex items-center gap-3 mb-3">
                                     <div className="bg-emerald-500/20 p-2 rounded-lg">
                                         <User className="h-5 w-5 text-emerald-400" />
@@ -616,9 +616,9 @@ export default function BlogPage() {
                                     <Input
                                         type="email"
                                         placeholder="Your email address"
-                                        className="bg-zinc-800/70 border-zinc-700 focus:border-emerald-400 py-5"
+                                        className="bg-zinc-800/70 border-zinc-700 focus:border-emerald-400 py-5 transition-all duration-300 focus:ring-2 focus:ring-emerald-500/30 focus:ring-offset-0 focus:ring-offset-zinc-900"
                                     />
-                                    <Button className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white py-5">
+                                    <Button className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white py-5 transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/20 transform hover:-translate-y-0.5">
                                         Subscribe to Newsletter
                                     </Button>
                                 </div>
