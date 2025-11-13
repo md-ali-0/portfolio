@@ -189,8 +189,7 @@ export const projects = [
     liveUrl: "https://example.com/weather",
     githubUrls: [
       { name: "Frontend", url: "https://github.com/username/weather-frontend" },
-      { name: "Backend", url: "https://github.com/username/weather-backend" },
-      { name: "API", url: "https://github.com/username/weather-api" }
+      { name: "Backend", url: "https://github.com/username/weather-backend" }
     ],
     content: `
       <h2>Project Overview</h2>

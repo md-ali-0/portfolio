@@ -49,7 +49,7 @@ export const blogPosts = [
     `,
     likes: 68,
     comments: 25,
-    featured: false,
+    featured: true,
   },
   {
     slug: "best-practices-for-react-development",
@@ -74,7 +74,7 @@ export const blogPosts = [
     `,
     likes: 55,
     comments: 18,
-    featured: false,
+    featured: true,
   },
   {
     slug: "career-growth-for-developers",
@@ -99,6 +99,31 @@ export const blogPosts = [
     `,
     likes: 32,
     comments: 8,
-    featured: false,
+    featured: true,
+  },
+  {
+    slug: "building-responsive-websites",
+    title: "Building Responsive Websites: Modern Techniques and Best Practices",
+    excerpt: "Learn how to create websites that look great on all devices using modern responsive design techniques.",
+    category: "UI/UX Design",
+    date: "2024-04-05",
+    readTime: 9,
+    coverImage: "/placeholder.svg?key=responsive",
+    author: {
+      name: "Ali",
+      title: "Full-Stack Developer",
+      avatar: "/profile-image.png",
+      bio: "Passionate about building scalable and user-friendly web applications.",
+    },
+    tags: ["Responsive Design", "CSS", "Frontend"],
+    content: `
+      <h2>Introduction</h2>
+      <p>Responsive design is crucial for modern websites. This guide covers the latest techniques and best practices.</p>
+      <h3>Mobile-First Approach</h3>
+      <p>Start with mobile design and progressively enhance for larger screens.</p>
+    `,
+    likes: 45,
+    comments: 15,
+    featured: true,
   },
 ]

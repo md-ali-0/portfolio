@@ -2,6 +2,7 @@
 
 import type React from "react";
 
+import { useForm } from "@/hooks/use-form";
 import {
     Clock,
     Github,
@@ -11,26 +12,28 @@ import {
     MapPin,
     Phone,
     Send,
-    Twitter
+    Twitter,
 } from "lucide-react";
-import { useState } from "react";
 import SectionHeader from "../section-header";
 
+interface FormValues {
+    name: string;
+    email: string;
+    subject: string;
+    message: string;
+}
+
 export default function ContactSection() {
-    const [formData, setFormData] = useState({
+    const [values, handleChange] = useForm<FormValues>({
         name: "",
         email: "",
         subject: "",
         message: "",
     });
 
-    const handleInputChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-    ) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value,
-        });
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        alert(JSON.stringify(values, null, 2));
     };
 
     const contactInfo = [
@@ -94,7 +97,8 @@ export default function ContactSection() {
                 <div
                     className="absolute inset-0 opacity-30"
                     style={{
-                        background: "radial-gradient(circle at 20% 50%, rgba(16, 185, 129, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(20, 184, 166, 0.1) 0%, transparent 50%)"
+                        background:
+                            "radial-gradient(circle at 20% 50%, rgba(16, 185, 129, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(20, 184, 166, 0.1) 0%, transparent 50%)",
                     }}
                 />
             </div>
@@ -107,9 +111,7 @@ export default function ContactSection() {
                 />
                 <div className="grid lg:grid-cols-5 gap-12">
                     {/* Contact Info - Reduced animations */}
-                    <div
-                        className="lg:col-span-2 space-y-6"
-                    >
+                    <div className="lg:col-span-2 space-y-6">
                         <div className="bg-zinc-800/50 backdrop-blur-sm p-6 rounded-2xl border border-zinc-700/50">
                             <h3 className="text-2xl font-bold mb-4 text-emerald-400">
                                 Let's Connect
@@ -162,15 +164,13 @@ export default function ContactSection() {
                     </div>
 
                     {/* Contact Form - Reduced animations */}
-                    <div
-                        className="lg:col-span-3"
-                    >
+                    <div className="lg:col-span-3">
                         <div className="bg-zinc-800/50 backdrop-blur-sm p-6 rounded-2xl border border-zinc-700/50">
                             <h3 className="text-2xl font-bold mb-6 text-emerald-400">
                                 Send Me a Message
                             </h3>
 
-                            <form className="space-y-6">
+                            <form className="space-y-6" onSubmit={handleSubmit}>
                                 <div className="grid md:grid-cols-2 gap-6">
                                     <div>
                                         <label
@@ -183,9 +183,9 @@ export default function ContactSection() {
                                             type="text"
                                             id="name"
                                             name="name"
-                                            value={formData.name}
-                                            onChange={handleInputChange}
-                                            className="w-full bg-zinc-900/50 border border-zinc-600 rounded-lg px-4 py-3 text-white placeholder-zinc-400 focus:outline-none transition-colors duration-200"
+                                            value={values.name}
+                                            onChange={handleChange}
+                                            className="w-full bg-zinc-900/50 border border-zinc-600 rounded-lg px-4 py-3 text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all duration-200"
                                             placeholder="Enter your name"
                                             required
                                         />
@@ -201,9 +201,9 @@ export default function ContactSection() {
                                             type="email"
                                             id="email"
                                             name="email"
-                                            value={formData.email}
-                                            onChange={handleInputChange}
-                                            className="w-full bg-zinc-900/50 border border-zinc-600 rounded-lg px-4 py-3 text-white placeholder-zinc-400 focus:outline-none transition-colors duration-200"
+                                            value={values.email}
+                                            onChange={handleChange}
+                                            className="w-full bg-zinc-900/50 border border-zinc-600 rounded-lg px-4 py-3 text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all duration-200"
                                             placeholder="Enter your email"
                                             required
                                         />
@@ -221,9 +221,9 @@ export default function ContactSection() {
                                         type="text"
                                         id="subject"
                                         name="subject"
-                                        value={formData.subject}
-                                        onChange={handleInputChange}
-                                        className="w-full bg-zinc-900/50 border border-zinc-600 rounded-lg px-4 py-3 text-white placeholder-zinc-400 focus:outline-none transition-colors duration-200"
+                                        value={values.subject}
+                                        onChange={handleChange}
+                                        className="w-full bg-zinc-900/50 border border-zinc-600 rounded-lg px-4 py-3 text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all duration-200"
                                         placeholder="What's this about?"
                                         required
                                     />
@@ -240,9 +240,9 @@ export default function ContactSection() {
                                         id="message"
                                         name="message"
                                         rows={6}
-                                        value={formData.message}
-                                        onChange={handleInputChange}
-                                        className="w-full bg-zinc-900/50 border border-zinc-600 rounded-lg px-4 py-3 text-white placeholder-zinc-400 focus:outline-none transition-colors duration-200 resize-none"
+                                        value={values.message}
+                                        onChange={handleChange}
+                                        className="w-full bg-zinc-900/50 border border-zinc-600 rounded-lg px-4 py-3 text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all duration-200 resize-none"
                                         placeholder="Tell me about your project or idea..."
                                         required
                                     />
@@ -250,7 +250,7 @@ export default function ContactSection() {
 
                                 <button
                                     type="submit"
-                                    className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold py-4 px-6 rounded-lg transition-all duration-200 flex items-center justify-center gap-2"
+                                    className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold py-4 px-6 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-emerald-500/20 transform hover:-translate-y-0.5"
                                 >
                                     Send Message
                                     <Send className="h-5 w-5" />
