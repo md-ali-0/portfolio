@@ -1,44 +1,22 @@
 "use client";
 
+import { socialLinks } from "@/data/socials";
 import { useMobile } from "@/hooks/use-mobile";
 import { motion } from "framer-motion";
 import {
     ArrowRight,
     Code,
     Download,
-    Github,
-    Linkedin,
-    Mail,
     Send,
     Sparkles,
     Zap,
 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import Button from "../custom-button";
 
 export default function HomeSection() {
     const isMobile = useMobile();
-
-    const socialLinks = [
-        {
-            icon: <Github className="h-5 w-5 sm:h-6 sm:w-6" />,
-            href: "https://github.com",
-            label: "GitHub",
-            color: "hover:text-emerald-400",
-        },
-        {
-            icon: <Linkedin className="h-5 w-5 sm:h-6 sm:w-6" />,
-            href: "https://linkedin.com",
-            label: "LinkedIn",
-            color: "hover:text-blue-400",
-        },
-        {
-            icon: <Mail className="h-5 w-5 sm:h-6 sm:w-6" />,
-            href: "mailto:contact@example.com",
-            label: "Email",
-            color: "hover:text-teal-400",
-        },
-    ];
 
     return (
         <section
@@ -228,7 +206,7 @@ export default function HomeSection() {
                                     data-cursor="link"
                                     data-cursor-text={social.label}
                                 >
-                                    {social.icon}
+                                    <social.icon className="h-5 w-5 sm:h-6 sm:w-6" />
                                 </Link>
                             </div>
                         ))}
@@ -268,11 +246,13 @@ export default function HomeSection() {
                                 <div className="absolute inset-0 rounded-full bg-gradient-to-r from-emerald-500/40 via-teal-400/40 to-emerald-500/40" />
 
                                 {/* Image container */}
-                                <div className="absolute inset-1 sm:inset-1 md:inset-2 lg:inset-2 overflow-hidden rounded-full bg-zinc-900">
-                                    <img
+                                <div className="absolute inset-1 sm:inset-1 md:inset-2 lg:inset-2 overflow-hidden rounded-full bg-zinc-900 relative">
+                                    <Image
                                         src="/profile-image.png"
                                         alt="Ali - Full Stack Developer"
-                                        className="w-full h-full object-cover"
+                                        fill
+                                        className="object-cover"
+                                        priority
                                     />
 
                                     {/* Overlay gradient */}
