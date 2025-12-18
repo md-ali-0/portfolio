@@ -15,7 +15,11 @@ import Image from "next/image";
 import Link from "next/link";
 import Button from "../custom-button";
 
-export default function HomeSection() {
+interface HomeSectionProps {
+    resumeUrl?: string | null;
+}
+
+export default function HomeSection({ resumeUrl }: HomeSectionProps) {
     const isMobile = useMobile();
 
     return (
@@ -186,14 +190,28 @@ export default function HomeSection() {
                         </div>
 
                         <div>
-                            <Button
-                                variant="outline"
-                                className="border-2 border-zinc-600 text-zinc-300 hover:border-zinc-500 hover:text-white backdrop-blur-sm w-full sm:w-auto text-sm sm:text-base px-4 sm:px-6 py-2 sm:py-3"
-                                dataCursorText="Download CV"
-                            >
-                                <Download className="mr-2 h-4 w-4" />
-                                Resume
-                            </Button>
+                            {resumeUrl ? (
+                                <Link href={resumeUrl} target="_blank" download>
+                                    <Button
+                                        variant="outline"
+                                        className="border-2 border-zinc-600 text-zinc-300 hover:border-zinc-500 hover:text-white backdrop-blur-sm w-full sm:w-auto text-sm sm:text-base px-4 sm:px-6 py-2 sm:py-3"
+                                        dataCursorText="Download CV"
+                                    >
+                                        <Download className="mr-2 h-4 w-4" />
+                                        Resume
+                                    </Button>
+                                </Link>
+                            ) : (
+                                <Button
+                                    variant="outline"
+                                    className="border-2 border-zinc-600 text-zinc-300 hover:border-zinc-500 hover:text-white backdrop-blur-sm w-full sm:w-auto text-sm sm:text-base px-4 sm:px-6 py-2 sm:py-3 opacity-50 cursor-not-allowed"
+                                    dataCursorText="Resume not available"
+                                    disabled
+                                >
+                                    <Download className="mr-2 h-4 w-4" />
+                                    Resume
+                                </Button>
+                            )}
                         </div>
                     </div>
 
@@ -246,7 +264,7 @@ export default function HomeSection() {
                                 <div className="absolute inset-0 rounded-full bg-gradient-to-r from-emerald-500/40 via-teal-400/40 to-emerald-500/40" />
 
                                 {/* Image container */}
-                                <div className="absolute inset-1 sm:inset-1 md:inset-2 lg:inset-2 overflow-hidden rounded-full bg-zinc-900 relative">
+                                <div className="absolute inset-1 sm:inset-1 md:inset-2 lg:inset-2 overflow-hidden rounded-full bg-zinc-900">
                                     <Image
                                         src="/profile-image.png"
                                         alt="Ali - Full Stack Developer"

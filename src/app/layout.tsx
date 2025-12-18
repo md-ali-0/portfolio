@@ -1,6 +1,5 @@
 import BackToTop from "@/components/back-to-top";
 import Footer from "@/components/footer";
-import MouseTrailer from "@/components/mouse-trailer";
 import Navbar from "@/components/navbar";
 import ScrollProgress from "@/components/scroll-progress";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -29,7 +28,6 @@ export default function RootLayout({
                     disableTransitionOnChange={false}
                 >
                     <div className="min-h-screen bg-zinc-950 text-white transition-colors duration-300">
-                        <MouseTrailer />
                         <ScrollProgress />
                         <Navbar />
                         <main className="relative z-10">

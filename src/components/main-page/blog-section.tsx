@@ -1,53 +1,19 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Post } from "@/types/Posts";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
-import BlogCard from "../features/blog/blog-card";
+import BlogCard from "../blog/blog-card";
 
-const blogPosts = [
-    {
-        slug: "modern-web-development-trends-2024",
-        title: "Modern Web Development Trends in 2024",
-        excerpt:
-            "Exploring the latest trends and technologies shaping the future of web development, from AI integration to advanced frameworks.",
-        category: "Web Development",
-        author: "Mohammad Ali",
-        publishedAt: "2024-01-15",
-        readTime: "8 min read",
-        image: "/Screenshot_45.png",
-        tags: ["React", "Next.js", "AI"],
-    },
-    {
-        slug: "building-scalable-applications",
-        title: "Building Scalable Applications with Microservices",
-        excerpt:
-            "Learn how to architect and build scalable applications using microservices architecture and modern deployment strategies.",
-        category: "Architecture",
-        author: "Mohammad Ali",
-        publishedAt: "2024-01-10",
-        readTime: "12 min read",
-        image: "/Screenshot_46.png",
-        tags: ["Microservices", "Docker", "Kubernetes"],
-    },
-    {
-        slug: "ai-powered-development-tools",
-        title: "AI-Powered Development Tools That Boost Productivity",
-        excerpt:
-            "Discover the latest AI tools and techniques that can significantly improve your development workflow and code quality.",
-        category: "AI & Tools",
-        author: "Mohammad Ali",
-        publishedAt: "2024-01-05",
-        readTime: "6 min read",
-        image: "/Screenshot_47.png",
-        tags: ["AI", "Productivity", "Tools"],
-    },
-];
+interface BlogSectionProps {
+    posts: Post[];
+}
 
-export default function BlogSection() {
+export default function BlogSection({ posts }: BlogSectionProps) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const postsPerSlide = 3;
-    const totalSlides = Math.ceil(blogPosts.length / postsPerSlide);
+    const totalSlides = Math.ceil(posts.length / postsPerSlide);
 
     const nextSlide = () => {
         setCurrentIndex((prev) => (prev + 1) % totalSlides);
@@ -59,7 +25,7 @@ export default function BlogSection() {
 
     const getCurrentPosts = () => {
         const startIndex = currentIndex * postsPerSlide;
-        return blogPosts.slice(startIndex, startIndex + postsPerSlide);
+        return posts.slice(startIndex, startIndex + postsPerSlide);
     };
 
     return (
@@ -91,8 +57,7 @@ export default function BlogSection() {
                             </span>
                         </h2>
                         <p className="text-zinc-400 max-w-xl text-sm sm:text-base">
-                            Insights, tutorials, and best practices from the
-                            development trenches.
+                            Insights, tutorials, and best practices from the development trenches.
                         </p>
                     </div>
 

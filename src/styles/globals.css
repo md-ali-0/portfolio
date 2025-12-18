@@ -255,22 +255,6 @@
   @apply bg-emerald-200 dark:bg-emerald-500/30 text-emerald-900 dark:text-white;
 }
 
-/* Custom cursor styles */
-@media (min-width: 768px) {
-  .cursor-none {
-    cursor: none !important;
-  }
-
-  a,
-  button,
-  input,
-  textarea,
-  [role="button"],
-  .interactive-item,
-  [data-cursor] {
-    cursor: none !important;
-  }
-}
 
 /* Add hardware acceleration for smoother animations */
 .hardware-accelerated {

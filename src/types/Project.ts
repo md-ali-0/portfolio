@@ -1,32 +1,30 @@
-export type Project = {
-    thumbnail: string | null;
+export interface Project {
     id: string;
     title: string;
     slug: string;
     content: string;
+    thumbnail: string;
     authorId: string;
-    images: Image[] | null;
-    liveUrl: string | null;
-    SourceFront: string | null;
-    SourceBack: string | null;
-    StartDate: Date;
-    EndDate: Date | null;
-    category: string;
-    languages: string[];
+    liveUrl: string;
+    SourceFront: string;
+    SourceBack: string;
+    StartDate: string;
+    EndDate: string;
     technologies: string[];
-    metaTitle: string | null;
-    metaDesc: string | null;
-    metaKey: string | null;
-    createdAt: Date;
-    updatedAt: Date;
-};
+    languages: string[];
+    images: ProjectImage[];
+    metaTitle: string;
+    metaDesc: string;
+    metaKey: string;
+    deletedAt: any;
+    createdAt: string;
+    updatedAt: string;
+}
 
-export interface Image {
-    id: string; // Unique identifier
-    url: string; // Image URL
-    projectId?: string | null; // Nullable foreign key for the Project model
-    project?: Project | null; // Optional relation to the Project object
-    createdAt: Date; // Timestamp when the record was created
-    updatedAt: Date; // Timestamp when the record was last updated
-  }
-  
+export interface ProjectImage {
+  id: string
+  url: string
+  projectId: string
+  createdAt: string
+  updatedAt: string
+}

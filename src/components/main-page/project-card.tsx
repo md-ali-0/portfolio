@@ -1,0 +1,135 @@
+"use client";
+
+import { Project } from "@/types/Project";
+import { ExternalLink, Github } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+
+interface ProjectCardProps {
+    project: Project;
+    index: number;
+}
+
+export default function ProjectCard({ project, index }: ProjectCardProps) {
+    return (
+        <Link
+            key={project.id}
+            href={`/projects/${project.slug}`}
+            className="block"
+        >
+            <div
+                id={`project-card-${index}`}
+                className="
+                    group relative
+                    bg-zinc-900/60 backdrop-blur-xl rounded-2xl border border-zinc-800 overflow-hidden transition-all duration-300 hover:border-emerald-500/30
+                "
+            >
+                {/* Animated background on hover */}
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-teal-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                {/* Static shine effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 pointer-events-none" />
+
+                <div className="p-6 relative z-10">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        {/* Image with subtle hover effect */}
+                        <div className="relative h-48 lg:h-full rounded-lg overflow-hidden">
+                            <Image
+                                src={
+                                    project.thumbnail ||
+                                    "/placeholder.svg"
+                                }
+                                alt={project.title}
+                                fill
+                                className="object-cover"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-zinc-900/40 to-transparent" />
+                            {/* Year badge */}
+                            <div className="absolute top-3 right-3">
+                                <span className="px-2 py-1 bg-black/40 backdrop-blur-md text-zinc-200 text-xs font-medium rounded-full border border-zinc-600/30">
+                                    {new Date(project.StartDate).getFullYear()}
+                                </span>
+                            </div>
+                        </div>
+
+                        {/* Content */}
+                        <div className="lg:col-span-2">
+                            <div className="flex flex-wrap items-center gap-2 mb-3">
+                                <h3 className="text-xl font-bold text-white">
+                                    {project.title}
+                                </h3>
+                            </div>
+
+                            <p className="text-zinc-400 mb-4 text-base leading-relaxed line-clamp-3">
+                                {project.content.replace(/<[^>]*>/g, '').substring(0, 200)}...
+                            </p>
+
+                            {/* Tech Stack */}
+                            <div className="flex flex-wrap gap-2 mb-6">
+                                {project.technologies.map(
+                                    (tech) => (
+                                        <span
+                                            key={tech}
+                                            className="px-2 py-1 bg-zinc-800/50 text-zinc-200 text-xs rounded-lg border border-zinc-700/50"
+                                        >
+                                            {tech}
+                                        </span>
+                                    )
+                                )}
+                            </div>
+
+                            {/* Links */}
+                            <div className="flex flex-wrap gap-3">
+                                <span className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-emerald-400 rounded-lg border border-emerald-500/30 text-sm">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="14"
+                                        height="14"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                    >
+                                        <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                                        <circle
+                                            cx="12"
+                                            cy="12"
+                                            r="3"
+                                        />
+                                    </svg>
+                                    <span>View Details</span>
+                                </span>
+
+                                {project.liveUrl && (
+                                    <a
+                                        href={project.liveUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        onClick={(e) => e.stopPropagation()}
+                                        className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-emerald-400 rounded-lg border border-emerald-500/30 text-sm"
+                                    >
+                                        <ExternalLink className="h-3 w-3" />
+                                        <span>Live Demo</span>
+                                    </a>
+                                )}
+                                {(project.SourceFront || project.SourceBack) && (
+                                    <a
+                                        href={project.SourceFront || project.SourceBack}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        onClick={(e) => e.stopPropagation()}
+                                        className="flex items-center gap-2 px-4 py-2 bg-zinc-800/50 text-zinc-300 rounded-lg border border-zinc-700/50 text-sm"
+                                    >
+                                        <Github className="h-3 w-3" />
+                                        <span>Source</span>
+                                    </a>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </Link>
+    );
+}
