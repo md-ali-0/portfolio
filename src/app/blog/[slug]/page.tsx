@@ -7,7 +7,7 @@ import { notFound } from "next/navigation";
 
 // Generate static params for all posts
 export async function generateStaticParams() {
-    const posts = await getPosts();
+    const { posts } = await getPosts();
     return posts.map((post) => ({
         slug: post.slug,
     }));
@@ -77,7 +77,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     }
 
     // Get related posts (same category)
-    const allPosts = await getPosts();
+    const { posts: allPosts } = await getPosts();
     const relatedPosts = allPosts
         .filter((p) => p.id !== post.id && p.categoryId === post.categoryId)
         .slice(0, 3);
