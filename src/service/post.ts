@@ -64,7 +64,10 @@ export const getPostBySlug = async (slug: string): Promise<Post | null> => {
             headers: {
                 "Content-Type": "application/json",
             },
-            cache: "no-store",
+            cache: "force-cache",
+            next: {
+                revalidate: 60 * 60,
+            },
         });
 
         if (!response.ok) {

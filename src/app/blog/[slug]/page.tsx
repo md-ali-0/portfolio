@@ -1,6 +1,7 @@
 import BlogContent from "@/components/blog/blog-content";
 import BlogSidebar from "@/components/blog/blog-sidebar";
 import { getCategoryName } from "@/lib/blog";
+import { getStaticBlogPostBySlug, getStaticBlogPosts } from "@/lib/blog-static";
 import { baseMetadata } from "@/lib/metadata";
 import { getPostBySlug, getPosts } from "@/service/post";
 import type { Metadata } from "next";
@@ -9,15 +10,18 @@ import { notFound } from "next/navigation";
 // Generate static params for all posts
 export async function generateStaticParams() {
     const { posts } = await getPosts();
-    return posts.map((post) => ({
-        slug: post.slug,
+    const staticPosts = getStaticBlogPosts();
+    const allSlugs = Array.from(new Set([...posts.map((post) => post.slug), ...staticPosts.map((post) => post.slug)]));
+
+    return allSlugs.map((slug) => ({
+        slug,
     }));
 }
 
 // Generate metadata for each post with SEO optimization
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
     const resolvedParams = await params;
-    const post = await getPostBySlug(resolvedParams.slug);
+    const post = getStaticBlogPostBySlug(resolvedParams.slug) ?? (await getPostBySlug(resolvedParams.slug));
 
     if (!post) {
         return {
@@ -71,14 +75,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
     const resolvedParams = await params;
-    const post = await getPostBySlug(resolvedParams.slug);
+    const post = getStaticBlogPostBySlug(resolvedParams.slug) ?? (await getPostBySlug(resolvedParams.slug));
 
     if (!post) {
         notFound();
     }
 
     // Get related posts (same category)
-    const { posts: allPosts } = await getPosts();
+    const allPosts = post.id.startsWith("static-post-") ? getStaticBlogPosts() : (await getPosts()).posts;
     const relatedPosts = allPosts
         .filter((p) => p.id !== post.id && p.categoryId === post.categoryId)
         .slice(0, 3);

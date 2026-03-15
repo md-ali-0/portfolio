@@ -2,6 +2,7 @@ import BlogList from "@/components/blog/blog-list";
 import BlogPageSidebar from "@/components/blog/blog-page-sidebar";
 import Breadcrumb from "@/components/breadcrumb";
 import { resolveCategoryId } from "@/lib/blog";
+import { getStaticBlogCategories, getStaticBlogPageData, getStaticBlogPosts } from "@/lib/blog-static";
 import { baseMetadata } from "@/lib/metadata";
 import { getCategories } from "@/service/category";
 import { getPosts } from "@/service/post";
@@ -37,18 +38,21 @@ export default async function BlogPage({
     const itemsPerPage = 10;
     const searchTerm = resolvedParams.searchTerm?.trim() || undefined;
     const selectedCategory = resolvedParams.category?.trim() || undefined;
+    const isStaticLandingPage = currentPage === 1 && !searchTerm && !selectedCategory;
 
-    const categories = await getCategories();
+    const categories = isStaticLandingPage ? getStaticBlogCategories() : await getCategories();
     const categoryId = resolveCategoryId(selectedCategory, categories);
 
-    const { posts, meta } = await getPosts({
-        page: currentPage,
-        limit: itemsPerPage,
-        searchTerm,
-        category: categoryId,
-    });
+    const { posts, meta } = isStaticLandingPage
+        ? getStaticBlogPageData(itemsPerPage)
+        : await getPosts({
+              page: currentPage,
+              limit: itemsPerPage,
+              searchTerm,
+              category: categoryId,
+          });
 
-    const { posts: latestPosts } = await getPosts({ limit: 5 });
+    const latestPosts = isStaticLandingPage ? getStaticBlogPosts(5) : (await getPosts({ limit: 5 })).posts;
     const popularPosts = [...latestPosts].sort((left, right) => right.viewCount - left.viewCount);
 
     return (
