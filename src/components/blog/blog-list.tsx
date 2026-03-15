@@ -28,7 +28,7 @@ export default function BlogList({ posts, currentPage, totalPages }: BlogListPro
 
                                     <div className="absolute top-4 left-4 z-20">
                                         <Badge className="bg-black/70 backdrop-blur-sm text-emerald-400 border border-emerald-500/30 font-semibold text-xs px-3 py-1">
-                                            {post.category?.name || "Uncategorized"}
+                                            {typeof post.category === 'string' ? post.category : post.category?.name || "Uncategorized"}
                                         </Badge>
                                     </div>
 

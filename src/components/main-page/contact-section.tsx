@@ -2,21 +2,30 @@
 
 import type React from "react";
 
-import {
-    Clock,
-    Github,
-    Instagram,
-    Linkedin,
-    Mail,
-    MapPin,
-    Phone,
-    Send,
-    Twitter
-} from "lucide-react";
-import { useState } from "react";
+import { Github, Linkedin, Mail, Twitter, Instagram, Send, MapPin, Phone, Clock } from "lucide-react";
+import { useState, useEffect } from "react";
+import { getSocialLinks } from "@/service/social-link";
 import SectionHeader from "../section-header";
 
 export default function ContactSection() {
+    const [links, setLinks] = useState<any[]>([])
+
+    useEffect(() => {
+        const fetchLinks = async () => {
+            const data = await getSocialLinks()
+            setLinks(data)
+        }
+        fetchLinks()
+    }, [])
+
+    const getIcon = (name: string) => {
+        const n = name.toLowerCase()
+        if (n.includes('github')) return Github
+        if (n.includes('linkedin')) return Linkedin
+        if (n.includes('twitter')) return Twitter
+        if (n.includes('instagram')) return Instagram
+        return Mail
+    }
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -147,15 +156,20 @@ export default function ContactSection() {
                                     Follow Me
                                 </h4>
                                 <div className="flex gap-3">
-                                    {socialLinks.map((social, index) => (
-                                        <a
-                                            key={index}
-                                            href={social.href}
-                                            className={`p-3 rounded-full bg-zinc-700/50 text-white transition-colors duration-200 ${social.color}`}
-                                        >
-                                            {social.icon}
-                                        </a>
-                                    ))}
+                                    {(links.length > 0 ? links : socialLinks).map((social: any, index: number) => {
+                                        const Icon = getIcon(social.name || social.label)
+                                        return (
+                                            <a
+                                                key={index}
+                                                href={social.url || social.href}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className={`p-3 rounded-full bg-zinc-700/50 text-white transition-colors duration-200 hover:bg-emerald-600`}
+                                            >
+                                                <Icon className="h-5 w-5" />
+                                            </a>
+                                        )
+                                    })}
                                 </div>
                             </div>
                         </div>

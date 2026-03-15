@@ -2,22 +2,44 @@
 import MagneticElement from "@/components/magnetic-element"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { projects } from "@/data/projects-data"
-import { generateProjectJsonLd } from "@/lib/metadata"
-import { motion } from "framer-motion"
-import { ArrowRight, Calendar, ExternalLink, Github, Tag } from "lucide-react"
-import Link from "next/link"
-import { notFound } from "next/navigation"
+import { getProjectBySlug, getProjects } from "@/service/project"
+import { useEffect, useState } from "react"
 
 export default function ProjectPageClient({ params }: { params: { slug: string } }) {
-  const project = projects.find((p) => p.slug === params.slug)
+  const [project, setProject] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
+  const [relatedProjects, setRelatedProjects] = useState<any[]>([])
+
+  useEffect(() => {
+    const fetchProject = async () => {
+      setLoading(true)
+      try {
+        const data = await getProjectBySlug(params.slug)
+        if (data) {
+          setProject(data)
+          const related = await getProjects({ category: data.category, limit: 4 })
+          setRelatedProjects(related.filter((p: any) => p.slug !== params.slug).slice(0, 3))
+        }
+      } catch (error) {
+        console.error("Error fetching project:", error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchProject()
+  }, [params.slug])
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
+        <div className="h-16 w-16 rounded-full border-4 border-emerald-400/30 border-t-emerald-400 animate-spin"></div>
+      </div>
+    )
+  }
 
   if (!project) {
     notFound()
   }
-
-  // Get related projects (excluding current project)
-  const relatedProjects = projects.filter((p) => p.slug !== params.slug && p.category === project.category).slice(0, 3)
 
   return (
     <>

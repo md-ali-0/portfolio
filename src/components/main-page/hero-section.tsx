@@ -1,8 +1,10 @@
 "use client";
 
 import { socialLinks } from "@/data/socials";
+import { getSocialLinks } from "@/service/social-link";
 import { useMobile } from "@/hooks/use-mobile";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import {
     ArrowRight,
     Code,
@@ -21,6 +23,24 @@ interface HomeSectionProps {
 
 export default function HomeSection({ resumeUrl }: HomeSectionProps) {
     const isMobile = useMobile();
+
+    const [links, setLinks] = useState<any[]>([])
+
+    useEffect(() => {
+        const fetchLinks = async () => {
+            const data = await getSocialLinks()
+            setLinks(data)
+        }
+        fetchLinks()
+    }, [])
+
+    const getIcon = (name: string) => {
+        const iconName = name.toLowerCase();
+        if (iconName.includes('github')) return socialLinks[0].icon;
+        if (iconName.includes('linkedin')) return socialLinks[1].icon;
+        if (iconName.includes('mail')) return socialLinks[2].icon;
+        return socialLinks[0].icon;
+    }
 
     return (
         <section
@@ -147,7 +167,7 @@ export default function HomeSection({ resumeUrl }: HomeSectionProps) {
                             with creativity and expertise.
                         </p>
 
-                        <div className="flex flex-wrap justify-center lg:justify-start gap-4 sm:gap-6 md:gap-8 lg:gap-10 pt-3 sm:pt-4">
+                        <div className="flex wrap justify-center lg:justify-start gap-4 sm:gap-6 md:gap-8 lg:gap-10 pt-3 sm:pt-4">
                             {[
                                 { number: "50+", label: "Projects" },
                                 { number: "3+", label: "Years" },
@@ -216,18 +236,21 @@ export default function HomeSection({ resumeUrl }: HomeSectionProps) {
                     </div>
 
                     <div className="flex justify-center lg:justify-start gap-3 sm:gap-4 md:gap-5 lg:gap-6 pt-4 sm:pt-6 md:pt-8">
-                        {socialLinks.map((social, index) => (
-                            <div key={index}>
-                                <Link
-                                    href={social.href}
-                                    className={`text-zinc-400 ${social.color} transition-all duration-300 p-2 sm:p-3 md:p-3 lg:p-4 rounded-full border border-zinc-700 hover:border-emerald-400/50 backdrop-blur-sm bg-zinc-900/30 hover:bg-zinc-800/50 block`}
-                                    data-cursor="link"
-                                    data-cursor-text={social.label}
-                                >
-                                    <social.icon className="h-5 w-5 sm:h-6 sm:w-6" />
-                                </Link>
-                            </div>
-                        ))}
+                        {(links.length > 0 ? links : socialLinks).map((social, index) => {
+                            const Icon = social.icon && typeof social.icon !== 'string' ? social.icon : getIcon(social.name || social.label)
+                            return (
+                                <div key={index}>
+                                    <Link
+                                        href={social.url || social.href}
+                                        className={`text-zinc-400 ${social.color || 'hover:text-emerald-400'} transition-all duration-300 p-2 sm:p-3 md:p-3 lg:p-4 rounded-full border border-zinc-700 hover:border-emerald-400/50 backdrop-blur-sm bg-zinc-900/30 hover:bg-zinc-800/50 block`}
+                                        data-cursor="link"
+                                        data-cursor-text={social.name || social.label}
+                                    >
+                                        <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
+                                    </Link>
+                                </div>
+                            )
+                        })}
                     </div>
                 </div>
 

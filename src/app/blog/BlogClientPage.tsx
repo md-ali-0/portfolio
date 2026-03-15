@@ -1,9 +1,10 @@
 "use client"
 import Breadcrumb from "@/components/breadcrumb"
+import Button from "@/components/custom-button"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { blogPosts } from "@/data/blog-data"
+import { getCategories } from "@/service/category"
+import { getPosts } from "@/service/post"
 import { ArrowRight, Calendar, ChevronLeft, ChevronRight, Clock, Search, Tag, TrendingUp } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useState } from "react"
@@ -13,38 +14,46 @@ const POSTS_PER_PAGE = 6
 export default function BlogPage() {
   const [searchTerm, setSearchTerm] = useState("")
   const [currentPage, setCurrentPage] = useState(1)
-  const [filteredPosts, setFilteredPosts] = useState(blogPosts)
+  const [selectedCategory, setSelectedCategory] = useState("All")
+  const [posts, setPosts] = useState<any[]>([])
+  const [categories, setCategories] = useState<any[]>([])
+  const [meta, setMeta] = useState<any>(null)
   const [featuredPost, setFeaturedPost] = useState<any>(null)
-
-  const categories = Array.from(new Set(blogPosts.map((post) => post.category)))
-
-  const popularPosts = [...blogPosts].sort((a, b) => b.readTime - a.readTime).slice(0, 4)
-  const editorsPicks = blogPosts.filter((post) => post.featured || post.category === "Web Development").slice(0, 3)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    const featured = blogPosts.find((post) => post.featured) || blogPosts[0]
-    setFeaturedPost(featured)
+    const fetchInitialData = async () => {
+      const cats = await getCategories()
+      setCategories(cats)
+    }
+    fetchInitialData()
   }, [])
 
   useEffect(() => {
-    let filtered = blogPosts
-
-    if (searchTerm) {
-      filtered = filtered.filter(
-        (post) =>
-          post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          post.excerpt.toLowerCase().includes(searchTerm.toLowerCase()),
-      )
+    const fetchPosts = async () => {
+      setIsLoading(true)
+      const data = await getPosts({
+        page: currentPage,
+        limit: POSTS_PER_PAGE,
+        searchTerm: searchTerm,
+        category: selectedCategory === "All" ? undefined : selectedCategory
+      })
+      setPosts(data.posts)
+      setMeta(data.meta)
+      if (data.posts.length > 0 && currentPage === 1 && !searchTerm && selectedCategory === "All") {
+        setFeaturedPost(data.posts.find((p: any) => p.featured) || data.posts[0])
+      }
+      setIsLoading(false)
     }
 
-    setFilteredPosts(filtered)
-    setCurrentPage(1)
-  }, [searchTerm])
+    fetchPosts()
+  }, [currentPage, searchTerm, selectedCategory])
 
-  const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE)
-  const startIndex = (currentPage - 1) * POSTS_PER_PAGE
-  const endIndex = startIndex + POSTS_PER_PAGE
-  const currentPosts = filteredPosts.slice(startIndex, endIndex)
+  const popularPosts = [...posts].sort((a, b) => (b.viewCount || 0) - (a.viewCount || 0)).slice(0, 4)
+  
+  const totalPages = meta?.totalPage || 1
+  const currentPosts = posts
+  const totalArticles = meta?.total || 0
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page)
@@ -68,7 +77,7 @@ export default function BlogPage() {
                   Latest Posts
                 </h2>
                 <div className="text-zinc-400 text-sm">
-                  {filteredPosts.length} {filteredPosts.length === 1 ? "article" : "articles"}
+                  {totalArticles} {totalArticles === 1 ? "article" : "articles"}
                 </div>
               </div>
 
@@ -102,7 +111,7 @@ export default function BlogPage() {
 
                               <div className="absolute top-3 left-3">
                                 <Badge className="bg-black/70 backdrop-blur-sm text-emerald-400 border border-emerald-500/30 font-semibold text-xs px-2 py-0.5">
-                                  {post.category}
+                                  {typeof post.category === 'string' ? post.category : post.category?.name || "Uncategorized"}
                                 </Badge>
                               </div>
 
@@ -288,23 +297,31 @@ export default function BlogPage() {
                   Categories
                 </h3>
                 <div className="space-y-1">
-                  {categories.map((category) => {
-                    const count = blogPosts.filter((post) => post.category === category).length
-                    return (
-                      <div
-                        key={category}
-                        className="flex items-center justify-between py-2 px-2 rounded-lg hover:bg-zinc-800/50 transition-colors cursor-pointer"
-                      >
-                        <span className="text-sm">{category}</span>
-                        <Badge
-                          variant="outline"
-                          className="text-xs border-zinc-700 text-zinc-400"
-                        >
-                          {count}
-                        </Badge>
-                      </div>
-                    )
-                  })}
+                  <div
+                    onClick={() => {
+                      setSelectedCategory("All")
+                      setCurrentPage(1)
+                    }}
+                    className={`flex items-center justify-between py-2 px-2 rounded-lg transition-colors cursor-pointer ${
+                      selectedCategory === "All" ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30" : "hover:bg-zinc-800/50"
+                    }`}
+                  >
+                    <span className="text-sm">All Articles</span>
+                  </div>
+                  {categories.map((category) => (
+                    <div
+                      key={category.id || category.name}
+                      onClick={() => {
+                        setSelectedCategory(category.name)
+                        setCurrentPage(1)
+                      }}
+                      className={`flex items-center justify-between py-2 px-2 rounded-lg transition-colors cursor-pointer ${
+                        selectedCategory === category.name ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30" : "hover:bg-zinc-800/50"
+                      }`}
+                    >
+                      <span className="text-sm">{category.name}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
 

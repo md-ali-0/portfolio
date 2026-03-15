@@ -4,7 +4,7 @@ import ProjectCard from "./project-card";
 
 export default async function ProjectsSection() {
 
-    const projects = await getProjects({limit: 5});
+    const projects = await getProjects({limit: 6});
 
     return (
         <section

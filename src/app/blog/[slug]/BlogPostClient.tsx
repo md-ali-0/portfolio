@@ -2,7 +2,7 @@
 
 import Button from "@/components/custom-button";
 import MagneticElement from "@/components/magnetic-element";
-import { blogPosts } from "@/data/blog-data";
+import { getPostBySlug, getPosts } from "@/service/post";
 import { useMobile } from "@/hooks/use-mobile";
 import { motion } from "framer-motion";
 import {
@@ -17,52 +17,11 @@ import {
     Tag,
     TrendingUp,
     User,
+    Loader2
 } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { useEffect, useState } from "react";
-
-// Define types
-interface Author {
-    name: string;
-    title: string;
-    avatar?: string;
-    bio: string;
-}
-
-interface BlogPost {
-    slug: string;
-    title: string;
-    excerpt: string;
-    category: string;
-    date: string;
-    readTime: number;
-    coverImage?: string;
-    author: Author;
-    tags: string[];
-    content: string;
-    likes: number;
-    comments: number;
-    featured: boolean;
-}
-
-// Mock authentication hook (replace with real auth in production)
-const useAuth = () => {
-    // Simulating a logged-in user; replace with actual auth logic
-    return {
-        isAuthenticated: false,
-        user: null as { name: string; avatar: string } | null,
-    };
-};
-
-interface Comment {
-    id: string;
-    author: string;
-    avatar?: string;
-    text: string;
-    timestamp: string;
-    likes: number;
-}
 
 export default function BlogPostClient({
     params,
@@ -70,32 +29,41 @@ export default function BlogPostClient({
     params: { slug: string };
 }) {
     const slug = params.slug;
-    const post = blogPosts.find((p) => p.slug === slug) || blogPosts[0];
-
-    if (!post) {
-        notFound();
-    }
-
+    const [post, setPost] = useState<any>(null);
     const [isLoading, setIsLoading] = useState(true);
     const isMobile = useMobile();
-    const [relatedPosts, setRelatedPosts] = useState<BlogPost[]>([]);
+    const [relatedPosts, setRelatedPosts] = useState<any[]>([]);
     const [isLiked, setIsLiked] = useState(false);
     const [isSaved, setIsSaved] = useState(false);
-    const [comments, setComments] = useState<Comment[]>([]);
+    const [comments, setComments] = useState<any[]>([]);
     const [commentText, setCommentText] = useState("");
     const [anonymousName, setAnonymousName] = useState("");
-    const { isAuthenticated, user } = useAuth();
 
     useEffect(() => {
-        setIsLoading(true);
-        setTimeout(() => {
-            const related = blogPosts
-                .filter((p) => p.slug !== slug && p.category === post?.category)
-                .slice(0, 3);
-            setRelatedPosts(related);
-            setIsLoading(false);
-        }, 500);
-    }, [slug, post?.category]);
+        const fetchPost = async () => {
+            setIsLoading(true);
+            try {
+                const data = await getPostBySlug(slug);
+                if (data) {
+                    setPost(data);
+                    // Fetch related posts
+                    const { posts } = await getPosts({ category: data.category?.id || data.category, limit: 3 });
+                    setRelatedPosts(posts.filter((p: any) => p.slug !== slug));
+                } else {
+                    setPost(null);
+                }
+            } catch (error) {
+                console.error("Error fetching post:", error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        fetchPost();
+    }, [slug]);
+
+    if (!isLoading && !post) {
+        notFound();
+    }
 
     const handleCommentSubmit = (e: React.FormEvent) => {
         e.preventDefault();

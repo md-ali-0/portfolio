@@ -9,10 +9,31 @@ import {
     MapPin,
     Twitter,
     User,
+    Instagram
 } from "lucide-react";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import { getSocialLinks } from "@/service/social-link";
 
 export default function PersonalImageSection() {
+    const [links, setLinks] = useState<any[]>([])
+
+    useEffect(() => {
+        const fetchLinks = async () => {
+            const data = await getSocialLinks()
+            setLinks(data)
+        }
+        fetchLinks()
+    }, [])
+
+    const getIcon = (name: string) => {
+        const n = name.toLowerCase()
+        if (n.includes('github')) return Github
+        if (n.includes('linkedin')) return Linkedin
+        if (n.includes('twitter')) return Twitter
+        if (n.includes('instagram')) return Instagram
+        return Mail
+    }
     const personalInterests = [
         {
             icon: <Heart className="h-5 w-5" />,
@@ -148,18 +169,21 @@ export default function PersonalImageSection() {
                                     Connect with me
                                 </h4>
                                 <div className="flex flex-wrap gap-4">
-                                    {socialLinks.map((social, index) => (
-                                        <a
-                                            key={index}
-                                            href={social.url}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className={`flex items-center gap-2 px-4 py-2 bg-zinc-800/50 border border-zinc-700 rounded-lg text-zinc-300 hover:bg-zinc-800 transition-all duration-300 ${social.color}`}
-                                        >
-                                            {social.icon}
-                                            <span>{social.label}</span>
-                                        </a>
-                                    ))}
+                                    {(links.length > 0 ? links : socialLinks).map((social: any, index: number) => {
+                                        const Icon = getIcon(social.name || social.label)
+                                        return (
+                                            <a
+                                                key={index}
+                                                href={social.url || social.href}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className={`flex items-center gap-2 px-4 py-2 bg-zinc-800/50 border border-zinc-700 rounded-lg text-zinc-300 hover:bg-zinc-800 transition-all duration-300 hover:text-emerald-400`}
+                                            >
+                                                <Icon className="h-5 w-5" />
+                                                <span>{social.name || social.label}</span>
+                                            </a>
+                                        )
+                                    })}
                                 </div>
                             </div>
                         </div>
