@@ -1,5 +1,6 @@
 "use client";
 
+import { getCategoryName } from "@/lib/blog";
 import { Badge } from "@/components/ui/badge";
 import { Post } from "@/types/Posts";
 import { motion } from "framer-motion";
@@ -51,7 +52,7 @@ export default function BlogCard({ post, index = 0 }: BlogCardProps) {
                     {post.category && (
                         <div className="absolute top-4 left-4">
                             <Badge className="bg-emerald-500 text-black hover:bg-emerald-600">
-                                {post.category.name}
+                                {getCategoryName(post)}
                             </Badge>
                         </div>
                     )}

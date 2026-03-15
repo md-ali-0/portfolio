@@ -23,6 +23,15 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { useEffect, useState } from "react";
 
+type BlogComment = {
+    id: string;
+    author: string;
+    avatar: string;
+    text: string;
+    timestamp: string;
+    likes: number;
+};
+
 export default function BlogPostClient({
     params,
 }: {
@@ -37,7 +46,7 @@ export default function BlogPostClient({
     const [morePosts, setMorePosts] = useState<any[]>([]);
     const [isLiked, setIsLiked] = useState(false);
     const [isSaved, setIsSaved] = useState(false);
-    const [comments, setComments] = useState<any[]>([]);
+    const [comments, setComments] = useState<BlogComment[]>([]);
     const [commentText, setCommentText] = useState("");
     const [anonymousName, setAnonymousName] = useState("");
 
@@ -90,7 +99,7 @@ export default function BlogPostClient({
         e.preventDefault();
         if (!commentText.trim()) return;
 
-        const newComment: Comment = {
+        const newComment: BlogComment = {
             id: Date.now().toString(),
             author: isAuthenticated && user
                 ? user.name

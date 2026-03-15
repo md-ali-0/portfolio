@@ -1,5 +1,6 @@
 import BlogContent from "@/components/blog/blog-content";
 import BlogSidebar from "@/components/blog/blog-sidebar";
+import { getCategoryName } from "@/lib/blog";
 import { baseMetadata } from "@/lib/metadata";
 import { getPostBySlug, getPosts } from "@/service/post";
 import type { Metadata } from "next";
@@ -102,7 +103,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             url: "https://md-ali.vercel.app",
         },
         keywords: post.tags.join(", "),
-        articleSection: post.category?.name || "Technology",
+        articleSection: getCategoryName(post) || "Technology",
         wordCount: post.content.replace(/<[^>]*>/g, "").split(/\s+/).length,
     };
 

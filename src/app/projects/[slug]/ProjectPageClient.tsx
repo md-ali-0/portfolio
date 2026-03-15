@@ -1,8 +1,12 @@
 "use client"
 import MagneticElement from "@/components/magnetic-element"
+import { generateProjectJsonLd } from "@/lib/metadata"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { getProjectBySlug, getProjects } from "@/service/project"
+import { motion } from "framer-motion"
+import { ArrowRight, Calendar, ExternalLink, Github, Tag } from "lucide-react"
+import Link from "next/link"
 import { notFound } from "next/navigation"
 import { useEffect, useState } from "react"
 
@@ -18,7 +22,7 @@ export default function ProjectPageClient({ params }: { params: { slug: string }
         const data = await getProjectBySlug(params.slug)
         if (data) {
           setProject(data)
-          const related = await getProjects({ category: data.category, limit: 4 })
+          const related = await getProjects({ limit: 4 })
           setRelatedProjects(related.filter((p: any) => p.slug !== params.slug).slice(0, 3))
         }
       } catch (error) {
@@ -78,7 +82,7 @@ export default function ProjectPageClient({ params }: { params: { slug: string }
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">{project.title}</h1>
             <p className="text-xl text-zinc-300 mb-8">{project.description}</p>
             <div className="flex flex-wrap justify-center gap-2 mb-8">
-              {project.technologies.map((tech) => (
+              {project.technologies.map((tech: string) => (
                 <Badge
                   key={tech}
                   className="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 border-0"
@@ -168,7 +172,7 @@ export default function ProjectPageClient({ params }: { params: { slug: string }
                 <div className="mt-12 pt-8 border-t border-zinc-800">
                   <h3 className="text-2xl font-bold mb-6">Project Gallery</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {project.images.map((image, index) => (
+                    {project.images.map((image: string, index: number) => (
                       <motion.div
                         key={index}
                         className="rounded-lg overflow-hidden"
@@ -194,7 +198,7 @@ export default function ProjectPageClient({ params }: { params: { slug: string }
                     <Tag className="mr-2 h-5 w-5 text-emerald-400" /> Technologies Used
                   </h3>
                   <div className="flex flex-wrap gap-2">
-                    {project.technologies.map((tech, index) => (
+                    {project.technologies.map((tech: string, index: number) => (
                       <motion.div
                         key={tech}
                         initial={{ opacity: 0, scale: 0.8 }}
@@ -291,7 +295,7 @@ export default function ProjectPageClient({ params }: { params: { slug: string }
               <div className="bg-zinc-900/50 backdrop-blur-sm rounded-xl p-6 border border-zinc-800">
                 <h3 className="text-xl font-bold mb-6 pb-4 border-b border-zinc-800">Related Projects</h3>
                 <div className="space-y-6">
-                  {relatedProjects.map((relatedProject, index) => (
+                  {relatedProjects.map((relatedProject: any, index: number) => (
                     <motion.div
                       key={relatedProject.slug}
                       initial={{ opacity: 0, y: 10 }}

@@ -1,5 +1,7 @@
 "use client";
 
+import CommentSection from "@/components/blog/comment-section";
+import { getCategoryName } from "@/lib/blog";
 import { Badge } from "@/components/ui/badge";
 import { Post } from "@/types/Posts";
 import { motion } from "framer-motion";
@@ -31,7 +33,7 @@ export default function BlogContent({ post }: BlogContentProps) {
                     {/* Category */}
                     {post.category && (
                         <Badge className="bg-emerald-500 text-black hover:bg-emerald-600 mb-4">
-                            {post.category.name}
+                            {getCategoryName(post)}
                         </Badge>
                     )}
 
@@ -91,6 +93,8 @@ export default function BlogContent({ post }: BlogContentProps) {
                         </div>
                     </div>
                 )}
+
+                <CommentSection postId={post.id} />
             </div>
         </motion.article>
     );
