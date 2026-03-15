@@ -2,6 +2,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { calculateReadTime, getAuthorAvatar, getCategoryName } from "@/lib/blog";
 import { Post } from "@/types/Posts";
 import { ArrowRight, Calendar, Clock } from "lucide-react";
 import Link from "next/link";
@@ -18,7 +19,7 @@ export default function BlogList({ posts, currentPage, totalPages }: BlogListPro
     return (
         <>
             <div className="space-y-6 mb-10">
-                {posts.map((post, index) => (
+                {posts.map((post) => (
                     <Link key={post.slug} href={`/blog/${post.slug}`} className="block group">
                         <div className="relative bg-gradient-to-br from-zinc-900/80 via-zinc-800/40 to-zinc-900/20 backdrop-blur-md rounded-2xl overflow-hidden border border-zinc-800/50 transition-all duration-300 group-hover:border-emerald-500/30 group-hover:shadow-lg group-hover:shadow-emerald-500/10 transform group-hover:-translate-y-1">
                             <div className="flex flex-col md:flex-row">
@@ -28,7 +29,7 @@ export default function BlogList({ posts, currentPage, totalPages }: BlogListPro
 
                                     <div className="absolute top-4 left-4 z-20">
                                         <Badge className="bg-black/70 backdrop-blur-sm text-emerald-400 border border-emerald-500/30 font-semibold text-xs px-3 py-1">
-                                            {typeof post.category === 'string' ? post.category : post.category?.name || "Uncategorized"}
+                                            {getCategoryName(post)}
                                         </Badge>
                                     </div>
 
@@ -36,10 +37,7 @@ export default function BlogList({ posts, currentPage, totalPages }: BlogListPro
                                         <div className="bg-black/70 backdrop-blur-sm rounded-full px-3 py-1 border border-zinc-700/50">
                                             <span className="text-zinc-300 text-xs flex items-center">
                                                 <Clock className="h-3 w-3 mr-1" />
-                                                {Math.ceil(
-                                                    post.content.replace(/<[^>]*>/g, "").split(/\s+/).length / 200
-                                                )}
-                                                m
+                                                {calculateReadTime(post.content)}m
                                             </span>
                                         </div>
                                     </div>
@@ -76,13 +74,7 @@ export default function BlogList({ posts, currentPage, totalPages }: BlogListPro
                                         <div className="flex items-center">
                                             <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-emerald-500/30">
                                                 <img
-                                                    src={
-                                                        post.author.email
-                                                            ? `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                                                                  post.author.name
-                                                              )}&background=10b981&color=fff`
-                                                            : "/placeholder.svg?height=40&width=40&query=author avatar"
-                                                    }
+                                                    src={getAuthorAvatar(post.author)}
                                                     alt={post.author.name}
                                                     className="w-full h-full object-cover"
                                                 />

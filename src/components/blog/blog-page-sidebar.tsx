@@ -2,51 +2,79 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { calculateReadTime } from "@/lib/blog";
 import { Category } from "@/types/Category";
 import { Post } from "@/types/Posts";
 import { Clock, ClockIcon, Search, Tag, TrendingUp, User } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { FormEvent, useState } from "react";
 
 interface BlogPageSidebarProps {
     categories: Category[];
     popularPosts: Post[];
     recentPosts: Post[];
+    initialSearchTerm?: string;
+    selectedCategory?: string;
 }
 
-export default function BlogPageSidebar({ categories, popularPosts, recentPosts }: BlogPageSidebarProps) {
-    const [searchTerm, setSearchTerm] = useState("");
+export default function BlogPageSidebar({
+    categories,
+    popularPosts,
+    recentPosts,
+    initialSearchTerm = "",
+    selectedCategory = "",
+}: BlogPageSidebarProps) {
+    const router = useRouter();
+    const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
+
+    const handleSearch = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+        const params = new URLSearchParams();
+
+        if (searchTerm.trim()) {
+            params.set("searchTerm", searchTerm.trim());
+        }
+
+        if (selectedCategory) {
+            params.set("category", selectedCategory);
+        }
+
+        router.push(`/blog${params.toString() ? `?${params.toString()}` : ""}`);
+    };
 
     return (
         <div className="lg:col-span-4 space-y-6">
-            {/* Search */}
             <div className="bg-gradient-to-br from-zinc-900/60 to-zinc-800/40 backdrop-blur-sm rounded-2xl p-6 border border-zinc-800/50 shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-emerald-500/10 hover:border-emerald-500/30">
                 <h3 className="text-lg font-bold mb-4 flex items-center">
                     <Search className="h-5 w-5 mr-2 text-emerald-400" />
                     Search Articles
                 </h3>
-                <div className="relative">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-zinc-500 h-5 w-5" />
-                    <Input
-                        type="text"
-                        placeholder="Search by title, category, or tags..."
-                        value={searchTerm}
-                        onChange={(e) =>
-                            setSearchTerm(e.target.value)
-                        }
-                        className="pl-10 bg-zinc-800/70 border-zinc-700 focus:border-emerald-400 text-base py-5 transition-all duration-300 focus:ring-2 focus:ring-emerald-500/30 focus:ring-offset-0 focus:ring-offset-zinc-900"
-                    />
-                </div>
+                <form onSubmit={handleSearch} className="space-y-3">
+                    <div className="relative">
+                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-zinc-500 h-5 w-5" />
+                        <Input
+                            type="text"
+                            placeholder="Search by title, category, or tags..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="pl-10 bg-zinc-800/70 border-zinc-700 focus:border-emerald-400 text-base py-5 transition-all duration-300 focus:ring-2 focus:ring-emerald-500/30 focus:ring-offset-0 focus:ring-offset-zinc-900"
+                        />
+                    </div>
+                    <Button type="submit" className="w-full bg-emerald-500 hover:bg-emerald-600 text-black">
+                        Search Posts
+                    </Button>
+                </form>
             </div>
 
-            {/* Popular Posts */}
             <div className="bg-gradient-to-br from-zinc-900/60 to-zinc-800/40 backdrop-blur-sm rounded-2xl p-6 border border-zinc-800/50 shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-emerald-500/10 hover:border-emerald-500/30">
                 <h3 className="text-lg font-bold mb-4 flex items-center">
                     <TrendingUp className="h-5 w-5 mr-2 text-emerald-400" />
                     Popular Articles
                 </h3>
                 <div className="space-y-4">
-                    {popularPosts.map((post, index) => (
+                    {popularPosts.map((post) => (
                         <Link
                             key={post.slug}
                             href={`/blog/${post.slug}`}
@@ -70,7 +98,7 @@ export default function BlogPageSidebar({ categories, popularPosts, recentPosts 
                                     <div className="flex items-center gap-2 mt-2">
                                         <span className="text-xs text-zinc-500 flex items-center">
                                             <Clock className="h-3 w-3 mr-1" />{" "}
-                                            {0}m
+                                            {calculateReadTime(post.content)}m
                                         </span>
                                         <span className="text-xs text-zinc-500">
                                             •
@@ -86,14 +114,13 @@ export default function BlogPageSidebar({ categories, popularPosts, recentPosts 
                 </div>
             </div>
 
-            {/* Recent Posts */}
             <div className="bg-gradient-to-br from-zinc-900/60 to-zinc-800/40 backdrop-blur-sm rounded-2xl p-6 border border-zinc-800/50 shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-emerald-500/10 hover:border-emerald-500/30">
                 <h3 className="text-lg font-bold mb-4 flex items-center">
                     <ClockIcon className="h-5 w-5 mr-2 text-emerald-400" />
                     Recent Articles
                 </h3>
                 <div className="space-y-4">
-                    {recentPosts.map((post, index) => (
+                    {recentPosts.map((post) => (
                         <Link
                             key={post.slug}
                             href={`/blog/${post.slug}`}
@@ -126,19 +153,37 @@ export default function BlogPageSidebar({ categories, popularPosts, recentPosts 
                 </div>
             </div>
 
-            {/* Categories */}
             <div className="bg-gradient-to-br from-zinc-900/60 to-zinc-800/40 backdrop-blur-sm rounded-2xl p-6 border border-zinc-800/50 shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-emerald-500/10 hover:border-emerald-500/30">
                 <h3 className="text-lg font-bold mb-4 flex items-center">
                     <Tag className="h-5 w-5 mr-2 text-emerald-400" />
                     Categories
                 </h3>
                 <div className="space-y-2">
+                    <Link
+                        href={searchTerm ? `/blog?searchTerm=${encodeURIComponent(searchTerm)}` : "/blog"}
+                        className={`flex items-center justify-between py-3 px-4 rounded-xl transition-all duration-300 ${
+                            !selectedCategory ? "bg-emerald-500/20 text-emerald-400" : "hover:bg-zinc-800/50"
+                        }`}
+                    >
+                        <span className="font-medium">All Categories</span>
+                    </Link>
                     {categories.map((category) => {
+                        const href = new URLSearchParams();
+
+                        href.set("category", category.slug);
+                        if (searchTerm.trim()) {
+                            href.set("searchTerm", searchTerm.trim());
+                        }
+
                         return (
                             <Link
                                 key={category.id}
-                                href={`/blog?category=${category.slug}`}
-                                className="flex items-center justify-between py-3 px-4 rounded-xl hover:bg-zinc-800/50 transition-all duration-300"
+                                href={`/blog?${href.toString()}`}
+                                className={`flex items-center justify-between py-3 px-4 rounded-xl transition-all duration-300 ${
+                                    selectedCategory === category.slug || selectedCategory === category.name
+                                        ? "bg-emerald-500/20 text-emerald-400"
+                                        : "hover:bg-zinc-800/50"
+                                }`}
                             >
                                 <span className="font-medium">
                                     {category.name}
@@ -149,18 +194,17 @@ export default function BlogPageSidebar({ categories, popularPosts, recentPosts 
                 </div>
             </div>
 
-            {/* Tag Cloud */}
             <div className="bg-gradient-to-br from-zinc-900/60 to-zinc-800/40 backdrop-blur-sm rounded-2xl p-6 border border-zinc-800/50 shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-emerald-500/10 hover:border-emerald-500/30">
                 <h3 className="text-lg font-bold mb-4 flex items-center">
                     <Tag className="h-5 w-5 mr-2 text-emerald-400" />
                     Popular Tags
                 </h3>
                 <div className="flex flex-wrap gap-2">
-                    {['Next.js', 'React', 'Tailwind CSS', 'TypeScript', 'Node.js', 'Express', 'MongoDB', 'PostgreSQL', 'Python', 'Django', 'Flask', 'Vue.js', 'Angular', 'Svelte', 'SvelteKit', 'Nuxt.js', 'NestJS', 'Strapi', 'Sanity'].map((tag, index) => {
+                    {['Next.js', 'React', 'Tailwind CSS', 'TypeScript', 'Node.js', 'Express', 'MongoDB', 'PostgreSQL', 'Python', 'Django', 'Flask', 'Vue.js', 'Angular', 'Svelte', 'SvelteKit', 'Nuxt.js', 'NestJS', 'Strapi', 'Sanity'].map((tag) => {
                         return (
                             <Link
                                 key={tag}
-                                href={`/blog?tag=${tag.toLowerCase()}`}
+                                href={`/blog?searchTerm=${encodeURIComponent(tag)}`}
                                 className="px-3 py-1.5 text-sm rounded-full bg-zinc-800/50 hover:bg-emerald-500/20 border border-zinc-700/50 hover:border-emerald-500/30 transition-all duration-300"
                             >
                                 {tag}
@@ -170,7 +214,6 @@ export default function BlogPageSidebar({ categories, popularPosts, recentPosts 
                 </div>
             </div>
 
-            {/* Subscribe */}
             <div className="bg-gradient-to-br from-emerald-900/30 to-teal-900/30 backdrop-blur-sm rounded-2xl p-6 border border-emerald-800/40 shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-emerald-500/20">
                 <div className="flex items-center gap-3 mb-3">
                     <div className="bg-emerald-500/20 p-2 rounded-lg">

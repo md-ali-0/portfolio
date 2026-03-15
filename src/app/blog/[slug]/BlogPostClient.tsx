@@ -2,8 +2,9 @@
 
 import Button from "@/components/custom-button";
 import MagneticElement from "@/components/magnetic-element";
-import { getPostBySlug, getPosts } from "@/service/post";
 import { useMobile } from "@/hooks/use-mobile";
+import { getCategories } from "@/service/category";
+import { getPostBySlug, getPosts } from "@/service/post";
 import { motion } from "framer-motion";
 import {
     Bookmark,
@@ -16,8 +17,7 @@ import {
     Share2,
     Tag,
     TrendingUp,
-    User,
-    Loader2
+    User
 } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -33,6 +33,8 @@ export default function BlogPostClient({
     const [isLoading, setIsLoading] = useState(true);
     const isMobile = useMobile();
     const [relatedPosts, setRelatedPosts] = useState<any[]>([]);
+    const [categories, setCategories] = useState<any[]>([]);
+    const [morePosts, setMorePosts] = useState<any[]>([]);
     const [isLiked, setIsLiked] = useState(false);
     const [isSaved, setIsSaved] = useState(false);
     const [comments, setComments] = useState<any[]>([]);
@@ -46,9 +48,17 @@ export default function BlogPostClient({
                 const data = await getPostBySlug(slug);
                 if (data) {
                     setPost(data);
-                    // Fetch related posts
-                    const { posts } = await getPosts({ category: data.category?.id || data.category, limit: 3 });
-                    setRelatedPosts(posts.filter((p: any) => p.slug !== slug));
+                    // Fetch related posts by same category
+                    const { posts: related } = await getPosts({ 
+                        category: typeof data.category === 'string' 
+                            ? data.category 
+                            : data.category?.id || data.category?.name, 
+                        limit: 4
+                    });
+                    setRelatedPosts(related.filter((p: any) => p.slug !== slug).slice(0, 3));
+                    // Fetch more posts for bottom section
+                    const { posts: more } = await getPosts({ limit: 4 });
+                    setMorePosts(more.filter((p: any) => p.slug !== slug).slice(0, 3));
                 } else {
                     setPost(null);
                 }
@@ -60,6 +70,17 @@ export default function BlogPostClient({
         };
         fetchPost();
     }, [slug]);
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            const cats = await getCategories();
+            setCategories(cats);
+        };
+        fetchCategories();
+    }, []);
+
+    const isAuthenticated = false; // Placeholder for auth
+    const user = null as any; // Placeholder for auth
 
     if (!isLoading && !post) {
         notFound();
@@ -166,24 +187,24 @@ export default function BlogPostClient({
                     >
                         <div className="mb-6 flex items-center justify-center gap-2 flex-wrap">
                             <Link
-                                href={`/blog/category/${post.category.toLowerCase()}`}
+                                href={`/blog?category=${typeof post.category === 'string' ? post.category : post.category?.name || ""}`}
                                 className="px-3 py-1 bg-emerald-500/20 text-emerald-400 rounded-full text-sm font-medium hover:bg-emerald-500/30 transition-all duration-300 border border-emerald-500/20"
                             >
-                                {post.category}
+                                {typeof post.category === 'string' ? post.category : post.category?.name || "Uncategorized"}
                             </Link>
                             <span className="text-zinc-500">•</span>
                             <span className="text-zinc-400 flex items-center text-sm bg-zinc-800/50 px-3 py-1 rounded-full">
                                 <Calendar className="h-4 w-4 mr-1" />{" "}
-                                {post.date}
+                                {new Date(post.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
                             </span>
                             <span className="text-zinc-500">•</span>
                             <span className="text-zinc-400 flex items-center text-sm bg-zinc-800/50 px-3 py-1 rounded-full">
                                 <Clock className="h-4 w-4 mr-1" />{" "}
-                                {post.readTime} min read
+                                {post.readingTime || post.readTime || "5"} min read
                             </span>
                             <span className="text-zinc-500">•</span>
                             <span className="text-zinc-400 flex items-center text-sm bg-zinc-800/50 px-3 py-1 rounded-full">
-                                <Eye className="h-4 w-4 mr-1" /> 1.2k views
+                                <Eye className="h-4 w-4 mr-1" /> {post.viewCount || 0} views
                             </span>
                         </div>
 
@@ -601,25 +622,14 @@ export default function BlogPostClient({
                                     Categories
                                 </h3>
                                 <div className="space-y-2">
-                                    {[
-                                        { name: "Technology", count: 12 },
-                                        { name: "Web Development", count: 8 },
-                                        { name: "UI/UX Design", count: 6 },
-                                        { name: "Programming", count: 10 },
-                                        { name: "Career", count: 4 },
-                                    ].map((category) => (
+                                    {categories.map((category) => (
                                         <Link
-                                            key={category.name}
-                                            href={`/blog/category/${category.name
-                                                .toLowerCase()
-                                                .replace(/\s+/g, "-")}`}
+                                            key={category.id || category.name}
+                                            href={`/blog?category=${category.name}`}
                                             className="flex justify-between items-center py-2 px-3 rounded-lg hover:bg-zinc-800/30 transition-all duration-300 group"
                                         >
                                             <span className="group-hover:text-emerald-400 transition-colors duration-300 text-white text-sm font-medium">
                                                 {category.name}
-                                            </span>
-                                            <span className="text-zinc-500 text-xs bg-zinc-800/50 px-2 py-1 rounded-full">
-                                                {category.count}
                                             </span>
                                         </Link>
                                     ))}
@@ -683,9 +693,9 @@ export default function BlogPostClient({
                     </div>
 
                     <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {blogPosts.slice(0, 3).map((post, index) => (
+                        {morePosts.map((morePost, index) => (
                             <motion.div
-                                key={post.slug}
+                                key={morePost.slug}
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 transition={{
@@ -696,48 +706,42 @@ export default function BlogPostClient({
                                 whileHover={{ y: -5 }}
                             >
                                 <Link
-                                    href={`/blog/${post.slug}`}
+                                    href={`/blog/${morePost.slug}`}
                                     className="block h-full bg-zinc-800/70 backdrop-blur-sm rounded-xl overflow-hidden border border-zinc-700/50 hover:border-emerald-500/50 transition-all duration-300 group"
                                 >
                                     <div className="h-48 overflow-hidden relative">
                                         <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/60 to-transparent z-10"></div>
                                         <img
-                                            src={
-                                                post.coverImage ||
-                                                "/placeholder.svg"
-                                            }
-                                            alt={post.title}
+                                            src={morePost.featuredImage || "/placeholder.svg"}
+                                            alt={morePost.title}
                                             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                                         />
                                     </div>
                                     <div className="p-5">
                                         <div className="flex items-center gap-2 mb-3">
                                             <span className="px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded-full text-xs">
-                                                {post.category}
+                                                {typeof morePost.category === 'string' ? morePost.category : morePost.category?.name || "Uncategorized"}
                                             </span>
                                             <span className="text-zinc-400 text-xs">
-                                                {post.date}
+                                                {new Date(morePost.createdAt).toLocaleDateString()}
                                             </span>
                                         </div>
                                         <h3 className="text-lg font-semibold mb-2 group-hover:text-emerald-400 transition-colors duration-300 text-white">
-                                            {post.title}
+                                            {morePost.title}
                                         </h3>
                                         <p className="text-zinc-400 text-sm line-clamp-2">
-                                            {post.excerpt}
+                                            {morePost.excerpt}
                                         </p>
                                         <div className="flex items-center mt-3">
                                             <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-emerald-400/50">
                                                 <img
-                                                    src={
-                                                        post.author.avatar ||
-                                                        "/placeholder.svg"
-                                                    }
-                                                    alt={post.author.name}
+                                                    src={morePost.author?.avatar || "/placeholder.svg"}
+                                                    alt={morePost.author?.name || "Author"}
                                                     className="w-full h-full object-cover"
                                                 />
                                             </div>
                                             <span className="ml-2 text-sm text-white">
-                                                {post.author.name}
+                                                {morePost.author?.name || "Anonymous"}
                                             </span>
                                         </div>
                                     </div>

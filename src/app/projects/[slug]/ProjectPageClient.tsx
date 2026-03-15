@@ -3,6 +3,7 @@ import MagneticElement from "@/components/magnetic-element"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { getProjectBySlug, getProjects } from "@/service/project"
+import { notFound } from "next/navigation"
 import { useEffect, useState } from "react"
 
 export default function ProjectPageClient({ params }: { params: { slug: string } }) {
@@ -63,11 +64,11 @@ export default function ProjectPageClient({ params }: { params: { slug: string }
           >
             <div className="mb-4 flex items-center justify-center gap-2">
               <Link
-                href={`/projects?category=${project.category.toLowerCase()}`}
+                href={`/projects?category=${(typeof project.category === 'string' ? project.category : project.category?.name || "").toLowerCase()}`}
                 className="px-3 py-1 bg-emerald-500/20 text-emerald-400 rounded-full text-sm font-medium hover:bg-emerald-500/30 transition-colors"
                 data-cursor="link"
               >
-                {project.category}
+                {typeof project.category === 'string' ? project.category : project.category?.name || "Uncategorized"}
               </Link>
               <span className="text-zinc-500">•</span>
               <span className="text-zinc-400 flex items-center text-sm">
@@ -238,7 +239,7 @@ export default function ProjectPageClient({ params }: { params: { slug: string }
                   </div>
                   <div>
                     <h4 className="text-zinc-400 text-sm">Category</h4>
-                    <p className="font-medium">{project.category}</p>
+                    <p className="font-medium">{typeof project.category === 'string' ? project.category : project.category?.name || "Uncategorized"}</p>
                   </div>
                 </div>
                 <div className="mt-6 pt-4 border-t border-zinc-800 space-y-4">
@@ -313,7 +314,7 @@ export default function ProjectPageClient({ params }: { params: { slug: string }
                             <h4 className="font-medium line-clamp-2 group-hover:text-emerald-400 transition-colors">
                               {relatedProject.title}
                             </h4>
-                            <p className="text-sm text-zinc-400 mt-1">{relatedProject.category}</p>
+                            <p className="text-sm text-zinc-400 mt-1">{typeof relatedProject.category === 'string' ? relatedProject.category : relatedProject.category?.name || "Uncategorized"}</p>
                           </div>
                         </div>
                       </Link>

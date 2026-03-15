@@ -1,4 +1,5 @@
 import config from "@/config";
+import { defaultPostsMeta, PostsMeta } from "@/lib/blog";
 import { Post } from "@/types/Posts";
 
 interface GetPostsParams {
@@ -10,12 +11,7 @@ interface GetPostsParams {
 
 interface PostsResponse {
     posts: Post[];
-    meta: {
-        page: number;
-        limit: number;
-        total: number;
-        totalPage: number;
-    };
+    meta: PostsMeta;
 }
 
 export const getPosts = async (params?: GetPostsParams): Promise<PostsResponse> => {
@@ -24,8 +20,8 @@ export const getPosts = async (params?: GetPostsParams): Promise<PostsResponse> 
         
         if (params?.page) queryParams.append("page", params.page.toString());
         if (params?.limit) queryParams.append("limit", params.limit.toString());
-        if (params?.searchTerm) queryParams.append("search", params.searchTerm);
-        if (params?.category) queryParams.append("category", params.category);
+        if (params?.searchTerm) queryParams.append("searchTerm", params.searchTerm);
+        if (params?.category) queryParams.append("categoryId", params.category);
 
         const url = `${config.host}/api/v1/post${queryParams.toString() ? `?${queryParams.toString()}` : ""}`;
         
@@ -48,23 +44,13 @@ export const getPosts = async (params?: GetPostsParams): Promise<PostsResponse> 
 
         return {
             posts: data?.data || [],
-            meta: data?.meta || {
-                page: 1,
-                limit: 10,
-                total: 0,
-                totalPage: 1,
-            },
+            meta: data?.meta || defaultPostsMeta,
         };
     } catch (error) {
         console.error("Error fetching posts:", error);
         return {
             posts: [],
-            meta: {
-                page: 1,
-                limit: 10,
-                total: 0,
-                totalPage: 1,
-            },
+            meta: defaultPostsMeta,
         };
     }
 };
@@ -89,7 +75,7 @@ export const getPostBySlug = async (slug: string): Promise<Post | null> => {
         }
 
         const data = await response.json();
-        return data;
+        return data?.data || null;
     } catch (error) {
         console.error(`Error fetching post with slug ${slug}:`, error);
         return null;
